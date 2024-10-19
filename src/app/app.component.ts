@@ -32,6 +32,7 @@ export class AppComponent {
     private account: AccountService,
     private authService: AuthService,
     private router: Router, 
+    protected auth: AuthService,
     private titleService: Title,
     private renderer: Renderer2) {
 
@@ -152,5 +153,8 @@ export class AppComponent {
       top: 0,
       behavior: 'smooth'
     });
+  }
+  logout() {
+    this.auth.logout();  
   }
 }
