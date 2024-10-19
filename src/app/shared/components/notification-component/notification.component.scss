@@ -1,0 +1,310 @@
+.z-12000 {
+    z-index: 12000 i !important;
+}
+
+strong {
+    display: block;
+}
+
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 2100;
+    background-color: transparent;
+}
+
+.progress-main {
+    padding-left: 30px !important;
+    width: 250px !important;
+    .progress {
+        height: 1rem !important;
+        .progress-bar {
+            background-color: #6bd16b !important;
+            color: black !important;
+        }
+    }
+}
+
+// .overlay {
+//   position: fixed;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   z-index: 1000;
+// }
+.notification {
+    /* word-break: break-all; */
+    line-break: auto;
+    // word-break: break-all;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.waiting {
+    cursor: wait !important;
+}
+
+// Simple Loader #Start
+// .loadWrapper {
+//   background: rgba(0,0,0,0.3);
+//   width: 100%;
+//   height: 100%;
+//   position: fixed;
+//   top:0px;
+//   left:0px;
+//   z-index: 99999;
+// }
+// .loader {
+//   border: 5px solid #f3f3f3; /* Light grey */
+//   border-top: 5px solid #3d3e3f; /* gray */
+//   position: absolute;
+//   left: 50%;
+//   top: 50%;
+//   border-radius: 50%;
+//   width: 50px;
+//   height: 50px;
+//   animation: spin 2s linear infinite;
+// }
+// @keyframes spin {
+//   0% { transform: rotate(0deg); }
+//   100% { transform: rotate(360deg); }
+// }
+// Simple Loader #End
+// Iphone Loader #Start
+// $spinner-color: #69717d !default;
+// $spinner-size: 48px !default;
+$spinner-color: black !default;
+$spinner-size: 48px !default;
+.overlay {
+    // background: rgba(#f7f7f7,.8);
+    background: transparent;
+    height: 100vh;
+    cursor: auto;
+}
+
+.overlay-loader {
+    background-color: transparent !important;
+}
+
+// .spinner {
+//   font-size: $spinner-size;
+//   position: relative;
+//   display: inline-block;
+//   width: 1em;
+//   height: 1em;
+//   &.center {
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     margin: auto;
+//   }
+//   .spinner-blade {
+//     position: absolute;
+//     // left: .4629em;
+//     left: 1040px;
+//     bottom: 0;
+//     width: .074em;
+//     height: .2777em;
+//     border-radius: .0555em;
+//     background-color: transparent;
+//     transform-origin: center -.2222em;
+//     animation: spinner-fade 1s infinite linear;
+//     $animation-delay: 0s;
+//     $blade-rotation: 0deg;
+//     @for $i from 1 through 12 {
+//       &:nth-child(#{$i}){
+//         animation-delay: $animation-delay;
+//         transform: rotate($blade-rotation);
+//         $blade-rotation: $blade-rotation + 30;
+//         $animation-delay: $animation-delay + .083;
+//       }
+//     }
+//   }
+// }
+// @keyframes spinner-fade{
+//   0% { background-color: $spinner-color; }
+//   100% { background-color: transparent; }
+// }
+// Iphone Loader #End
+// New Iphone Spinner #Start
+.mob-spinner.ispinner {
+    display: none !important;
+}
+
+.ispinner {
+    font-size: $spinner-size;
+    position: relative;
+    // display: inline-block;
+    width: 1em;
+    height: 1em;
+}
+
+.ispinner.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(calc(-50% - .35em), -50%);
+    // right: 0;
+    // bottom: 0;
+    margin: auto;
+}
+
+.ispinner .ispinner-blade {
+    position: absolute;
+    // top: 37%;
+    // left: 44.5%;
+    left: 1040px;
+    bottom: 0;
+    width: 10%;
+    height: 25%;
+    background-color: $spinner-color;
+    border-radius: 50%/20%;
+    -webkit-animation: iSpinnerBlade 1s linear infinite;
+    animation: iSpinnerBlade 1s linear infinite;
+    will-change: opacity;
+}
+
+.ispinner .ispinner-blade:nth-child(1) {
+    -webkit-transform: rotate(30deg) translate(0, -150%);
+    transform: rotate(30deg) translate(0, -150%);
+    -webkit-animation-delay: -1.6666666667s;
+    animation-delay: -1.6666666667s;
+}
+
+.ispinner .ispinner-blade:nth-child(2) {
+    -webkit-transform: rotate(60deg) translate(0, -150%);
+    transform: rotate(60deg) translate(0, -150%);
+    -webkit-animation-delay: -1.5833333333s;
+    animation-delay: -1.5833333333s;
+}
+
+.ispinner .ispinner-blade:nth-child(3) {
+    -webkit-transform: rotate(90deg) translate(0, -150%);
+    transform: rotate(90deg) translate(0, -150%);
+    -webkit-animation-delay: -1.5s;
+    animation-delay: -1.5s;
+}
+
+.ispinner .ispinner-blade:nth-child(4) {
+    -webkit-transform: rotate(120deg) translate(0, -150%);
+    transform: rotate(120deg) translate(0, -150%);
+    -webkit-animation-delay: -1.4166666667s;
+    animation-delay: -1.4166666667s;
+}
+
+.ispinner .ispinner-blade:nth-child(5) {
+    -webkit-transform: rotate(150deg) translate(0, -150%);
+    transform: rotate(150deg) translate(0, -150%);
+    -webkit-animation-delay: -1.3333333333s;
+    animation-delay: -1.3333333333s;
+}
+
+.ispinner .ispinner-blade:nth-child(6) {
+    -webkit-transform: rotate(180deg) translate(0, -150%);
+    transform: rotate(180deg) translate(0, -150%);
+    -webkit-animation-delay: -1.25s;
+    animation-delay: -1.25s;
+}
+
+.ispinner .ispinner-blade:nth-child(7) {
+    -webkit-transform: rotate(210deg) translate(0, -150%);
+    transform: rotate(210deg) translate(0, -150%);
+    -webkit-animation-delay: -1.1666666667s;
+    animation-delay: -1.1666666667s;
+}
+
+.ispinner .ispinner-blade:nth-child(8) {
+    -webkit-transform: rotate(240deg) translate(0, -150%);
+    transform: rotate(240deg) translate(0, -150%);
+    -webkit-animation-delay: -1.0833333333s;
+    animation-delay: -1.0833333333s;
+}
+
+.ispinner .ispinner-blade:nth-child(9) {
+    -webkit-transform: rotate(270deg) translate(0, -150%);
+    transform: rotate(270deg) translate(0, -150%);
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+}
+
+.ispinner .ispinner-blade:nth-child(10) {
+    -webkit-transform: rotate(300deg) translate(0, -150%);
+    transform: rotate(300deg) translate(0, -150%);
+    -webkit-animation-delay: -0.9166666667s;
+    animation-delay: -0.9166666667s;
+}
+
+.ispinner .ispinner-blade:nth-child(11) {
+    -webkit-transform: rotate(330deg) translate(0, -150%);
+    transform: rotate(330deg) translate(0, -150%);
+    -webkit-animation-delay: -0.8333333333s;
+    animation-delay: -0.8333333333s;
+}
+
+.ispinner .ispinner-blade:nth-child(12) {
+    -webkit-transform: rotate(360deg) translate(0, -150%);
+    transform: rotate(360deg) translate(0, -150%);
+    -webkit-animation-delay: -0.75s;
+    animation-delay: -0.75s;
+}
+
+.ispinner.ispinner-large {
+    // width: 35px;
+    // height: 35px;
+}
+
+.ispinner.ispinner-large .ispinner-blade {
+    width: 8.5714285714%;
+    height: 25.7142857143%;
+    border-radius: 50%/16.67%;
+}
+
+@-webkit-keyframes iSpinnerBlade {
+    0% {
+        opacity: 0.85;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        opacity: 0.25;
+    }
+}
+
+@keyframes iSpinnerBlade {
+    0% {
+        opacity: 0.85;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        opacity: 0.25;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .notification {
+        max-width: 300px;
+        min-width: 210px;
+    }
+}
+
+// New Iphone Spinner #End
+@media only screen and (max-width: 1024px) {
+    .waiting {
+        cursor: auto !important;
+    }
+    .mob-spinner.ispinner {
+        display: inline-block !important;
+    }
+    .overlay-loader {
+        background: rgba(#f7f7f7, .4) !important;
+    }
+}

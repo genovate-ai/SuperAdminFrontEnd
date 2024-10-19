@@ -1,0 +1,163 @@
+<div id="manage-role">
+  <app-manage-profile-component *ngIf="getProfileView()"></app-manage-profile-component>
+  <div class="hide-report" [ngClass]="{'show-report': isDataLoaded}">
+    <button (click)="createRole()" id="create-role" *ngIf="this.screenPermission.isCreateButtonAllow"
+      class="anc-btn anc-btn-solid anc-btn-solid-2 mt-4 mb-4">
+      {{"app.createNew" | translation | async}}</button>
+    <div id="user-log" class="create-role" [ngClass]="{'mt-4': !this.screenPermission.isCreateButtonAllow}">
+      <div class="data-log-section hide-report-2" [ngClass]="{'show-report': isDataLoaded}">
+        <div class="widgets">
+          <div class="widgets__counter">
+            <span id="results-found-count">{{totalRecords | number}} </span>
+            <span *ngIf="totalRecords > 1">{{"general.resultsFound" | translation | async}}</span>
+            <span *ngIf="totalRecords <= 1">result found</span>
+          </div>
+          <div class="widgets__controls m-r-3px">
+            <div class="widgets__controls--reset m-t-neg-4px m-r-10px">
+              <span title="{{'d3Reporting.resetFilters' | translation | async}}" (click)="resetAllFilter()"
+                id="reset-all-filters">
+                <img src="../../../../../assets/images/components-icons/reset-icon.png" height="14" width="14" />
+              </span>
+            </div>
+            <div class="widgets__controls--lock m-t-neg-4px">
+              <span id="save-filters"  [ngClass]="{'d-none': saveFilters}" (click)="lockFilters()"
+                title="{{'d3Reporting.lockAppliedFilters' | translation | async}}">
+                <img src="../../../../../assets/images/components-icons/unlock-icon.png" height="16" width="12" />
+              </span>
+              <span id="remove-filters"  [ngClass]="{'d-none': !saveFilters}"
+                title="{{'d3Reporting.unlockFilters' | translation | async}}" (click)="this.removeFiltersfromDB()">
+                <img src="../../../../../assets/images/components-icons/lock-icon.png" height="16" width="12" />
+              </span>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="datatable-container pr-0 pl-0">
+          <div class="table-responsive apl-data-log-table apl-scrollbar scrollbar--2" appHorizontalDragScroll
+            [disabled]="disabledDragScroll">
+            <div id='table-user-log' class=" mb-0">
+              <table id="dc-table-graph" class="table__data-log">
+                <thead>
+                  <tr id='table-header-user-log' class="text-uppercase">
+                    <th *ngFor="let item of tableHeaderData, let j = index let lastcall = last" #thSort
+                      id='sort-{{item.field_name}}' [attr.data-field_name]="item.field_name"
+                      [attr.data-icon_type]="item.icon_type" [attr.data-sort_state]="item.sort_state" 
+                      clickOutsideElem (clickOutside)="clickedOutsideFilterDialog(item.fieldKey)"
+                      [clickOutsideEnabled]="this.lstFiltersOpenClose[item.fieldKey]"
+                      [clickOutsideEvents]="'click,touchstart'" [excludeDynamic]="item.fieldKey == 'scanDateTime'"
+                      [excludeClassList]="['dp-nav-header-btn','dp-calendar-day','dp-calendar-month']">
+
+                      <div class="filter-block d-none"
+                        [ngClass]="{'d-block': lstFiltersOpenClose[item.fieldKey] == true}">
+                        <app-custom-filter-popup
+                          *ngIf="item.filterType === 'selection' || item.filterType === 'selectionDate'"
+                          [options]="filterOptions[item.fieldKey]" [totalCount]="filterOptionsCounts[item.fieldKey]"
+                          [wildcardEnable]="item.isWildcard" [resetControl]="resetFilter[item.fieldKey]"
+                          [isFilterForDate]="item.filterType === 'selectionDate'"
+                          [selectedValues]="selectedValuesArrays[item.fieldKey]"
+                          [selectedValueWildcard]="selectedValueWildcard[item.fieldKey]"
+                          [selectedOperatorWildcard]="selectedOperatorWildcard[item.fieldKey]"
+                          [automationId]="item.fieldKey" [isFilterApplied]="lstFiltersApplied[item.fieldKey]"
+                          (onClose)="closeAllFilterPopups()" (onApply)="applyListofFilters($event, item.fieldKey)"
+                          (onClear)="clearListOfComponent($event, item.fieldKey)"
+                          (onWildcardApply)="wildcardSearch($event, item.fieldKey)" (onLoader)="onLoader($event)">
+                        </app-custom-filter-popup>
+                      </div>
+
+                      <div class="d-flex align-center-center">
+                        <div class="log-header p-0">
+                          <span *ngIf="item.filterType !== 'none'" id="{{item.fieldKey}}_show-filter"
+                            class="log-header__filter-icon enableWhiteListing" (click)="showFilterPopup(item.fieldKey)">
+                            <!-- <i class="fas fa-filter enableWhiteListing"></i> -->
+                            <img src="../../../../../assets/images/components-icons/filter-icon.png"
+                              class="enableWhiteListing m-t-neg-2px" height="10" width="10" />
+                          </span>
+                        </div>
+                        <div class="log-header" [ngClass]="{'active-filter': this.lstFiltersApplied[item.fieldKey] == true,
+            'open-filter-popup': lstFiltersOpenClose[item.fieldKey] == true}">
+                          <div class="d-flex align-items-center">
+                            <label class="mb-0 m-r-4px cursor-pointer" id="{{item.fieldKey}}_sort"
+                              (click)="applySort($event, thSort, item, j)">
+                              {{ item?.langKey | translation | async}}
+                            </label>
+                          </div>
+
+                          <div class="d-flex align-items-center {{item?.ml_icon}}">
+                            <span class="w-13px d-inline-block position-relative hide-visibility th-sort-img m-r-2px">
+                              <i ></i>
+
+                            </span>
+                            <span class="log-header__clear-filter" *ngIf="item.filterType !== 'none'">
+                              <span (click)="clearFilter(item.fieldKey)" id="{{item.fieldKey}}_clear-filter"
+                                [ngClass]="{'hide-visibility': !lstFiltersApplied[item.fieldKey]}">&times;</span></span>
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </th>
+
+                    <th class="width-10-p">
+                      <label>{{ "roles.action" | translation | async }}</label>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let role of lstRoles, let i = index">
+                    <td class="width-40-p p-l-35px " title="{{role.userRoleName}}">
+                      <label class="text-ellipsis max-w-500px vertical-align-middle">{{ role.userRoleName }}</label>
+                    </td>
+                    <td class="width-50-p p-l-13px " title="{{ role.userRoleDesc }}">
+                      <label class="text-ellipsis max-w-500px vertical-align-middle">{{ role.userRoleDesc }}</label>
+                    </td>
+                    <td class="text-nowrap pl-0">
+                      <div class="d-flex">
+                        <div class="widgets__controls--edit pb-0 pt-0 pos-r t-neg-3px"
+                          *ngIf="this.screenPermission.isEditButtonAllow"><span (click)="editRole(role.userRoleId)"
+                            class=" btn-inline-margin cursor-pointer" id="edit-role-{{i}}" title="Edit Role">
+                            <img class="m-b-2px" height="14"
+                              src="../../../../../assets/images/components-icons/edit-icon.png" width="12"></span>
+                        </div>
+                        <div class="widgets__controls--edit pb-0 pt-0 ml-2 pos-r t-neg-3px"
+                          *ngIf="this.screenPermission.isEditButtonAllow"><span (click)="editRights(role.userRoleId)"
+                            class="btn-inline-pading cursor-pointer" id="edit-role-rights-{{i}}" title="Edit Rights">
+                            <img class="m-b-2px" height="14"
+                              src="../../../../../assets/images/components-icons/edit-2.png" width="12">
+                          </span>
+                        </div>
+                        <div class="widgets__controls--view pb-0 pt-0 ml-2 pos-r t-neg-3px"><span
+                            (click)="viewUsers(role.userRoleId)" class="btn-inline-pading cursor-pointer"
+                            id="view-role-user-{{i}}" title="View users">
+                            <img class="m-b-2px" height="14"
+                              src="../../../../../assets/images/components-icons/view-icon.png" width="12">
+                          </span>
+                        </div>
+                      </div>
+                      <!-- <img src="../../../../../assets/images/components-icons/edit-icon.png" *ngIf="this.screenPermission.isEditButtonAllow" (click)="editRole(role.userRoleId)" class="grid-icon  btn-inline-margin cursor-pointer" id="edit-role-{{i}}">
+                                    <img src="../../../../assets/images/rights.svg" (click)="editRights(role.userRoleId)" *ngIf="this.screenPermission.isEditButtonAllow" class="btn-inline-pading cursor-pointer" id="edit-role-rights-{{i}}">
+                                    <img src="../../../../../assets/images/components-icons/view-icon.png" style="height:24px" (click)="viewUsers(role.userRoleId)" class="btn-inline-pading cursor-pointer" id="view-role-user-{{i}}"> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+    (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component>
+
+  <div class="anc-modal">
+    <app-popup-v2></app-popup-v2>
+  </div>
+
+</div>

@@ -1,0 +1,168 @@
+.anc-form-floating {
+  position: relative;
+  &__input-control {
+      padding: 1rem 0.75rem;
+      &::placeholder {
+          color: transparent;
+          visibility: hidden;
+          opacity: 0;
+      }
+      &.form-control {
+          font-family: Heebo;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 24px;
+          height: calc(2.5em + 0.75rem + 2px);
+          background: #ffffff;
+          color: #1c1c1d;
+          padding: 26px 6px 2px 16px;
+          border: 0;
+          border-radius: 4px;
+          box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.08);
+          &:focus {
+              color: #1c1c1d !important;
+              box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.08) !important;
+              border-color: transparent;
+          }
+          &.has-error {
+              background: #f9e3e3;
+          }
+          &.valid {
+              -webkit-animation: change-to-valid 1s ease-in-out;
+              /* Safari 4+ */
+              -moz-animation: change-to-valid 1s ease-in-out;
+              /* Fx 5+ */
+              -o-animation: change-to-valid 1s ease-in-out;
+              /* Opera 12+ */
+              animation: change-to-valid 1s ease-in-out;
+              /* IE 10+ */
+          }
+      }
+      &:focus~.anc-form-floating__label-container,
+      &:not(:placeholder-shown)~.anc-form-floating__label-container {
+          opacity: 1;
+          transform: translateY(-0.7rem);
+      }
+  }
+  &__label-container {
+      display: inline-block;
+      z-index: 5;
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      // padding: 16px 6px 20px 16px;
+      border: 1px solid transparent;
+      transform-origin: 0 0;
+      transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+      font-family: Mukta;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      color: #a2a4a6;
+      & label {
+          position: relative;
+          z-index: 1;
+      }
+  }
+  &__error {
+      visibility: visible;
+      opacity: 1;
+      position: absolute;
+      top: -1px;
+      left: -13px;
+      // transform: translate(3px, 14px);
+      // width: 100%;
+      z-index: 1;
+      &.hide {
+          visibility: hidden;
+          opacity: 0;
+      }
+      &>i {
+          // width: fit-content;
+          position: relative;
+          z-index: 1;
+          cursor: pointer;
+      }
+  }
+  &__error-text {
+      position: relative;
+      z-index: 3;
+      visibility: hidden;
+      opacity: 0;
+      font-size: 12px;
+      line-height: 150%;
+      letter-spacing: 0.02em;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-2px, 20px);
+      background: #ffffff;
+      box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 24px rgba(51, 51, 51, 0.24);
+      border-radius: 4px;
+      padding: 5px 5px 2px 5px;
+      &::after {
+          content: "";
+          position: absolute;
+          top: -6px;
+          left: 3px;
+          width: 0;
+          height: 0;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          border-bottom: 6px solid #ffffff;
+      }
+      &.show {
+          visibility: visible;
+          opacity: 1;
+      }
+  }
+  & .is-mandatory {
+      color: #e05536;
+  }
+  @-webkit-keyframes change-to-valid {
+      0% {
+          background-color: #cbecd9;
+      }
+      75% {
+          background-color: #cbecd9;
+      }
+      100% {
+          background-color: white;
+      }
+  }
+  @-moz-keyframes change-to-valid {
+      0% {
+          background-color: #cbecd9;
+      }
+      75% {
+          background-color: #cbecd9;
+      }
+      100% {
+          background-color: white;
+      }
+  }
+  @-o-keyframes change-to-valid {
+      0% {
+          background-color: #cbecd9;
+      }
+      75% {
+          background-color: #cbecd9;
+      }
+      100% {
+          background-color: white;
+      }
+  }
+  @keyframes change-to-valid {
+      0% {
+          background-color: #cbecd9;
+      }
+      75% {
+          background-color: #cbecd9;
+      }
+      100% {
+          background-color: white;
+      }
+  }
+}

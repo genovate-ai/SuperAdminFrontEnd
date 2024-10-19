@@ -1,0 +1,33 @@
+<div class="anc-form-floating">
+  <input type="text" (blur)="this.onTouch()" #input [(ngModel)]="value" autocomplete="off"
+    class="anc-form-floating__input-control form-control" [appGeneralPhoneMask]="countryCode"
+    onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+    [ngClass]="{'has-error': displayError, 'valid': !displayError && input.value.trim().length > 0}" [id]="id"
+    placeholder="Placeholder" [disabled]="this.disabled">
+
+  <div class="anc-form-floating__label-container" id="{{ id }}-error-container">
+    <div class="anc-form-floating__error" [ngClass]="{'hide': !displayError}">
+      <i (mouseover)="setErrorVisible()" (mouseout)="setErrorHidden()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path
+            d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+            fill="#EA4E40" />
+          <path
+            d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+            fill="#EA4E40" />
+          <path
+            d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+            fill="#EA4E40" />
+        </svg>
+      </i>
+      <div class="anc-form-floating__error-text" #errorText [ngClass]="{'show': displayError && errorVisible}">
+        <ng-container *ngTemplateOutlet="layoutTemplate;">
+        </ng-container>
+      </div>
+    </div>
+    <label [for]="id" id="{{id}}-label" (click)="input.focus();">
+      {{ !translate ? placeholderKey : (placeholderKey | translation | async) }}
+      <span *ngIf="mandatory" class="is-mandatory">*</span>
+    </label>
+  </div>
+</div>

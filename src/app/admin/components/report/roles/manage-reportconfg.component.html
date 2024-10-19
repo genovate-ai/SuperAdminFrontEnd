@@ -1,0 +1,460 @@
+<div class="m-t-12 popup-body pr-2 apl-scrollbar" style="min-height: calc(100vh - 10rem);">
+
+  <div class="row m-0">
+    <div class="col-sm-3 pl-0">
+      <div class="anc-card b-r-4 pr-0">
+        <div class="d-flex align-items-center justify-content-between mb-3 p-r-12px">
+          <div class="mr-auto max-w-70p">
+            <label class="anc-form-label w-100 text-ellipsis vertical-align-text-top">
+              {{ "reportRights.GroupsSummary" | translation | async }}
+            </label>
+          </div>
+          <div >
+            <img class="anc-bg-dark b-r-2 mr-1 p-1" width="16"
+              src="../../../../../assets/images/components-icons/plus-light-icon.png" alt="" (click)="addGroup()"
+              id="add-group" *ngIf="screenPermission.isCreateButtonAllow"
+              title="{{ 'toolTips.addGroup' | translation | async }}">
+            <img class="anc-bg-dark b-r-2 mr-1 p-1" width="16"
+              src="../../../../../assets/images/components-icons/expand-icon.png" alt="" (click)="expandAllItems()"
+              id="expand-all-groups" *ngIf="!collapseAll" title="{{ 'toolTips.expandGroups' | translation | async }}">
+            <img class="anc-bg-dark b-r-2 mr-1 p-1" width="16"
+              src="../../../../../assets/images/components-icons/collapse-icon.png" alt="" (click)="collapseAllItems()"
+              *ngIf="collapseAll" title="{{ 'toolTips.collapseGroups' | translation | async }}">
+          </div>
+        </div>
+
+        <div  class="overflow-auto p-r-12px apl-scrollbar"
+          style="min-height: calc(100vh - 21rem);max-height: calc(100vh - 21rem);">
+          <ul *ngFor="let group of dataGroup; let i = index" class="group-card-listing">
+            <li (click)="updateSelectedListID(group.codeID,'group')" class="group-card"
+              [ngClass]="checkbackgoundcolor(group.codeID,'group') ? '' : ''">
+              <div class="d-flex align-items-center">
+                <div class="mr-auto max-w-75p">
+                  <label class="group-card-text w-100 text-ellipsis" title="{{group.name}}">{{group.name}}</label>
+                </div>
+                <div >
+                  <span class="group-card-toggle mr-2">
+                    <img src="../../../../../assets/images/components-icons/chevron-down.png" alt="" width="12"
+                      class="cursor-pointer" *ngIf="!collapseGroup[i]" (click)="expandGroup(i,$event)"
+                      id="expand-group-{{i + 1}}">
+                    <img src="../../../../../assets/images/components-icons/chevron-down-filled.png" alt="" width="14"
+                      class="cursor-pointer" *ngIf="collapseGroup[i]" (click)="expandGroup(i,$event)"
+                      id="expand-group-{{i + 1}}">
+                  </span>
+                  <span class="group-card-option m-l-0px" [ngClass]="{'m-l-4px': group.codeID == 0}">
+                    <img src="../../../../../assets/images/components-icons/ellipsis-v.png" alt="" height="14"
+                      class="cursor-pointer" *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow"
+                      (click)="showDeleteGroup[i] = true;$event.stopPropagation();" class="cursor-pointer">
+                    <div class="option-list-box">
+                      <ul class="option-list">
+                        <li class="option-list-item">
+                          <div class="item"
+                            *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow && showDeleteGroup[i]"
+                            (click)="deleteGroup($event,group.codeID, i);$event.stopPropagation();"
+                            id="delete-group-{{i + 1}}" clickOutsideElem (clickOutside)="showDeleteGroup[i] = false;"
+                            [clickOutsideEnabled]="showDeleteGroup[i]" [clickOutsideEvents]="'click,touchstart'">
+                            <img src="../../../../../assets/images/components-icons/delete-3-icon.png" height="14"
+                              width="12" class="mr-1 m-t-neg-2px" />Delete
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </div>
+              </div>
+
+              <!-- <i *ngIf="collapseGroup[i]" class="fas fa-chevron-circle-down btn-ok-fontawesom"
+                [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}" style="padding-right: 5px;"
+                (click)="expandGroup(i,$event)" id="expand-group-{{i + 1}}"></i>
+              <i *ngIf="!collapseGroup[i]" class="fas fa-chevron-circle-right btn-ok-fontawesom"
+                [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}" style="padding-right: 5px;"
+                (click)="expandGroup(i,$event)" id="expand-group-{{i + 1}}"></i>
+              <label class="width-75-p cursorPoiner font-size-point8 font-weight-bold"> <i
+                  *ngIf="group.codeID == 0">{{group.name}} </i><span *ngIf="group.codeID != 0">{{group.name}}
+                </span></label>
+              <i (click)="deleteGroup($event,group.codeID)" id="delete-group-{{i + 1}}"
+                *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow"
+                class="fas fa-trash-alt btn-ok-fontawesom margin-right-10px"
+                [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}"></i>
+              <hr class="horizontalLineGroup" /> -->
+            </li>
+            <div class="group-card-list" *ngIf="collapseGroup[i]">
+              <ng-container *ngFor="let report of dataReport;">
+                <ul class="list-item" *ngIf="report.ieReportGroupID == group.codeID">
+                  <li class="d-block w-100" (click)="updateSelectedListID(report.ieReportConfigurationID,'report')"
+                    [ngClass]="checkbackgoundcolor(report.ieReportConfigurationID,'report') ? '' : ''">
+                    <div class="item max-w-100p">
+                      <label class="text max-w-75p text-ellipsis mr-auto"> {{ report.displayName }} </label>
+                      <img src="../../../../../assets/images/components-icons/delete-2-icon.png" width="12" class="icon"
+                        (click)="deleteReport($event,report)"
+                        *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow" />
+                    </div>
+                  </li>
+                </ul>
+              </ng-container>
+            </div>
+            <!-- <div class="pt-1 pb-2" *ngIf="collapseGroup[i]">
+              <ul *ngFor="let report of dataReport;" class="padding-left-1point5">
+                <li class="cursorPoiner" (click)="updateSelectedListID(report.ieReportConfigurationID,'report')"
+                  *ngIf="report.ieReportGroupID == group.codeID"
+                  [ngClass]="checkbackgoundcolor(report.ieReportConfigurationID,'report') ? 'backgroundReportUnselected' : 'backgroundReportSelected'">
+                  <label class="width-85-p cursorPoiner font-size-0point88"> {{ report.displayName }} </label>
+                  <i (click)="deleteReport($event,report)"
+                    *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow"
+                    [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(report.ieReportConfigurationID,'report')}"
+                    class="fas fa-trash-alt btn-ok-fontawesom"></i>
+                  <hr class="horizontalLineReport" />
+                </li>
+              </ul>
+            </div> -->
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- <div class="table-resp apl-resp-table-v5 h-table-popup--lg apl-scrollbar">
+        <fieldset class="fieldsetCustomReport margin-top5">
+          <legend class="legendFontWidth">{{ "reportRights.GroupsSummary" | translation | async }}</legend>
+          <div class="w-100 clearfix">
+            <i (click)="collapseAllItems()" id="collapse-all-groups"
+              class="fas fa-lg fa-compress-arrows-alt btn-ok-fontawesom floatright"
+              style="margin: 0px 10px 5px 0px; padding-top: 5px; cursor: pointer;" *ngIf="collapseAll"
+              ngbTooltip="{{ 'toolTips.collapseGroups' | translation | async }}"></i>
+            <i (click)="expandAllItems()" id="expand-all-groups"
+              class="fas fa-lg fa-expand-arrows-alt btn-ok-fontawesom floatright"
+              style="margin: 0px 10px 5px 0px;padding-top: 5px; cursor: pointer;" *ngIf="!collapseAll"
+              ngbTooltip="{{ 'toolTips.expandGroups' | translation | async }}"></i>
+            <i (click)="addGroup()" id="add-group" class="fas fa-lg fa-plus-square btn-ok-fontawesom floatright"
+              style="margin: 0px 10px 5px 0px; padding-top: 5px; cursor: pointer;"
+              *ngIf="screenPermission.isCreateButtonAllow"
+              ngbTooltip="{{ 'toolTips.addGroup' | translation | async }}"></i>
+          </div>
+          <div class="max-height60 apl-scrollbar">
+            <ul *ngFor="let group of dataGroup; let i = index" class="backgroundReportConfgList">
+              <li (click)="updateSelectedListID(group.codeID,'group')" class="cursorPoiner margin-top0"
+                [ngClass]="checkbackgoundcolor(group.codeID,'group') ? 'backgroundListReport' : 'backgroundSelectedListReport'">
+                <i *ngIf="collapseGroup[i]" class="fas fa-chevron-circle-down btn-ok-fontawesom"
+                  [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}"
+                  style="padding-right: 5px;" (click)="expandGroup(i,$event)" id="expand-group-{{i + 1}}"></i>
+                <i *ngIf="!collapseGroup[i]" class="fas fa-chevron-circle-right btn-ok-fontawesom"
+                  [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}"
+                  style="padding-right: 5px;" (click)="expandGroup(i,$event)" id="expand-group-{{i + 1}}"></i>
+                <label class="width-75-p cursorPoiner font-size-point8 font-weight-bold"> <i
+                    *ngIf="group.codeID == 0">{{group.name}} </i><span *ngIf="group.codeID != 0">{{group.name}}
+                  </span></label>
+                <i (click)="deleteGroup($event,group.codeID)" id="delete-group-{{i + 1}}"
+                  *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow"
+                  class="fas fa-trash-alt btn-ok-fontawesom margin-right-10px"
+                  [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(group.codeID,'group')}"></i>
+                <hr class="horizontalLineGroup" />
+              </li>
+              <div class="pt-1 pb-2" *ngIf="collapseGroup[i]">
+                <ul *ngFor="let report of dataReport;" class="padding-left-1point5">
+                  <li class="cursorPoiner" (click)="updateSelectedListID(report.ieReportConfigurationID,'report')"
+                    *ngIf="report.ieReportGroupID == group.codeID"
+                    [ngClass]="checkbackgoundcolor(report.ieReportConfigurationID,'report') ? 'backgroundReportUnselected' : 'backgroundReportSelected'">
+                    <label class="width-85-p cursorPoiner font-size-0point88"> {{ report.displayName }} </label>
+                    <i (click)="deleteReport($event,report)"
+                      *ngIf="group.codeID != 0 && this.screenPermission.isUpdateAllow"
+                      [ngClass]="{'btn-fontawesom' : !checkbackgoundcolor(report.ieReportConfigurationID,'report')}"
+                      class="fas fa-trash-alt btn-ok-fontawesom"></i>
+                    <hr class="horizontalLineReport" />
+                  </li>
+                </ul>
+              </div>
+            </ul>
+          </div>
+        </fieldset>
+      </div> -->
+    </div>
+
+    <!-- Below is the code for Report -->
+    <div class="col-sm-9 pl-1 pr-2" *ngIf="isReportSelected && showDetails">
+      <form [formGroup]="form" autocomplete="off">
+        <div class="anc-card b-r-4 mb-4 apl-scrollbar" style="min-height: calc(100vh - 18.15rem);">
+          <label class="anc-form-label mb-4">{{ "reportRights.ReportDetails" | translation | async }}</label>
+          <div class="col-md-12 p-0">
+
+            <div class="form-group">
+              <app-anc-input-box formControlName="fcReportName" [placeholder]="'reportsConfg.reportdsply'"
+                [numeric]="false" [translate]="true" [mandatory]="true" id="reportNameId"
+                [displayError]="form.controls.fcReportName?.errors && (form.controls.fcReportName.dirty || form.controls.fcReportName.touched)">
+                <ng-template>
+                  <div *ngIf="
+                          form.get('fcReportName')?.errors?.required &&
+                          (form.get('fcReportName').dirty || form.get('fcReportName').touched) ||
+                          form.get('fcReportName')?.errors?.required && isNavigated
+                        ">
+
+                    {{ "reportsConfg.dsplynamerequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcReportName.errors?.maxlength && (form.controls.fcReportName.dirty || form.controls.fcReportName.touched)">
+                    {{ "userAccount.lengthundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+
+            <div class="form-group">
+              <app-anc-input-box formControlName="fcReportDesc" [placeholder]="'reportsConfg.reportdsc'"
+                [numeric]="false" [translate]="true" [mandatory]="true" id="reportDescId"
+                [displayError]="form.controls.fcReportDesc?.errors && (form.controls.fcReportDesc.dirty || form.controls.fcReportDesc.touched)">
+                <ng-template>
+                  <div *ngIf="
+                          form.get('fcReportDesc')?.errors?.required &&
+                          (form.get('fcReportDesc').dirty || form.get('fcReportDesc').touched) ||
+                          form.get('fcReportDesc')?.errors?.required && isNavigated
+                        ">
+
+                    {{ "reportsConfg.descrequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcReportDesc.errors?.maxlength && (form.controls.fcReportDesc.dirty || form.controls.fcReportDesc.touched)">
+                    {{ "reportRole.lengtTwoHundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="ng-select-box required">
+                  <ng-select class="form-control" name="reportGrp" id="reportTypeId"
+                    placeholder="{{ 'reportsConfg.reportgrp' | translation | async }}" [disabled]="true"
+                    [(ngModel)]="selectedReportGrp" [items]="lstReportGrp" [clearable]="true" bindValue="codeID"
+                    bindLabel="name" formControlName="fcReportGrp" [multiple]="false" [closeOnSelect]="true"
+                    [ngClass]="{'disable-cursor-NgSelect': (this.form.controls['fcReportGrp'].disabled)}">
+                  </ng-select>
+                  <div class="floating-error"
+                    [ngClass]="{'hide': !(form.get('fcReportGrp')?.errors && (form.get('fcReportGrp').dirty || form.get('fcReportGrp').touched))}">
+                    <i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path
+                          d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                          fill="#EA4E40" />
+                      </svg>
+                    </i>
+                    <div class="floating-error-text">
+                      <div 
+                        *ngIf=" form.get('fcReportGrp')?.errors && (form.get('fcReportGrp').dirty || form.get('fcReportGrp').touched)">
+                        {{ "reportsConfg.reportgrprequired" | translation | async }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6 ">
+                <div class="ng-select-box required">
+
+                  <ng-select class="form-control" name="reportType" id="reportTypeId"
+                    placeholder="{{ 'reportsConfg.report' | translation | async }}" [disabled]="true"
+                    [(ngModel)]="selectedReportType" [items]="lstReport" [clearable]="true" bindValue="codeID"
+                    bindLabel="name" formControlName="fcReport" [multiple]="false" [closeOnSelect]="true"
+                    [ngClass]="{'disable-cursor-NgSelect': (this.form.controls['fcReport'].disabled)}">
+                  </ng-select>
+                  <div class="floating-error"
+                    [ngClass]="{'hide': !(form.get('fcReport')?.errors && (form.get('fcReport').dirty || form.get('fcReport').touched))}">
+                    <i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path
+                          d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                          fill="#EA4E40" />
+                      </svg>
+                    </i>
+                    <div class="floating-error-text">
+                      <div 
+                        *ngIf=" form.get('fcReport')?.errors && (form.get('fcReport').dirty || form.get('fcReport').touched)">
+                        {{ "reportsConfg.reportrequired" | translation | async }}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-group col-12">
+                <div class="d-flex align-items-center justify-content-end">
+                  <label class="mb-0 mr-2 anc-text-bold">{{ "reportsConfg.status" | translation | async }}</label>
+                  <app-custom-radio-button-v3 value1="true" id="status-report-group-1" value2="false" label1="Active"
+                    label2="InActive" formControlName="fcIsActive" name="nmeIsActive">
+                  </app-custom-radio-button-v3>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="d-flex flex-row-reverse">
+            <button type="submit" (click)="submitReportForm(form.value)" *ngIf="this.isSaveButtonAllow" id="btn-save-1" [ngClass]="{'disabled-v2 cursor-not-allowed': form.invalid}"
+              class="apl-btn-v3 primary-2">
+              <i class="fa fa-save"></i> {{"buttons.submit" | translation | async}}
+            </button>
+            <button type="button" (click)="resetReportForm()" class="apl-btn-v3 mr-2" id="btn-reset-1"
+              *ngIf="this.isSaveButtonAllow">
+              <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Below is the code for Report Group -->
+    <div class="col-sm-9 pl-1 pr-2" *ngIf="!isReportSelected && showDetails">
+      <form [formGroup]="form" autocomplete="off">
+        <div class="anc-card b-r-4 mb-4" style="min-height: calc(100vh - 18.15rem);">
+          <label class="anc-form-label mb-4">{{ "reportRights.GroupDetails" | translation | async }}</label>
+          <div class="col-md-12 p-0">
+
+            <div class="form-group">
+              <app-anc-input-box formControlName="fcGroupName" [placeholder]="'groupsConfg.groupName'" [numeric]="false"
+                [translate]="true" [mandatory]="true" id="groupNameId"
+                [displayError]="form.controls.fcGroupName?.errors && (form.controls.fcGroupName.dirty || form.controls.fcGroupName.touched)">
+                <ng-template>
+                  <div *ngIf="
+                          form.get('fcGroupName')?.errors?.required &&
+                          (form.get('fcGroupName').dirty || form.get('fcGroupName').touched) ||
+                          form.get('fcGroupName')?.errors?.required && isNavigated
+                        ">
+
+                    {{ "groupsConfg.groupnamerequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcGroupName.errors?.maxlength && (form.controls.fcGroupName.dirty || form.controls.fcGroupName.touched)">
+                    {{ "userAccount.lengthundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+
+            <div class="form-group ">
+              <app-anc-input-box formControlName="fcGroupDesc" [placeholder]="'groupsConfg.groupdsc'" [numeric]="false"
+                [translate]="true" [mandatory]="true" id="groupDescId"
+                [displayError]="form.controls.fcGroupDesc?.errors && (form.controls.fcGroupDesc.dirty || form.controls.fcGroupDesc.touched)">
+                <ng-template>
+                  <div *ngIf="
+                        form.get('fcGroupDesc')?.errors?.required &&
+                        (form.get('fcGroupDesc').dirty || form.get('fcGroupDesc').touched) ||
+                        form.get('fcGroupDesc')?.errors?.required && isNavigated
+                      ">
+
+                    {{ "groupsConfg.descrequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcGroupDesc.errors?.maxlength && (form.controls.fcGroupDesc.dirty || form.controls.fcGroupDesc.touched)">
+                    {{ "reportRole.lengtTwoHundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+            <div class="form-group ">
+              <div class="ng-select-box required">
+                <ng-select class="form-control apl-form-control-inv" name="groupRprt" id="groupRprtId"
+                  [(ngModel)]="selectedgroupRprt" [items]="lstReport"
+                  placeholder="{{ 'groupsConfg.groupRprt' | translation | async }}" [clearable]="true"
+                  bindValue="codeID" bindLabel="name" formControlName="fcGroupRprt" [multiple]="true"
+                  [closeOnSelect]="false">
+                  <ng-template ng-header-tmp>
+                    <div class="custom-control custom-checkbox m-l-4px">
+                      <input type="checkbox" class="custom-control-input" (change)="selectAllGroupRprt($event)"
+                        id="chkReportGrouphead" [checked]="lstReport.length === selectedgroupRprt.length">
+                      <label class="custom-control-label" for="chkReportGrouphead">{{ "app.selectAll" | translation
+                        | async }}</label>
+                    </div>
+
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" [checked]="selectedgroupRprt?.indexOf(item.codeID) > -1"
+                        class="custom-control-input" id="chkReportGroup-{{+item.codeID}}">
+                      <label class="custom-control-label">{{item.name}}</label>
+                    </div>
+                  </ng-template>
+                  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <div class="ng-value select-limit-width mw-25" *ngFor="let item of items | slice:0:selectItemLimit">
+                      <span class="ng-value-icon left" id="clear-{{item.codeID}}" (click)="clear(item)"
+                        aria-hidden="true">x</span>
+                      <span class="ng-value-label  select-limit-text" title="{{item.name}}">
+                        {{item.name}}</span>
+                    </div>
+                    <div class="ng-value text-plane" title='{{ "app.selectNote" | translation | async }}'
+                      *ngIf='items.length > selectItemLimit'>
+                      <span class="ng-value-label">
+                        {{ "app.plus" | translation | async }}{{items.length - selectItemLimit}}
+                        {{ "app.more" | translation | async }}</span>
+                    </div>
+                  </ng-template>
+                </ng-select>
+                <div class="floating-error"
+                  [ngClass]="{'hide': !(form.get('fcGroupRprt')?.errors && (form.get('fcGroupRprt').dirty || form.get('fcGroupRprt').touched))}">
+                  <i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path
+                        d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                        fill="#EA4E40" />
+                      <path
+                        d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                        fill="#EA4E40" />
+                      <path
+                        d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                        fill="#EA4E40" />
+                    </svg>
+                  </i>
+                  <div class="floating-error-text">
+                    <div 
+                      *ngIf=" form.get('fcGroupRprt')?.errors && (form.get('fcGroupRprt').dirty || form.get('fcGroupRprt').touched)">
+                      {{ "groupsConfg.groupRprtrequired" | translation | async }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="d-flex align-items-center justify-content-end">
+                <label class="mb-0 mr-2 anc-text-bold">{{ "groupsConfg.status" | translation | async }}</label>
+                <app-custom-radio-button-v3 value1="true" id="status-report-role" value2="false" label1="Active"
+                  label2="InActive" formControlName="fcIsActive" name="nmeIsActive">
+                </app-custom-radio-button-v3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="d-flex flex-row-reverse">
+            <button type="submit" (click)="submitGroupForm(form.value)" *ngIf="this.isSaveButtonAllow" id="btn-save-2" [ngClass]="{'disabled-v2 cursor-not-allowed': form.invalid}"
+              class="apl-btn-v3 primary-2">
+              <i class="fa fa-save"></i> {{"buttons.submit" | translation | async}}
+            </button>
+            <button type="button" (click)="resetGroupForm()" class="apl-btn-v3 mr-2" id="btn-reset-2"
+              *ngIf="this.isSaveButtonAllow">
+              <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- <app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component> -->
+<app-confirmation-v3 *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-v3>

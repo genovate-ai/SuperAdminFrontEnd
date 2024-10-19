@@ -1,0 +1,25 @@
+<div class="filter-popup">
+  <div class="filter-popup__container">
+
+    <div class="filter-popup__header pt-0 position-relative">
+      <div class="header-height">
+        <div class="filter-popup__close" id="{{titleForId}}_close" (click)="this.onClose.emit(true)">
+          &times;
+        </div>
+      </div>
+      <div class="filter-popup__search-container pt-0 position-relative">
+        <div class="filter-popup__search-input">
+
+          <app-custom-date-picker-v2 [minDateRange]="date" [selectedDate]="selectedDateInput"
+          [i18n-placeholder-key]="'fieldText.startDate'" [monthFormat]="'MMM YYYY'"
+            (onSelected)="getDate($event)"></app-custom-date-picker-v2>
+        </div>
+      </div>
+
+      <!-- <div class="filter-popup__action">
+        <span class="filter-popup__action--clear-all" id="{{titleForId}}_clear" (click)="clearList()">Clear</span>
+      </div> -->
+    </div>
+
+  </div>
+</div>

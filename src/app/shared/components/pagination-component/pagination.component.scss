@@ -1,0 +1,193 @@
+.pagination-cell {
+  min-width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 11px !important;
+  // border: #221f73 1px solid;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.padding-text {
+  padding: 0px 3px !important;
+}
+
+.pagination-cell p {
+  // color: gray;
+  // vertical-align: sub;
+  color: rgba(15, 26, 38, 1);
+}
+
+// .pagination-cell p:hover {
+//     color: black;
+//     font-weight: bold;
+// }
+// .pagination-cell:hover {
+//     // background-color: #221f73;
+//     color: black;
+//     font-weight: bold;
+// }
+.paginaction-cell-active {
+  // width: 25px;
+  height: 25px;
+  // background-color: #221f73;
+  color: rgba(15, 26, 38, 1);
+  font-weight: bold;
+  border-radius: 2px;
+  text-align: center;
+  font-size: 12px !important;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.paginaction-cell-active p {
+  color: black;
+  font-weight: bold !important;
+}
+
+.pagination-cell p {
+  padding: 2px 3px !important;
+  margin-bottom: 0 !important;
+}
+
+.pagination-cell-container {
+  height: fit-content;
+}
+
+.fas {
+  color: #a8a8a8;
+  position: relative;
+  z-index: 100;
+  top: 3px;
+}
+
+.fa-filter {
+  top: 0px !important;
+}
+
+.ng-select-pagination {
+  position: absolute !important;
+  right: 2px;
+  outline: none;
+  color: gray;
+  top: 2px;
+  z-index: 100;
+  select {
+    border: none !important;
+    color: gray !important;
+    outline: none !important;
+    background-color: transparent !important;
+  }
+  .select-items div,
+  .select-selected {
+    background-color: red !important;
+  }
+  .select-items {
+    background-color: red !important;
+  }
+}
+
+.countLbl {
+  // margin-top: 9px;
+  // margin-top: 3px;
+  vertical-align: unset !important;
+  margin-top: 0;
+  font-size: 11px;
+  color: gray;
+}
+
+.container {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  font-size: 12px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.showCount {
+  color: rgba(15, 26, 38, 1);
+  display: inline-block !important;
+  & p {
+    margin-bottom: 0;
+  }
+}
+
+#Row-per-page {
+  color: rgba(15, 26, 38, 1);
+  text-transform: capitalize;
+}
+
+.pagin-row-no-change {
+  border: 0;
+  width: 72px;
+  border-radius: 4px;
+  border: 1px solid #b9aeae;
+  padding: .25rem;
+  margin-left: .25rem;
+  &:focus-visible {
+    outline: 0;
+  }
+}
+.wrapper {
+  margin-top: -25px;
+}
+
+.dropbtn {
+  background-color: #3498db;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  bottom: 50px;
+  z-index: 1;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropup-content a:hover {
+  background-color: #ccc;
+}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #2980b9;
+}
+
+
+@media only screen and (max-width: 480px) {
+  .pagination-cell {
+    min-width: 0px !important;
+    font-size: 9px !important;
+    margin: 4px !important;
+  }
+  .paginaction-cell-active {
+    font-size: 9px !important;
+    min-width: 0px !important;
+    margin: 4px !important;
+  }
+}

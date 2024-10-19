@@ -1,0 +1,36 @@
+<!-- <div class="mb-5 custom-date-picker">
+  <dp-date-picker (click)="couleurBouton()" #dayPicker [(ngModel)]="dateOutForm" [theme]="'dp-material'" name="dateOutForm"
+    [config]="datePickerConfig"></dp-date-picker> {{dateOutForm}}
+</div> -->
+
+<!-- <div style="width: 50px" class=" form-group"> -->
+<div class="position-relative custom-date-picker w-100">
+    <div >
+        <input *ngIf="calenderType == 'input'" type="text" [id]="inputId" [(ngModel)]="displayDate" name="nameStartDate" class="form-control date-field" placeholder="{{ placeholderKey | translation | async }}" [readOnly]="readonlyForm" />
+        <img *ngIf="calenderType == 'input'" src="../../../../assets/images/Calnder 2.svg" [id]="btnId" class="input-img-date" (click)="openDatePicker();">
+        <span *ngIf="clearable && calenderType == 'input' && displayDate != ''" class="clearable" (click)=clearDate()><i class="fas fa-times"></i></span>
+        <div *ngIf="calenderType == 'button'" [id]="btnId" class="btn-mode" (click)="openDatePicker();">
+          <img src="../../../../assets/images/CalenderIcon.svg" [id]="btnId" class="input-icon-date">  
+          <div class="text-date">{{ btnTextKey | translation | async }}</div>
+        </div>
+    </div>
+    <div [formGroup]="dateForm" class="custom-date-picker calendar-container" #container>
+        <input type="text" class="calender-view" formControlName="selectedDate" #dateSelected="dpDayPicker" [dpDayPicker]="dayPickerConfig"  [theme]="'dp-material'" [mode]="calenderMode" [selectionEnd]="changeCalenderDesign()" (onChange)="dateChanged($event)" />
+    </div>
+</div>
+
+<!-- </div> -->
+
+
+<!-- <div [formGroup]="filterForm" class=" custom-date-picker">
+  From: <input type="text" (focus)="couleurBouton()" #dateFromDp="dpDayPicker" [dpDayPicker]="dayPickerConfig"
+    [theme]="'dp-material'" formControlName="dateFrom" [mode]="'day'" (onChange)="date = $event" />
+
+  To: <input type="text" #dateToDp="dpDayPicker" [dpDayPicker]="dayPickerConfig" [displayDate]="displayDate"
+    [theme]="'dp-material'" formControlName="dateTo" [mode]="'month'" (onChange)="date = $event" />
+</div>
+
+<dp-date-picker [(ngModel)]="dateOutForm" [theme]="'dp-material'" name="dateOutForm" [config]="datePickerConfig">
+</dp-date-picker> {{dateOutForm}} -->
+
+<!-- <ngx-datepicker [(ngModel)]="dateOldVersion"></ngx-datepicker> -->

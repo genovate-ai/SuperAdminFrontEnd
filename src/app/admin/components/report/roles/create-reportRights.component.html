@@ -1,0 +1,304 @@
+<form [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+  <div class="m-t-12 popup-body pr-2 apl-scrollbar" style="min-height: calc(100vh - 10rem);">
+
+    <div class="row m-0 mb-5">
+
+      <div class="col-sm-3 pl-0">
+        <div class="anc-card b-r-4 pr-0">
+          <div class="d-flex align-items-center justify-content-between mb-3 p-r-12px">
+            <div class="mr-auto max-w-95p">
+              <label class="anc-form-label w-100 text-ellipsis vertical-align-text-top">
+                {{ "reportsConfg.reportgrps" | translation | async }}
+              </label>
+            </div>
+          </div>
+
+          <div class="overflow-auto p-r-12px apl-scrollbar"
+            style="min-height: calc(100vh - 20rem);max-height: calc(100vh - 20rem);">
+            <ng-container formArrayName="fcLstGroupAccessRights">
+              <ul *ngFor="let right of formGroupData.controls; let i = index" class="group-card-listing"
+                [ngClass]="checkbackgoundcolor(right.controls['fcgroupid'].value) ? '' : ''" [formGroupName]="i">
+                <li (click)="updateGroupID(right.controls['fcgroupid'].value, right.controls['fcIsView'].value, i)" [ngClass]="{'bg-dark border border-white': selectedRight === i}"
+                  class="group-card pb-0">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="mr-auto max-w-95p">
+                      <label class="group-card-text w-100 text-ellipsis" [ngClass]="{'text-white' : selectedRight === i}"
+                        title="{{right.controls['fcgroupName'].value}}">{{right.controls['fcgroupName'].value}}</label>
+                    </div>
+                    <!-- <i title="{{ 'toolTips.homePageExist' | translation | async }}"
+                      class="fa fa-home m-t-neg-3px text-dark" aria-hidden="true"
+                      *ngIf="defaultreportGroup == right.controls['fcgroupid'].value"></i> -->
+                    <img src="../../../../../assets/images/components-icons/home-icon.png" width="12"
+                      title="{{ 'toolTips.homePageExist' | translation | async }}" class="m-t-neg-3px"
+                      *ngIf="defaultreportGroup == right.controls['fcgroupid'].value" alt="home" />
+                  </div>
+                  <div class="w-100 mb-1">
+                    <label homePageExist
+                      class="text"  [ngClass]="{'text-white' : selectedRight === i}">&#8203;{{getReportCount(right.controls['fcgroupid'].value,right.controls['fcIsView'].value)}}</label>
+                  </div>
+                  <div class="w-100">
+                    <app-custom-radio-button-v4 id="status-report-right-{{i + 1}}"  value1="true" value2="false" [colorChange]="selectedRight" [index]="i"
+                      label1="Mandatory" label2="NotMandatory" formControlName="fcIsView" name="nmeisMandatory">
+                    </app-custom-radio-button-v4>
+                  </div>
+                  <!-- <label class="width-80-p cursorPoiner"> {{right.controls['fcgroupName'].value}} </label> -->
+                  <!-- <i title="{{ 'toolTips.homePageExist' | translation | async }}" class="fa fa-home homeIcon"
+                aria-hidden="true" *ngIf="defaultreportGroup == right.controls['fcgroupid'].value"></i> -->
+                  <!-- <label homePageExist
+                    class="fontxSmaLL width-75-p cursorPoiner">&nbsp;{{getReportCount(right.controls['fcgroupid'].value,right.controls['fcIsView'].value
+                    )}}</label> -->
+                  <!-- <div class="ml-2px">
+                    <app-custom-radio-button id="status-report-right-{{i + 1}}"
+                      class="width-25-p smallRadioButtonCustom displayInlineBlock" value1="true" value2="false"
+                      label1="Mandatory" label2="NotMandatory" formControlName="fcIsView" name="nmeisMandatory">
+                    </app-custom-radio-button>
+                  </div> -->
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+
+
+
+        </div>
+
+        <!-- <div class="apl-resp-table col-sm-4 padding00000">
+          <div class="table-resp apl-resp-table-v5 h-table-popup--lg apl-scrollbar">
+            <fieldset class="fieldsetCustomReport">
+              <legend class="legendFontWidth">{{ "reportRights.ReportGroups" | translation | async }}</legend>
+              <ng-container formArrayName="fcLstGroupAccessRights">
+                <ul *ngFor="let right of formGroupData.controls; let i = index"
+                  [ngClass]="checkbackgoundcolor(right.controls['fcgroupid'].value) ? 'backgroundListReport' : 'backgroundSelectedListReport'"
+                  [formGroupName]="i">
+                  <li (click)="updateGroupID(right.controls['fcgroupid'].value, right.controls['fcIsView'].value)"
+                    class="cursorPoiner">
+                    <label class="width-80-p cursorPoiner"> {{right.controls['fcgroupName'].value}} </label>
+                    <i title="{{ 'toolTips.homePageExist' | translation | async }}" class="fa fa-home homeIcon"
+                      aria-hidden="true" *ngIf="defaultreportGroup == right.controls['fcgroupid'].value"></i>
+                    <label homePageExist
+                      class="fontxSmaLL width-75-p cursorPoiner">&nbsp;{{getReportCount(right.controls['fcgroupid'].value,right.controls['fcIsView'].value
+                      )}}</label>
+                    <div class="ml-2px">
+                      <app-custom-radio-button id="status-report-right-{{i + 1}}"
+                        class="width-25-p smallRadioButtonCustom displayInlineBlock" value1="true" value2="false"
+                        label1="Mandatory" label2="NotMandatory" formControlName="fcIsView" name="nmeisMandatory">
+                      </app-custom-radio-button>
+                    </div>
+                  </li>
+                </ul>
+              </ng-container>
+            </fieldset>
+          </div>
+        </div> -->
+
+      </div>
+
+
+
+
+      <div class="col-sm-9 pl-0 pr-0 apl-scrollbar" style="max-height: calc(100vh - 18rem);">
+        <div class="anc-card b-r-4 p-0">
+          <div class="d-flex align-items-center justify-content-between mb-3 pt-1 pl-2">
+            <div class="mr-auto max-w-95p">
+              <label class="anc-form-label w-100 text-ellipsis vertical-align-text-top">
+                {{ "reportRights.Reports" | translation | async }}
+              </label>
+            </div>
+          </div>
+          <div class="apl-resp-table">
+            <div class="table-resp apl-resp-table-v5 h-table-popup--lg apl-scrollbar pr-1"
+              style="max-height: calc(100vh - 19.7rem);">
+              <table >
+                <thead class="outer-index">
+                  <tr>
+                    <th class="p-2 width-10-p">
+                      <label class="mb-0">{{ "reportRights.displayName" | translation | async }}</label>
+                    </th>
+                    <th class="p-2 width-10-p">
+                      <label class="mb-0">{{ "reportRights.reportName" | translation | async }}</label>
+                    </th>
+                    <th class="p-2 width-10-p">
+                      <label class="mb-0">{{ "reportRights.description" | translation | async }}</label>
+                    </th>
+                    <th class="p-2 width-10-p">
+                      <div class="position-relative" clickOutsideElem (clickOutside)="showSelectAll = false;"
+                        [clickOutsideEnabled]="showSelectAll" [clickOutsideEvents]="'click,touchstart'">
+                        <label class="mb-0">
+                          {{ "reportRights.view" | translation | async }}
+                          <i class="fas ml-1"
+                            [ngClass]="{'fa-caret-down': !showSelectAll && reportsViewAllow, 'fa-caret-up': showSelectAll && reportsViewAllow}"
+                            (click)="showSelectAll = !showSelectAll"></i>
+                        </label>
+                        <div *ngIf="showSelectAll && reportsViewAllow"
+                          class="data-log-checkbox checkbox-filter view-select-all-box">
+                          <div class="custom-control custom-checkbox mr-4">
+                            <input type="checkbox" class="custom-control-input" id="isViewReportAll"
+                              formControlName="fcSelectAll" (change)="selectAllViewReport($event);">
+                            <label class="custom-control-label p-t-2px" for="isViewReportAll">Select all</label>
+                          </div>
+                        </div>
+
+                      </div>
+
+
+                    </th>
+                    <th class="p-2 width-10-p">
+                      <label class="mb-0">{{ "reportRights.setHome" | translation | async }}</label>
+                    </th>
+                    <th class="p-2 width-10-p">
+                      <label class="mb-0">{{ "reportRights.fieldAccess" | translation | async }}</label>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody formArrayName="fcLstReportAccessRights">
+                  <ng-container *ngFor="let right of formReportData.controls; let i = index let lastcall=last"
+                    [formGroupName]="i">
+                    <tr *ngIf="this.gID == right.controls['fcieReportGroupID'].value && reportsViewAllow"
+                      class="b-0 row-{{ i }} bg-change">
+                      <td class="p-2 width-10-p">
+                        <label class="mb-0 text-ellipsis max-w-150px vertical-align-middle"
+                          title="{{right.controls['fcdisplayName'].value}}">{{right.controls['fcdisplayName'].value}}</label>
+                      </td>
+                      <td class="p-2 width-10-p">
+                        <label class="mb-0 text-ellipsis max-w-150px vertical-align-middle"
+                          title="{{right.controls['fcreportName'].value}}">{{right.controls['fcreportName'].value}}</label>
+                      </td>
+                      <td class="p-2 width-10-p">
+                        <label class="mb-0 text-ellipsis max-w-150px vertical-align-middle"
+                          title="{{right.controls['fcdescription'].value}}">{{right.controls['fcdescription'].value}}</label>
+                      </td>
+                      <td class="p-2 width-10-p">
+                        <label>
+                          <div class="custom-control custom-checkbox ml-2">
+                            <input type="checkbox" class="custom-control-input" formControlName="fcIsView"
+                              id="isViewReport{{right.controls['fcieReportConfigurationID'].value}}"
+                              (change)="reportCountCheck(right.controls['fcIsView'].value,right.controls['fcieReportGroupID'].value)">
+                            <label class="custom-control-label"
+                              for="isViewReport{{right.controls['fcieReportConfigurationID'].value}}"></label>
+                          </div>
+                        </label>
+                      </td>
+
+                      <td class="p-2 width-10-p">
+                        <label>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" formControlName="fcsetHome"
+                              id="issetHome{{right.controls['fcieReportConfigurationID'].value}}"
+                              (change)="ReportSetHome(i, right.controls['fcsetHome'].value, right.controls['fcieReportGroupID'].value)">
+                            <i *ngIf="right.controls['fcsetHome'].value" class="fa fa-star fa-lg"
+                              aria-hidden="true"></i>
+                            <i *ngIf="!right.controls['fcsetHome'].value" class="fa fa-star-o"
+                              style="font-size: 1.1rem;" aria-hidden="true"></i>
+                          </div>
+                        </label>
+                      </td>
+                      <td class="text-center p-2 width-10-p">
+                        <span *ngIf="right.controls['fcFieldAccess'].value" (click)="showHideFields(right)"
+                          class="cursor-pointer">
+                          <img src="../../../../../assets/images/components-icons/field-access.png" width="26"
+                            alt="Field Access" />
+                          <!-- <i class="fas fa-sliders-h fa-lg text-primary-app cursor-pointer"></i> -->
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- <ng-container
+                      > -->
+                    <tr class="b-0  fadeIn" [ngClass]="{'animated': !showSelectAll}"
+                      *ngIf="this.gID == right.controls['fcieReportGroupID'].value && reportsViewAllow && right.controls['fcShowAccessFields'].value">
+                      <td colspan="6" class="field-access p-0">
+                        <div class="field-access__container position-relative" id="field-container-{{ i }}"
+                          [ngClass]="{'h-1': this.gID == right.controls['fcieReportGroupID'].value && reportsViewAllow && right.controls['fcShowAccessFields'].value}"
+                          [ngClass]="{'h-collapse': !right.controls['fcShowAccessFields'].value}">
+                          <i class="fas fa-caret-up caret-up cursorPoiner fa-lg position-absolute r-46px t-neg-13px"
+                            (click)="showHideFields(right)"></i>
+                          <div class="w-100 mb-2">
+                            <div class="position-relative w-25 pl-2 fadeIn"
+                              *ngIf="right.controls['fcShowAllFields'].value == true"
+                              [ngClass]="{'animated': !showSelectAll}">
+                              <input class="search-field-access form-control" placeholder="Search" type="text"
+                                id="{{i}}_search" autocomplete="off" formControlName="fcSearchFieldAccess">
+                              <i class="fas fa-search search-field-access-icon"></i>
+                              <img class="search-field-access-icon remove cursor-pointer" id="{{ i }}_search-remove"
+                                (click)="right.controls['fcSearchFieldAccess'].setValue('')"
+                                *ngIf="(right.controls['fcSearchFieldAccess'].value || '').length > 0"
+                                src="../../../../../assets/images/components-icons/text-remove.png" />
+                            </div>
+                          </div>
+
+                          <div
+                            *ngFor="let item of right.controls['fcFieldReportRoleAccess'].value | filterObjects:'fieldDisplayName': right.controls['fcSearchFieldAccess'].value: right.controls['fcShowAllFields'].value == true ? right.controls['fcFieldReportRoleAccess'].value.length : 7 trackBy:trackByFieldId, let j = index"
+                            id="field-{{i}}" class="field-access field-access__item fadeIn cursor-pointer"
+                            [ngClass]="{'selected': item.isViewAllow && !item.sysIndicator, 'disabled cursor-not-allowed': item.isViewAllow && item.sysIndicator,'animated': !showSelectAll}"
+                            (click)="markUnmarkAccessField(item)">
+                            <label class="mb-0 cursor-pointer"
+                              [ngClass]="{'cursor-not-allowed': item.isViewAllow && item.sysIndicator}">
+                              {{(item.fieldDisplayName || '').trim().toLowerCase()}}
+                            </label>
+                          </div>
+                          <div  *ngIf="right.controls['fcShowAllFields'].value == false">
+                            <img src="../../../../../assets/images/components-icons/ellipse-h-icon.png"
+                              class="h-auto w-22px m-t-11px" />
+                          </div>
+                          <div class="field-access field-access__item selected cursor-pointer"
+                            *ngIf="right.controls['fcShowAllFields'].value == false"
+                            (click)="right.controls['fcShowAllFields'].value = true">
+                            {{ right.controls['fcFieldReportRoleAccess'].value.length > 0 ?
+                            right.controls['fcFieldReportRoleAccess'].value.length - 7 : '' }}
+                            <img src="../../../../../assets/images/components-icons/expand-counter.png"
+                              class="h-auto w-14px m-t-4px" />
+                          </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <!-- </ng-container> -->
+                    <tr *ngIf="lastcall && setBg" class="{{ getBg() }} d-none">
+                    </tr>
+                  </ng-container>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="mt-2" *ngIf="this.isSaveButtonAllow">
+      <div class="d-flex flex-row-reverse">
+        <button type="submit" (click)="submit(form.value)" *ngIf="this.isSaveButtonAllow" id="btn-save"
+          class="apl-btn-v3 primary-2">
+          <i class="fa fa-save"></i> {{"buttons.submit" | translation | async}}
+        </button>
+        <button type="button" *ngIf="!isFromUpdateComponent" (click)="resetForm()" id="btn-reset">
+          <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="popup-footer">
+      <div *ngIf="this.isSaveButtonAllow" class="width-100-p ">
+
+        <button type="submit" (click)="submit(form.value)" *ngIf="this.isSaveButtonAllow" id="btn-save"
+          class="apl-btn-v3 primary-2">
+          <i class="fa fa-save"></i> {{"buttons.submit" | translation | async}}
+        </button>
+
+        <button type="button" *ngIf="!isFromUpdateComponent" (click)="resetForm()" id="btn-reset"
+          class="apl-btn-v3 mr-2">
+          <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+        </button>
+      </div>
+    </div> -->
+
+  </div>
+
+
+
+</form>
+
+<app-confirmation-v3 *ngIf="showConfirmationFlag" (positive)="positiveDelete()" (negative)="negativeDelete()"
+  [message]="confirmationMessage"></app-confirmation-v3>

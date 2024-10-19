@@ -1,0 +1,89 @@
+<div class="filter-popup" style="position: absolute; width: 100%;">
+  <div class="filter-popup__container" style="width: 95.5% !important; background: #ededed;">
+
+    <!-- <div class="filter-popup__header">
+      <div class="filter-popup__close" id="{{titleForId}}_close" (click)="this.onClose.emit(true)">
+        &times;
+      </div>
+    </div> -->
+
+    <div class="filter-popup__body" style="padding-left: 0.25rem;">
+      <div class="filter-popup__filter-container apl-scrollbar">
+        <!-- treeview starts here -->
+        <div style="flex: 0 0 20%; max-width: 20%; padding-right: 15px; padding-left: 0px;">
+          <div class="pr-1" class="sites-box ancera-scrollbar grid-container border-0"
+            style="min-width: 14.3rem; padding-top: 5px; margin-top: 0rem; max-height: fit-content; background-color: #ededed;">
+
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: lstCollectionSitesTree }">
+            </ng-container>
+
+            <ng-template #recursiveList let-list>
+              <ng-container>
+                <ng-container *ngFor="let item of list;">
+                  <tr *ngIf="item.item.visibleState">
+                    <td [style.paddingLeft.px]="getPaddingLeftByLevel(item.level)">
+                      <div class="d-flex align-items-center site-view-checkbox" [ngClass]="{'color-disabled': item.item.disabled}">
+                        <!-- <button type="button" tabindex="-1" class="expand-tree text-center" (click)="expandChildren(item)">
+                                            <i class="fas ml-1"
+                                                [ngClass]="{'fa-chevron-right': !item.item.expandChildren, 'fa-chevron-down': item.item.expandChildren}"></i>
+                                        </button> -->
+                        <i class="fas p-5px"
+                          [ngClass]="{'fa-caret-right': !item.item.expandChildren, 'fa-caret-down m-l-neg-3px': item.item.expandChildren}"
+                          (click)="expandChildren(item)"></i>
+                        <div class="checkbox checkbox-sm">
+                          <input class="form-check-input" type="checkbox" [checked]="item.item.selected"
+                            id="site-{{item.item.siteId}}" (change)="onItemCheckd($event, item)">
+                          <!-- [ngClass] ="{'pointer-events-none': item.item.siteTypeId == 14 || item.item.siteTypeId == 10 || item.item.siteTypeId == 21}"  -->
+                          <!-- [ngClass] ="{'display-node-inactive': item.item.disabled == true}"  -->
+                          <label class="mb-0" for="site-{{item.item.siteId}}" [ngClass]="{'pointer-events-none': item.item.disabled}"
+                            [style.width.px]="getWidthByLevel(item.level)">
+                            <div class="d-inline-block pull-left">
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.CorporateOffice" class="fas fa-warehouse m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level1-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Farms" class="fas fa-sitemap m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level2-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Houses" class="fas fa-home m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level3-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.ProcessingPlants" class="fas fa-spa m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level4-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Integrator" class="fas fa-cogs m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level5-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Region" class="fas fa-landmark m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level6-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.FeedMill" class="fas fa-city m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level7-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Hatchery" class="fas fa-cubes m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level8-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Laboratory" class="fas fa-flask m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level9-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Default" class="fas fa-check-double m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level10-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Rehang" class="fas fa-weight-hanging m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level11-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.BirdWash" class="fab fa-earlybirds m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level16-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.BirdRinse" class="fas fa-dove m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level12-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.Chiller" class="fas fa-air-freshener m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level13-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.WingDip" class="far fa-circle m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level14-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab" class="fas fa-vial m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level15-color -->
+                              <i *ngIf="item.item.siteTypeId == siteTypeID.SubRegion" class="fas fa-map-marked-alt m-r-5px"  [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i> <!--level15-color -->
+                              <!-- <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab"  class="fas fa-map-marked-alt m-l-10px level16-color"></i> -->
+                          </div>
+                          {{item.item.siteName}}</label>
+                          <!-- [ngClass] ="{'display-node-inactive': item.item.disabled == true}"  -->
+                          <label class="mb-0 checkboxsmall" [ngClass]="{'pointer-events-none color-disabled': item.item.disabled}" for="site-{{item.item.siteId}}">
+                          </label>
+                        </div>
+                      </div>
+
+                    </td>
+                  </tr>
+                  <ng-container *ngIf="item.children.length > 0">
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }">
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+
+            </ng-template>
+          </div>
+        </div>
+        <!-- Tree view ends here -->
+      </div>
+    </div>
+
+    <div class="filter-popup__footer">
+      <span class="filter-popup__action--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{ "filterpopup.ClearAll" | translation | async }}</span>
+      <span class="filter-popup__action--apply" id="{{titleForId}}_apply" (click)="emitList()">{{ "filterpopup.Apply" | translation | async }}</span>
+    </div>
+  </div>
+</div>

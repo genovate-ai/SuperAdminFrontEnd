@@ -1,0 +1,47 @@
+<div class="m-t-12 popup-body pr-2">
+
+    <div class="apl-resp-table">
+        <div class="table-resp apl-resp-table-v5 h-table-popup--lg apl-scrollbar">
+            <table>
+                <thead class="outer-index">
+                    <tr>
+                        <th class="width-50-p table-header-report pr-0">
+                            <label class="mb-0">{{ "manageEula.eulaName" | translation | async }}</label>
+                        </th>
+
+                        <th class="width-20-p table-header-report pr-0">
+                            <label class="mb-0">{{ "manageEula.status" | translation | async }}</label>
+                        </th>
+
+                        <th class="width-30-p table-header-report pr-0">
+                            <label class="mb-0">{{ "manageEula.date" | translation | async }}</label>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let log of lstUserEulaLog; let i = index">
+
+                        <td class="width-50-p">
+                            <label class="mb-0">{{log.eulaName}}</label>
+                        </td>
+                        <td class="width-20-p ">
+                            <label *ngIf="log.statusId === 1" class="mb-0">{{ "manageEula.assigned" | translation | async }}</label>
+                            <label *ngIf="log.statusId === 2" class="mb-0">{{ "manageEula.accepted" | translation | async }}</label>
+                            <label *ngIf="log.statusId === 3" class="mb-0">{{ "manageEula.rejected" | translation | async }}</label>
+                        </td>
+                        <td class="width-30-p ">
+                            <label> {{log.actionDate | date:  datezoneFormat }}</label>
+                        </td>
+                        <!-- ( regionDateFormat | translation | async ) -->
+                    </tr>
+                    <tr *ngIf="lstUserEulaLog.length == 0">
+                        <td colspan="3" class="text-center">{{ "general.noDataFound" | translation | async }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

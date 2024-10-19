@@ -1,0 +1,15 @@
+<div class="date-picker-v3">
+  <div class="position-relative">
+    <input type="text" [(ngModel)]="displayDate" name="nameStartDate" class="form-control date-field"
+      placeholder="{{ placeholderKey | translation | async }}" [readOnly]="readonlyForm" />
+    <span class="log-header__calender-icon" (click)="openDatePicker();">
+      <img src="../../../../assets/images/components-icons/calender.png" alt="calender">
+    </span>
+    <div [formGroup]="dateForm" class="custom-date-picker calendar-container" #container>
+      <input type="text" class="calender-view" formControlName="selectedDate" #dateSelected="dpDayPicker"
+        [dpDayPicker]="dayPickerConfig" [theme]="'dp-material'" [mode]="calenderMode"
+        [selectionEnd]="changeCalenderDesign()" (onChange)="dateChanged($event)" />
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,55 @@
+.custom-selected-input-section {
+    width: 100% !important;
+    position: relative;
+}
+
+.custom-selected-input-container {
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.selected-item {
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+
+.selected-item-ellipsis {
+    // width: 40%;
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 100px;
+}
+
+.selected-item-tag {
+    background-color: #e1dcdc;
+    padding: 0.25rem 0.5rem;
+}
+
+.selected-item-text {
+    cursor: pointer;
+}
+
+.drop-list {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 2px;
+    width: 100%;
+    max-height: 104px;
+    padding: 5px;
+    overflow-y: auto;
+    position: absolute;
+    top: 34px;
+    word-wrap: break-word;
+    white-space: normal;
+    z-index: 2;
+    .drop-list-item {
+        display: block;
+        margin-bottom: 0px !important;
+    }
+    .drop-list-item:hover {
+        background: #f1f1f1;
+    }
+}

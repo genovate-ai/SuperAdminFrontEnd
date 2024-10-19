@@ -1,0 +1,98 @@
+<form [formGroup]="form" autocomplete="off">
+
+  <div class="popup-body mt-2">
+    <div class="popup-card h-sm-popup pr-2">
+
+      <!-- <fieldset class="fieldsetCustomReport mb-3">
+        <legend class="legendFontWidth">{{"reportRole.reportRole" | translation | async }}
+        </legend> -->
+      <div class="form-row">
+        <div class="col-md-4 col-4">
+          <div class="form-group">
+            <app-anc-input-box formControlName="fcName" [placeholder]="'reportRole.role'" [numeric]="false"
+              [translate]="true" [mandatory]="true" id="nameId"
+              [displayError]="form.controls.fcName.errors && (form.controls.fcName.dirty || form.controls.fcName.touched)">
+              <ng-template>
+                <div *ngIf="
+                          form.get('fcName').errors?.required &&
+                          (form.get('fcName').dirty || form.get('fcName').touched) ||
+                          form.get('fcName').errors?.required && isNavigated
+                        ">
+
+                  {{ "reportRole.namerequired" | translation | async }}
+                </div>
+                <div
+                  *ngIf="form.controls.fcName.errors?.maxlength && (form.controls.fcName.dirty || form.controls.fcName.touched)">
+                  {{ "userAccount.lengthundredMax" | translation | async }}
+                </div>
+                <div
+                  *ngIf="form.controls.fcName.hasError('pattern') && (form.controls.fcName.dirty || form.controls.fcName.touched)">
+                  {{ "reportRole.invalidName" | translation | async }}
+                </div>
+              </ng-template>
+            </app-anc-input-box>
+          </div>
+        </div>
+        <div class="col-md-8 col-8">
+          <div class="form-group ">
+            <app-anc-input-box formControlName="fcDesc" [placeholder]="'reportRole.description'" [numeric]="false"
+              [translate]="true" [mandatory]="true" id="DescId"
+              [displayError]="form.controls.fcDesc.errors && (form.controls.fcDesc.dirty || form.controls.fcDesc.touched)">
+              <ng-template>
+                <div *ngIf="
+                        form.get('fcDesc').errors?.required &&
+                        (form.get('fcDesc').dirty || form.get('fcDesc').touched) ||
+                        form.get('fcDesc').errors?.required && isNavigated
+                      ">
+
+                  {{ "reportRole.descrequired" | translation | async }}
+                </div>
+                <div
+                  *ngIf="form.controls.fcDesc.errors?.maxlength && (form.controls.fcDesc.dirty || form.controls.fcDesc.touched)">
+                  {{ "reportRole.lengtTwoHundredMax" | translation | async }}
+                </div>
+              </ng-template>
+            </app-anc-input-box>
+
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center pl-2">
+          <div class="d-flex align-items-center mr-3">
+            <label class="mb-0 mr-2 anc-text-bold">{{ "reportRole.status" | translation | async }}</label>
+            <app-custom-radio-button-v3 value1="true" id="status-report-role" value2="false" label1="Active"
+              label2="InActive" formControlName="fcIsActive" name="nmeIsActive">
+            </app-custom-radio-button-v3>
+          </div>
+          <div class="d-flex align-items-center mr-3">
+            <label class="mb-0 mr-2 anc-text-bold text-nowrap">{{ "reportRole.dataSecurity" | translation | async }}</label>
+            <app-custom-radio-button-v3 value1="true" id="status-data-security" value2="false" label1="Active"
+              label2="InActive" formControlName="fcdataSecurity" name="nmeIsActive">
+            </app-custom-radio-button-v3>
+          </div>
+          <div class="d-flex align-items-center mr-3">
+            <label class="mb-0 mr-2 anc-text-bold">{{ "reportRole.auditTrail" | translation | async }}</label>
+            <app-custom-radio-button-v3 value1="true" id="status-audit-trail" value2="false" label1="Active"
+              label2="InActive" formControlName="fcauditTrail" name="nmeIsActive">
+            </app-custom-radio-button-v3>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+  <div class="popup-footer">
+    <div *ngIf="this.screenPermission.isCreateButtonAllow || this.isSaveButtonAllow" class="w-100 d-flex flex-row-reverse">
+
+      <button type="submit" (click)="submit(form.value)" class="apl-btn-v3 primary-2 m-l-10px" id="btn-save"
+        [ngClass]="{'disabled-v2 cursor-not-allowed': form.invalid}">
+        <i class="fa fa-save"></i> {{"buttons.submit" | translation | async}}
+      </button>
+      <button type="button" *ngIf="!isFromUpdateComponent" (click)="resetForm()" id="btn-reset"
+        class="apl-btn-v3 m-l-10px">
+        <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+      </button>
+    </div>
+  </div>
+</form>

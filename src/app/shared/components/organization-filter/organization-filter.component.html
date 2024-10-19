@@ -1,0 +1,28 @@
+<div class="backdrop" (click)="onClose()" >
+    
+</div>
+<div class="popup">
+    <form [formGroup]="orgnForm" (ngSubmit)="onSubmit()" >
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="ng-select-box">
+                    <ng-select
+                      class="form-control"
+                      placeholder="Organization"
+                      formControlName="orgnId"
+                      id="orgnId"
+                      [items]="orgnList"
+                      bindLabel="orgnName"
+                      bindValue="orgnId"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                    >
+                    </ng-select>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <button id="SubmitId" type="submit" >Apply</button>
+        </div>
+    </form>
+</div>

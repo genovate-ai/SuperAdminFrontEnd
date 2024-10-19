@@ -1,0 +1,32 @@
+<div class="popup-overlay" [ngClass]="{'d-block': visible}">
+
+    <div (window:resize)="onResize($event)" [ngClass]="{'u-popup-dialog animated fadeInDown': visible,'popup-hide': !visible,'u-center-vertical':xsCenter}" [@dialog] [style.width.%]="width">
+        <div class="popup-content">
+            <div *ngIf="visible" id="close-popup-modal" (click)="close()" class="dialog__close-btn">
+                <p class="close-text close-modal">&times;</p>
+                <img src="../../../../assets/images/components-icons/close-icon.png" alt="Close" height="14" width="14" id="closeModalId" class="cursor-pointer d-none close-modal" />
+            </div>
+
+            <div class="popup-head" style="border-bottom: 1px solid #cccccc; padding: .3rem 0;background-color:#4e73df ;">
+                <div class="popup-header">
+                    {{ popupController.popupHeader }}
+                </div>
+            </div>
+
+      <div>
+        <ng-container #popupcontainer></ng-container>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+<app-confirmation-component *ngIf="showConfirmationFlag && !this.popupController.getConfirmationV2()"
+  (positive)="positiveDelete()" (negative)="showConfirmationFlag = false" [message]="confirmationMessage">
+</app-confirmation-component>
+
+<app-confirmation-v3 *ngIf="showConfirmationFlag && this.popupController.getConfirmationV2()"
+  (positive)="positiveDelete()" (negative)="showConfirmationFlag = false" [message]="confirmationMessage">
+</app-confirmation-v3>

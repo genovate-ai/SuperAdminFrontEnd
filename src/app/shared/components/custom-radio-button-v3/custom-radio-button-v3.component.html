@@ -1,0 +1,8 @@
+<div class="wrapper-v2 row" (click)="toggleCheck()" [ngClass]="{'wrapper-true': isValueTrue }" >
+
+    <input type="radio" class="row-md-3" [disabled]="disabled" [checked]="selectedValue===value1" [disabled]="disabled" [value]="value1" id="yes_radio">
+    <input type="radio" [disabled]="disabled" class="row-md-3" [value]="value2" [checked]="selectedValue===value2" id="no_radio" >
+
+    <div style="margin-left: 0px;" class="toggle">
+    </div>
+</div>

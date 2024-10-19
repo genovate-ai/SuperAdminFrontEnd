@@ -1,0 +1,100 @@
+<div class="header">
+    <svg (click)="onBack()" width="27" height="21" viewBox="0 0 27 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M10.0059 0.504698C10.1375 0.503937 10.268 0.529161 10.3898 0.578926C10.5117 0.628691 10.6225 0.702017 10.7159 0.794699C10.8097 0.887662 10.884 0.998262 10.9348 1.12012C10.9856 1.24198 11.0117 1.37269 11.0117 1.5047C11.0117 1.63671 10.9856 1.76742 10.9348 1.88927C10.884 2.01113 10.8097 2.12173 10.7159 2.2147L2.41592 10.5047L10.7159 18.7947C10.9042 18.983 11.01 19.2384 11.01 19.5047C11.01 19.771 10.9042 20.0264 10.7159 20.2147C10.5276 20.403 10.2722 20.5088 10.0059 20.5088C9.73962 20.5088 9.48423 20.403 9.29592 20.2147L0.295922 11.2147C0.202194 11.1217 0.127798 11.0111 0.0770294 10.8893C0.0262607 10.7674 0.000123202 10.6367 0.000123217 10.5047C0.000123232 10.3727 0.0262608 10.242 0.0770295 10.1201C0.127798 9.99826 0.202194 9.88766 0.295923 9.7947L9.29592 0.794699C9.38936 0.702017 9.50018 0.628691 9.62202 0.578926C9.74385 0.529161 9.87432 0.503937 10.0059 0.504698Z"
+            fill="black" />
+        <path
+            d="M1.00586 9.50488L25.0059 9.50488C25.2711 9.50488 25.5254 9.61024 25.713 9.79778C25.9005 9.98531 26.0059 10.2397 26.0059 10.5049C26.0059 10.7701 25.9005 11.0245 25.713 11.212C25.5254 11.3995 25.2711 11.5049 25.0059 11.5049L1.00586 11.5049C0.740643 11.5049 0.486288 11.3995 0.298752 11.212C0.111216 11.0245 0.00585946 10.7701 0.00585949 10.5049C0.00585952 10.2397 0.111216 9.98531 0.298752 9.79777C0.486288 9.61024 0.740643 9.50488 1.00586 9.50488Z"
+            fill="black" />
+    </svg>
+
+    <Span>Mark Images as</Span>
+</div>
+
+<div class="tags">
+    <!-- <div class="row">
+        <div class="tag-headings">
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.34717" cy="4.04395" r="4" fill="#86B741" />
+            </svg>
+            <span class="first">First image</span>
+            <!-- <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.34717" cy="4.04395" r="4" fill="#FF0000" />
+            </svg>
+            <span class="last">Last image</span> 
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.34717" cy="4.04395" r="4" fill="#0385E2" />
+            </svg>
+            <span class="upload">Image to upload</span>
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.34717" cy="4.04395" r="4" fill="#acacacf9" />
+            </svg>
+            <span class="drop">Droped image</span>
+
+        </div>
+
+
+
+    </div> -->
+    <button class="btn-cancl" (click)="onCancel()">Cancel</button>
+    <button class="btn-save" (click)="onSave()">Save</button>
+
+    <div class="row">
+
+        <button class="action-btn color-green" (click)="onFirstImage()" [ngClass]="{'btn-first': this.activeFirstImage==true }">
+            <svg *ngIf="this.activeFirstImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="white" />
+            </svg>
+            <svg *ngIf="!this.activeFirstImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="#86B741" />
+            </svg>
+            First image</button>
+        <!-- <button class="action-btn" (click)="onLastImage()" [ngClass]="{'selected': this.activeLastImage==true }">
+        <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="4.84717" cy="4.67676" r="4" fill="white"/>
+            </svg> 
+        Last image</button>-->
+        <button class="action-btn color-blue" (click)="onSelectImage()" [ngClass]="{'btn-upload': this.activeUploadImage==true }">
+            <svg *ngIf="this.activeUploadImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="white" />
+            </svg>
+            <svg *ngIf="!this.activeUploadImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="#0385E2" />
+            </svg>
+            Select image</button>
+        <button class="action-btn color-grey" (click)="onDropImage()" [ngClass]="{'btn-drop': this.activeDropImage==true }">
+            <svg *ngIf="this.activeDropImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="white" />
+            </svg>
+            <svg *ngIf="!this.activeDropImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="#acacacf9" />
+            </svg>
+            Drop image</button>
+        <button class="action-btn color-green" (click)="onViewImage()" [ngClass]="{'btn-first': this.activeViewImage==true }">
+            <svg *ngIf="this.activeViewImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="white" />
+            </svg>
+            <svg *ngIf="!this.activeViewImage" width="9" height="9" viewBox="0 0 9 9" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4.84717" cy="4.67676" r="4" fill="#86B741" />
+            </svg>
+            View image</button>
+
+    </div>
+
+</div>
+
+<div class="map">
+    <div id="map">
+    </div>
+</div>
+<div class="anc-modal rpt audit-v2">
+    <app-popup-component></app-popup-component>
+</div>

@@ -1,0 +1,26 @@
+<div class="confirmation-overlay" [ngClass]="{'popup-confirmation-overlay': popupOpen}">
+    <div class="confirmation-box positive-relative">
+        <div class="confirmation-close">
+            <img src="../../../../assets/images/components-icons/close-icon.png" alt="Close" height="14" width="14" class="cursor-pointer" (click)="Negative()" id="close-confirmation" />
+        </div>
+        <div class="confirmation-body">
+            <div class="confirmation-title" *ngIf="isDelete">
+                {{ "confirmationBox.confirmation" | translation | async }}
+            </div>
+            <div class="confirmation-title" *ngIf="!isDelete">
+                {{ "confirmationBox.confirmationMap" | translation | async }}
+            </div>
+            <div class="confirmation-message">
+                <label class="mb-0" [innerHTML]="message | boldStrSpChar:boldTxt:disableBold"></label>
+            </div>
+        </div>
+        <div class="confirmation-footer" *ngIf="isDelete">
+            <button type="button" class="anc-btn anc-btn-solid-2 mr-4" id="btn-yes" (click)="Positive()">Yes</button>
+            <button type="button" class="anc-btn anc-btn-secondary" id="btn-no" (click)="Negative()">No</button>
+        </div>
+        <div class="confirmation-footer" *ngIf="!isDelete">
+            <button type="button" class="anc-btn anc-btn-solid-2" id="btn-ok" (click)="Positive()">Ok</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,626 @@
+<div class="pop-head border-0">
+  {{ this.popupController.popupHeader }}
+</div>
+<div class="user-mgmt">
+  <form [formGroup]="form" autocomplete="off">
+
+
+    <div class="tab-layout">
+      <div class="tabs row">
+        <div class="col-md-4 text-left" [ngClass]="{'tab-active': stepOne, 'tab':!stepOne}" id="progressbar-step-1"
+          (click)="tabInternalClick( 'one', true)">
+          <label>{{ "userAccount.personalInfo" | translation | async }}</label>
+        </div>
+
+        <div class="tab col-md-4" [ngClass]="{'tab-active': stepTwo}" id="progressbar-step-2"
+          (click)="tabInternalClick( 'two', true)">
+          <label>{{ "userAccount.organizationInfo" | translation | async }}</label>
+        </div>
+
+        <div class="tab col-md-4 text-right" [ngClass]="{'tab-active':stepThree}" id="progressbar-step-3"
+          (click)="tabInternalClick('three', true)">
+          <label>User Roles</label>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="popup-body apl-scrollbar">
+      <div class="pr-2 pl-2 apl-scrollbar create-user-h">
+        <div [ngClass]="{'display-block': value === 'one', 'display-none': value !== 'one'}" class="m-b-50px">
+          <div class="row m-l-0px m-r-0px m-t-10px">
+            
+            <div class="form-group  pl-0 col-md-6">
+              <app-anc-input-box formControlName="fcFirstName" [placeholder]="'fieldText.firstname'" [numeric]="false"
+                [translate]="true" [mandatory]="true" id="firstNameId"
+                [displayError]="form.controls.fcFirstName.errors && (form.controls.fcFirstName.dirty || form.controls.fcFirstName.touched)">
+                <ng-template>
+                  <div *ngIf="
+                          form.get('fcFirstName').errors?.required &&
+                          (form.get('fcFirstName').dirty || form.get('fcFirstName').touched) ||
+                          form.get('fcFirstName').errors?.required && isNavigated
+                        ">
+
+                    {{ "userAccount.firstNameIsRequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcFirstName.errors?.maxlength && (form.controls.fcFirstName.dirty || form.controls.fcFirstName.touched)">
+                    {{ "userAccount.lengthundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+
+            <div class="form-group  pr-0 col-md-6">
+              <app-anc-input-box formControlName="fcLastName" [placeholder]="'fieldText.lastname'" [numeric]="false"
+                [translate]="true" [mandatory]="true" id="lastNameId"
+                [displayError]="form.controls.fcLastName.errors && (form.controls.fcLastName.dirty || form.controls.fcLastName.touched)">
+                <ng-template>
+                  <div *ngIf="
+                            form.get('fcLastName').errors?.required &&
+                            (form.get('fcLastName').dirty || form.get('fcLastName').touched) || form.get('fcLastName').errors?.required && isNavigated
+                          ">
+                    {{ "userAccount.lastNameIsRequired" | translation | async }}
+                  </div>
+                  <div
+                    *ngIf="form.controls.fcLastName.errors?.maxlength && (form.controls.fcLastName.dirty || form.controls.fcLastName.touched)">
+                    {{ "userAccount.lengthundredMax" | translation | async }}
+                  </div>
+                </ng-template>
+              </app-anc-input-box>
+            </div>
+          </div>
+
+
+          <div class="form-group  pl-0 pr-0 col-md-12">
+            <app-anc-input-box formControlName="fcDesignation" [placeholder]="'fieldText.title'" [numeric]="false"
+              [translate]="true" [mandatory]="false" id="designationId"
+              [displayError]="form.controls.fcDesignation.errors && (form.controls.fcDesignation.dirty || form.controls.fcDesignation.touched)">
+            </app-anc-input-box>
+          </div>
+
+
+          <div class="form-group ">
+            <div class="ng-select-box">
+              <ng-select class="form-control" name="nmeRoleCategory" id="roleCategoryId"
+                placeholder="{{ 'userAccount.roleCategory' | translation | async }}" [(ngModel)]="selectedRoleCategory"
+                [items]="lstRoleCategory" [clearable]="true" bindValue="codeID" bindLabel="name"
+                formControlName="fcRoleCategoryId" (clear)="changeRoleCategory(null)"
+                (change)="changeRoleCategory($event)" [multiple]="false" [closeOnSelect]="true">
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="showRoleCategoryName">
+            <app-anc-input-box formControlName="fcRoleCategoryName" [placeholder]="'userAccount.description'"
+              [numeric]="false" [translate]="true" [mandatory]="true" id="roleCategoryName"
+              [displayError]="form.controls.fcRoleCategoryName.errors && (form.controls.fcRoleCategoryName.dirty || form.controls.fcRoleCategoryName.touched)">
+              <ng-template>
+                <div *ngIf="
+                        form.get('fcRoleCategoryName').errors?.required &&
+                        (form.get('fcRoleCategoryName').dirty || form.get('fcRoleCategoryName').touched) ||
+                        form.get('fcRoleCategoryName').errors?.required && isNavigated
+                      ">
+                  {{ "userAccount.descriptionReq" | translation | async }}
+                </div>
+                <div
+                  *ngIf="form.controls.fcRoleCategoryName.errors?.maxlength && (form.controls.fcRoleCategoryName.dirty || form.controls.fcRoleCategoryName.touched)">
+                  {{ "userAccount.lengthundredMax" | translation | async }}
+                </div>
+              </ng-template>
+            </app-anc-input-box>
+          </div>
+
+          <div class="form-group" *ngIf="showTehsilId">
+            <div class="ng-select-box required">
+
+              <ng-select class="form-control apl-form-control-inv" 
+                name="nmeRoleCategory" id="roleCategoryId"
+                placeholder="Tehsil"
+                [(ngModel)]="selectedTehsils"
+                [items]="lstTehsils" [clearable]="true" bindValue="codeID" bindLabel="name"
+                formControlName="fcTehsilId"
+                [multiple]="true" [closeOnSelect]="false">
+
+                <ng-template ng-header-tmp>
+
+                  <div class="ng-option">
+
+                    <div class="custom-control custom-checkbox m-l-4px">
+                      <input type="checkbox" class="custom-control-input" (change)="selectAllTehsils($event)"
+                        id="roles-category-id-head" [checked]="this.lstTehsils.length === this.selectedTehsils.length">
+                      <label class="custom-control-label" for="roles-category-id-head">{{ "app.selectAll" | translation | async
+                        }}</label>
+                    </div>
+                  </div>
+
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" [checked]="selectedTehsils.indexOf(item.codeID) > -1"
+                      class="custom-control-input" id="{{'roles-category-id-'+item.codeID}}">
+                    <label class="custom-control-label">{{item.name}}</label>
+                  </div>
+                </ng-template>
+
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                  <div class="ng-value select-limit-width" *ngFor="let item of items | slice:0:selectItemLimit">
+                    <span class="ng-value-icon left" id="clear-rolesId-{{+item.codeID}}"
+                      (click)="clear(item)" aria-hidden="true">x</span>
+                    <span class="ng-value-label select-limit-text" title="{{item.name}}">
+                      {{item.name}}</span>
+                  </div>
+                  <div class="ng-value text-plane" title='{{ "app.selectNote" | translation | async }}'
+                    *ngIf='items.length > selectItemLimit'>
+                    <span class="ng-value-label max-w-99p">
+                      {{ "app.plus" | translation | async }}{{items.length - selectItemLimit}}
+                      {{ "app.more" | translation | async }}</span>
+                  </div>
+                </ng-template>
+
+              </ng-select>
+              <div class="floating-error"
+                [ngClass]="{'hide': !(form.get('fcTehsilId').errors && (form.get('fcTehsilId').dirty || form.get('fcTehsilId').touched))}">
+                <i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path
+                      d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                      fill="#EA4E40" />
+                  </svg>
+                </i>
+                <div class="floating-error-text">
+                  <div 
+                    *ngIf=" form.get('fcTehsilId').errors && (form.get('fcTehsilId').dirty || form.get('fcTehsilId').touched)">
+                    {{ "userAccount.AssignedRolesRequired" | translation | async }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- <div class="form-group " *ngIf="showTehsilId">
+            <div class="ng-select-box required">
+              <ng-select class="form-control" name="nmeRoleCategory" id="roleCategoryId"
+                placeholder="Tehsil"
+                [items]="lstTehsils" [clearable]="true" bindValue="codeID" bindLabel="name"
+                formControlName="fcTehsilId"
+                [multiple]="false" [closeOnSelect]="true">
+              </ng-select>
+              <div class="floating-error"
+                [ngClass]="{'hide': !(form.get('fcTehsilId').errors && (form.get('fcTehsilId').dirty || form.get('fcTehsilId').touched))}">
+                <i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path
+                      d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                      fill="#EA4E40" />
+                  </svg>
+                </i>
+                <div class="floating-error-text">
+                  <div
+                    *ngIf=" form.get('fcTehsilId').errors && (form.get('fcTehsilId').dirty || form.get('fcTehsilId').touched)">
+                    Tehsil is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="form-group">
+            <app-anc-input-box formControlName="fcEmail" [placeholder]="'fieldText.Email'" [numeric]="false"
+              [translate]="true" [mandatory]="true" id="emailId"
+              [displayError]="form.controls.fcEmail.errors && (form.controls.fcEmail.dirty || form.controls.fcEmail.touched)">
+              <ng-template>
+                <div *ngIf="
+                      form.get('fcEmail').errors?.required &&
+                      (form.get('fcEmail').dirty || form.get('fcEmail').touched) ||
+                      form.get('fcEmail').errors?.required && isNavigated
+                    ">
+                  {{ "userAccount.emailIsRequired" | translation | async }}
+                </div>
+                <div *ngIf="
+                                form.get('fcEmail').errors?.invalidEmail &&
+                                (form.get('fcEmail').dirty || form.get('fcEmail').touched) && !form.get('fcEmail').errors?.required
+                              ">
+                  {{ "userAccount.invalidEmail" | translation | async }}
+                </div>
+                <div
+                  *ngIf="form.controls.fcEmail.errors?.maxlength && (form.controls.fcEmail.dirty || form.controls.fcEmail.touched)">
+                  {{ "userAccount.lengthundredMax" | translation | async }}
+                </div>
+              </ng-template>
+            </app-anc-input-box>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="lbl ">{{"fieldText.cellNumber" | translation | async}}</label>
+              <div >
+                <div class="mb-2">
+                  <app-anc-number-box formControlName="fcCellNumber" [placeholder]="'fieldText.cellNumber'"
+                    [numeric]="true"  [translate]="true" countryCode="92" 
+                    [mandatory]="form.controls.fcCellNumber?.errors?.required" id="cellNumberId"
+                    [displayError]="form.controls.fcCellNumber.errors && (form.controls.fcCellNumber.dirty || form.controls.fcCellNumber.touched)">
+                    <ng-template>
+                      <div *ngIf="
+                                form.get('fcCellNumber').errors?.required &&
+                                (form.get('fcCellNumber').dirty || form.get('fcCellNumber').touched) || form.get('fcCellNumber').errors?.required && isNavigated
+                              ">
+                        {{ "userAccount.cellPhoneRequired" | translation | async }}
+                      </div>
+                    </ng-template>
+                  </app-anc-number-box>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="lbl  m-t-4px">{{"fieldText.enterWorkNumber" | translation | async}}</label>
+              <div >
+                <div class="mb-2">
+
+                  <app-anc-number-box formControlName="fcPhoneNumber" [placeholder]="'fieldText.workNumbertxt'"
+                    [numeric]="true" [translate]="true" countryCode="92"
+                    [mandatory]="form.controls.fcPhoneNumber?.errors?.required" id="PhoneNumberId"
+                    [displayError]="form.controls.fcPhoneNumber.errors && (form.controls.fcPhoneNumber.dirty || form.controls.fcPhoneNumber.touched)">
+                    <ng-template>
+                      <div *ngIf="
+                                form.get('fcPhoneNumber').errors?.required &&
+                                (form.get('fcPhoneNumber').dirty || form.get('fcPhoneNumber').touched) || form.get('fcPhoneNumber').errors?.required && isNavigated
+                              ">
+                        {{ "userAccount.workNumberRequired" | translation | async }}
+                      </div>
+                    </ng-template>
+                  </app-anc-number-box>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      <div [ngClass]="{'display-block': value === 'two', 'display-none': value !== 'two'}"class=" pl-0 pr-0 col-md-12">
+          <div class="form-group">
+            <div class="ng-select-box required">
+                  <ng-select required class="form-control" name="nmeOrgType" id="orgTypeId" 
+                    placeholder="{{ 'userAccount.organizationType' | translation | async }}"
+                    [(ngModel)]="selectedValueOrgType" [items]="lstOrgType" [clearable]="true" bindValue="codeID"
+                    bindLabel="name" formControlName="fcOrganizationType"
+                    (change)="selectedOrgType(selectedValueOrgType, true)" [multiple]="false" [closeOnSelect]="true">
+                  </ng-select>
+                  <div class="floating-error"
+                    [ngClass]="{'hide': !(form.get('fcOrganizationType').errors && (form.get('fcOrganizationType').dirty || form.get('fcOrganizationType').touched))}">
+                    <i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path
+                          d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                          fill="#EA4E40" />
+                        <path
+                          d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                          fill="#EA4E40" />
+                      </svg>
+                    </i>
+                    <div class="floating-error-text">
+                      <div 
+                        *ngIf=" form.get('fcOrganizationType').errors && (form.get('fcOrganizationType').dirty || form.get('fcOrganizationType').touched)">
+                        {{ "userAccount.OrganizaionTypeRequired" | translation | async }}
+                      </div>
+                    </div>
+                  </div>
+            </div>
+         </div>
+
+          <div class="form-group">
+            <div class="ng-select-box required">
+              <ng-select class="form-control" name="nmeOrganization" id="organizationId"
+                placeholder="{{ 'fieldText.organization' | translation | async }}"
+                [(ngModel)]="selectedValueOrganization" [items]="lstOrganizationsFiltered" [clearable]="true"
+                bindValue="codeID" bindLabel="name" formControlName="fcOrganization" [multiple]="false"
+                [closeOnSelect]="true" (change)="selectedOrg(selectedValueOrganization, true)" >
+              </ng-select>
+              <div class="floating-error"
+                [ngClass]="{'hide': !(form.get('fcOrganization').errors && (form.get('fcOrganization').dirty || form.get('fcOrganization').touched))}">
+                <i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path
+                      d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                      fill="#EA4E40" />
+                    <path
+                      d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                      fill="#EA4E40" />
+                  </svg>
+                </i>
+                <div class="floating-error-text">
+                  <div 
+                    *ngIf=" form.get('fcOrganization').errors && (form.get('fcOrganization').dirty || form.get('fcOrganization').touched)">
+                    {{ "userAccount.OrganizaionRequired" | translation | async }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div >
+            <div class="form-group d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <label class="lbl-user mb-0 mr-2">{{ "userAccount.PrimaryContact" | translation | async }}</label>
+                <div >
+                  <app-custom-radio-button-v3 id="primary-contact" value1="true" value2="false" label1="Yes" label2="No"
+                    formControlName="fcPrimaryContact" name="nmePrimaryContact"></app-custom-radio-button-v3>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <label class="lbl-user mb-0 mr-2">{{ "userAccount.siteAdministrator" | translation | async }}</label>
+                <div >
+                  <app-custom-radio-button-v3 id="site-administrator" value1="true" value2="false" label1="Yes"
+                    label2="No" formControlName="fcSiteAdministrator" name="nmeSiteAdministrator">
+                  </app-custom-radio-button-v3>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <label class="lbl-user mb-0 mr-2">{{ "userAccount.status" | translation | async }}</label>
+                <app-custom-radio-button-v3 id="user-status" value1="true" value2="false" label1="Active"
+                  label2="  Active" formControlName="fcIsActive" name="nmeIsActive"></app-custom-radio-button-v3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div [ngClass]="{'display-block': value === 'three', 'display-none': value !== 'three'}">
+          <div class=" pl-0 pr-0 col-md-12 ">
+            <div class="form-group">
+
+              <div class="ng-select-box required">
+
+                <ng-select class="form-control apl-form-control-inv" name="nmeRoles" id="rolesId"
+                  [(ngModel)]="selectedRoles" [items]="lstRolesFiltered"
+                  placeholder="{{ 'userAccount.assignedRoles' | translation | async }}" [clearable]="roleClearable"
+                  bindValue="codeID" bindLabel="name" formControlName="fcRoleId" [multiple]="true"
+                  [closeOnSelect]="false">
+                  <ng-template ng-header-tmp>
+
+                    <div class="ng-option">
+
+                      <div class="custom-control custom-checkbox m-l-4px">
+                        <input type="checkbox" class="custom-control-input" (change)="selectAllRoles($event)"
+                          id="roles-head" [checked]="this.lstRolesFiltered.length === this.selectedRoles.length">
+                        <label class="custom-control-label" for="roles-head">{{ "app.selectAll" | translation | async
+                          }}</label>
+                      </div>
+                    </div>
+
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" [checked]="selectedRoles.indexOf(item.codeID) > -1"
+                        class="custom-control-input" id="{{'rolesId-'+item.codeID}}">
+                      <label class="custom-control-label">{{item.name}}</label>
+                    </div>
+                  </ng-template>
+
+                  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <div class="ng-value select-limit-width" *ngFor="let item of items | slice:0:selectItemLimit">
+                      <span *ngIf="!roleClearable && item.allowRemove" class="ng-value-icon left"
+                        id="clear-rolesId-{{+item.codeID}}" (click)="clear(item)" aria-hidden="true">x</span>
+                      <span *ngIf="roleClearable" class="ng-value-icon left" id="clear-rolesId-{{+item.codeID}}"
+                        (click)="clear(item)" aria-hidden="true">x</span>
+                      <span class="ng-value-label  select-limit-text"
+                        [ngClass]="{'max-w-90p': !roleClearable && !item.allowRemove}" title="{{item.name}}">
+                        {{item.name}}</span>
+                    </div>
+                    <div class="ng-value text-plane" title='{{ "app.selectNote" | translation | async }}'
+                      *ngIf='items.length > selectItemLimit'>
+                      <span class="ng-value-label max-w-99p">
+                        {{ "app.plus" | translation | async }}{{items.length - selectItemLimit}}
+                        {{ "app.more" | translation | async }}</span>
+                    </div>
+                  </ng-template>
+
+                </ng-select>
+                <div class="floating-error"
+                  [ngClass]="{'hide': !(form.get('fcRoleId').errors && (form.get('fcRoleId').dirty || form.get('fcRoleId').touched))}">
+                  <i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path
+                        d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                        fill="#EA4E40" />
+                      <path
+                        d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                        fill="#EA4E40" />
+                      <path
+                        d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                        fill="#EA4E40" />
+                    </svg>
+                  </i>
+                  <div class="floating-error-text">
+                    <div 
+                      *ngIf=" form.get('fcRoleId').errors && (form.get('fcRoleId').dirty || form.get('fcRoleId').touched)">
+                      {{ "userAccount.AssignedRolesRequired" | translation | async }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class=" pl-0 pr-0 col-md-12 ">
+            <div class="form-group">
+
+              <div class="ng-select-box">
+                <ng-select class="form-control height140 apl-form-control-inv" name="nameReportRoles" id="reportRoleId"
+                  [(ngModel)]="selectedReportRoles" [items]="lstReportRolesFiltered"
+                  placeholder="{{ 'userAccount.rptRole' | translation | async }}" [clearable]="true" bindValue="codeID"
+                  bindLabel="name" formControlName="fcReportRoleId" [multiple]="false" [closeOnSelect]="true">
+                </ng-select>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Eula -->
+          <div class=" pl-0 pr-0 col-md-12">
+            <div class="form-group">
+
+              <div class="ng-select-box">
+
+                <ng-select *ngIf="renderLstEulas" class="form-control height140 apl-form-control-inv" name="nameEulas"
+                  id="euladdl" [(ngModel)]="selectedEulas" [items]="lstEulas"
+                  placeholder="{{ 'userAccount.userEulas' | translation | async }}" [clearable]="true"
+                  bindValue="codeID" bindLabel="name" formControlName="fcEulaId" [multiple]="true"
+                  [closeOnSelect]="false">
+
+                  <ng-template ng-header-tmp>
+                    <div class="ng-option">
+                      <div class="custom-control custom-checkbox m-l-4px">
+                        <input type="checkbox" class="custom-control-input" (change)="selectAllEulas($event)"
+                          id="eula-head" [checked]="this.lstEulas.length === this.selectedEulas.length">
+                        <label class="custom-control-label" for="eula-head">{{ "app.selectAll" | translation | async
+                          }}</label>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                  <ng-template ng-option-tmp let-item="item">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" [disabled]="item.tag === 2"
+                        [checked]="selectedEulas.indexOf(item.codeID) > -1" class="custom-control-input"
+                        id="{{'user-eula-'+item.codeID}}">
+                      <label class="custom-control-label">{{item.name}}</label>
+                    </div>
+                  </ng-template>
+
+                  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <div class="ng-value select-limit-width mw-25" *ngFor="let item of items | slice:0:selectItemLimit">
+                      <div [ngClass]="{'bg-gray': item.tag === 2}">
+                        <span *ngIf="item.tag !== 2" id="clear-eula-{{+item.codeID}}" class="ng-value-icon left"
+                          (click)="clear(item)" aria-hidden="true">x</span>
+                        <span [ngClass]="{'w-4r': item.tag === 2}" class="ng-value-label  select-limit-text"
+                          title="{{item.name}}">
+                          {{item.name}}</span>
+                      </div>
+
+                    </div>
+                    <div class="ng-value text-plane" title='{{ "app.selectNote" | translation | async }}'
+                      *ngIf='items.length > selectItemLimit'>
+                      <span class="ng-value-label">
+                        {{ "app.plus" | translation | async }}{{items.length - selectItemLimit}}
+                        {{ "app.more" | translation | async }}</span>
+                    </div>
+                  </ng-template>
+
+                </ng-select>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- Eula End-->
+
+          <!-- <div class="mb-2">
+            <label class="m-l-15px font-weight-bold lbl-user mb-0">{{"userAccount.sites" | translation | async}}</label>
+            <div class=" pl-0 pr-0 col-md-12"> -->
+          <!-- <app-custom-treeview-component id="select-sites" [siteDetails]="siteDetails" [siteTagData]="taggedData"
+                [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+                [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+                [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+                [clientSites]="lstClientSites" [isPiperUser]="isPiperUser" (sitesSelected)="updateSites($event)"
+                (sendSiteTagData)="taggedData = $event" (removeSites)="removeOrgnSites($event)" style="width: 100%;">
+              </app-custom-treeview-component> -->
+          <!-- <app-site-treeview-all-sites-v2 class="w-100" id="select-sites" [siteDetails]="siteDetails"
+                [siteTagData]="taggedData" [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+                [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+                [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+                [clientSites]="lstClientSites" [isPiperUser]="isPiperUser" (sitesSelected)="updateSites($event)"
+                (sendSiteTagData)="taggedData = $event" (removeSites)="removeOrgnSites($event)"
+                (showSitesTree)="this.showSitesTree=!$event" [selectOrgnSite]="isSiteAdmin">
+              </app-site-treeview-all-sites-v2>
+            </div>
+          </div> -->
+
+          <!-- <div class="mb-2  pl-0 pr-0 col-12">
+            <div class="d-flex align-items-center">
+              <label class="lbl-piper">{{ "userAccount.piperUser" | translation | async }}</label>
+              <div class="ml-2">
+                <app-custom-radio-button-v3 id="piper-user" value1="true" value2="false" label1="Active" label2="Active"
+                  formControlName="fcPiperUser" name="nmeIsPiperUser">
+                </app-custom-radio-button-v3>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+
+    <div class="popup-footer pt-0 pb-0">
+      <div class="w-100">
+        <button type="button" id="btn-back" *ngIf="value === 'three' || value === 'two'"
+          (click)="btnInternalClickBack()" class="apl-btn-v3  m-l-10px">
+          <i class="fas fa-arrow-left"></i>
+          {{"buttons.back" | translation | async}}
+        </button>
+
+        <button type="button" *ngIf="!isFromUpdateComponent" (click)="resetForm(true);" class="apl-btn-v3  m-l-10px"
+          id="btn-reset">
+          <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+        </button>
+
+        <button *ngIf="value === 'three' && isFromUpdateComponent && this.isSaveButtonAllow" type="submit"
+          (click)="ResetPassword()" [disabled]="form.invalid" class="apl-btn-v3 m-l-10px text-nowrap w-auto pl-2 pr-2"
+          id="btn-reset-password">
+          <i class="fa fa-key"></i> {{"buttons.password" | translation | async}}
+        </button>
+        <button *ngIf="value === 'three' && isFromUpdateComponent && viewPipers && this.isSaveButtonAllow" type="submit"
+          (click)="ResetUserPin()" [disabled]="form.invalid" class="apl-btn-v3 m-l-10px text-nowrap" id="btn-reset-pin">
+          <i class="fa fa-key"></i> {{"buttons.pin" | translation | async}}
+        </button>
+        <button id="btn-save" *ngIf="value === 'three' && this.isSaveButtonAllow" type="submit"
+          (click)="submit(form.value)" class="apl-btn-v3 primary-2  m-l-10px m-r-7px">
+          {{"buttons.Submit" | translation | async}}
+        </button>
+
+        <button type="button" *ngIf="value === 'one' || value === 'two'" (click)="btnInternalClickNext()"
+          class="apl-btn-v3 primary  m-l-10px m-r-7px" id="btn-next">{{"buttons.next" | translation | async}}
+          <i class="fas fa-arrow-right p-l-4px"></i>
+        </button>
+
+      </div>
+    </div>
+
+  </form>
+
+
+  <app-site-treeview-all-sites-selection *ngIf="showSitesTree" id="select-sites" [siteDetails]="siteDetails"
+    [siteTagData]="taggedData" [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+    [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+    [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+    [clientSites]="lstClientSites" [isPiperUser]="isPiperUser"
+    (sitesSelected)="updateSites($event); this.showSitesTree = false;" (sendSiteTagData)="taggedData = $event"
+    (removeSites)="removeOrgnSites($event)" (hideSitesTree)="this.showSitesTree = !$event" [organId]="orgnId"
+    [selectOrgnSite]="isSiteAdmin">
+  </app-site-treeview-all-sites-selection>
+</div>

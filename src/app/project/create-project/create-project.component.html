@@ -1,0 +1,643 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
+<div style="position: absolute; top: 90%;" *ngIf="showAlert" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+  {{ alertMessage }}
+  <button type="button" class="btn-close" aria-label="Close" (click)="showAlert = false"></button>
+</div>
+<div>
+  <div class="popup-body">
+    <form [formGroup]="addFarm">
+  
+      <!-- Step 1: Project Details -->
+      <div>
+        <div class="row">
+          <!-- Project Title -->
+          <div class="col-md-4">
+            <div class="form-group ng-select-box">
+              <label for="projectTile">Project Title</label>
+              <input type="text" id="projectTile" class="form-control" formControlName="ProjectTile">
+              <!-- Error Handling -->
+              <div *ngIf="addFarm.controls.ProjectTile.errors && 
+                          (addFarm.controls.ProjectTile.dirty || addFarm.controls.ProjectTile.touched)"
+                   class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle-fill text-danger"></i> Project Title is required
+              </div>
+            </div>
+          </div>
+  
+          <!-- Industry Select (Dropdown List Style) -->
+          <div class="col-md-4">
+  <div class="form-group ng-select-box required custom-dropdown-container">
+    <label for="roleSelect">Select Industry</label>
+    <div class="custom-dropdown-container">
+      <ng-select
+        id="roleSelect"
+        class="form-control"
+        [clearable]="true"
+        [multiple]="true"
+        bindLabel="name"
+        [closeOnSelect]="false"
+        [items]="IndustryList"
+        formControlName="selectedIndustry"
+        [(ngModel)]="selectedIndustryItem"
+        (ngModelChange)="onchangeEvent($event)"
+        [selectOnTab]="true">
+        
+        <!-- Custom Template: Nothing visible in the control -->
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
+          <!-- Empty span to prevent displaying items in the control -->
+          <span></span>
+        </ng-template>
+
+        <!-- Custom Template for Items in the Dropdown with checkboxes -->
+
+      </ng-select>
+      <div *ngIf="selectedIndustryItem?.length > 0" class="selected-items-hover">
+        <span class="selected-items-text">
+          {{ getSelectedItemsText(selectedIndustryItem) }}
+        </span>
+        
+        <!-- Hoverable dropdown container -->
+        <div class="hover-dropdown">
+          <ul>
+            <li *ngFor="let item of selectedIndustryItem; let index = index">
+              {{ item.name }}
+              <!-- Remove button/icon next to each selected item -->
+              <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Industry' ,-1)"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Handling -->
+    <div *ngIf="addFarm.get('selectedIndustry').errors && 
+                (addFarm.get('selectedIndustry').dirty || addFarm.get('selectedIndustry').touched)"
+         class="invalid-feedback d-block">
+      <i class="bi bi-exclamation-circle-fill text-danger"></i> Please Select Industry!
+    </div>
+  </div>
+</div>
+
+          
+  
+          <!-- Role Select (Dropdown List Style) -->
+          <div class="col-md-4">
+            <div class="form-group ng-select-box required custom-dropdown-container">
+              <label for="roleSelect">Select Role</label>
+              <div class="custom-dropdown-container">
+              <ng-select
+                id="roleSelect"
+                class="form-control "
+                [clearable]="true"
+                [multiple]="true"
+                bindLabel="name"
+                [closeOnSelect]="false"
+                [items]="RoleList"
+                formControlName="selectedRole"
+                [(ngModel)]="selectedRoleItem"
+                (ngModelChange)="onchangeRoleEvent($event)">
+                <ng-template ng-option-tmp let-item="item">
+                  <span *ngIf="item.id !== -1">{{ item.name }}</span>
+                  <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewRole($event)">
+                    Create New Role
+                  </button>
+                </ng-template>
+                 <!-- Custom Template: Nothing visible in the control -->
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
+                  <!-- Empty span to prevent displaying items in the control -->
+                  <span></span>
+                </ng-template>
+              </ng-select>
+             
+              <div *ngIf="selectedRoleItem?.length > 0" class="selected-items-hover">
+                <span class="selected-items-text">
+                  {{ getSelectedItemsText(selectedRoleItem) }}
+                </span>
+                
+                <!-- Hoverable dropdown container -->
+                <div class="hover-dropdown">
+                  <ul>
+                    <li *ngFor="let item of selectedRoleItem; let index = index">
+                      {{ item.name }}
+                      <!-- Remove button/icon next to each selected item -->
+                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Role',-1)"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+              <!-- Error Handling -->
+              <div *ngIf="addFarm.get('selectedRole').errors && 
+                          (addFarm.get('selectedRole').dirty || addFarm.get('selectedRole').touched)"
+                   class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle-fill text-danger"></i> Please Select Role!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="ng-select-box required">
+              <label for="industrySelect">Select Grade</label>
+              <ng-select
+                class="form-control"      
+                [clearable]="true"
+                [multiple]="true"
+                 bindLabel="name"          
+                [closeOnSelect]="true"
+                [dropdownPosition]="'bottom'"
+                [items]="GradeList"
+                [virtualScroll]="true"
+                formControlName = "selectedGrade"
+                [(ngModel)]="selectedGradeItem"
+                (ngModelChange) = "onchangeGradeEvent($event)"
+                
+                >
+                 <!-- Custom option template for Create New Industry -->
+              <ng-template ng-option-tmp let-item="item">
+                <span *ngIf="item.id !== -1">{{ item.name }}</span>
+                <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewGrade($event)">
+                  Create New Grade
+                </button>
+              </ng-template>
+              
+              </ng-select>
+              <div *ngIf="selectedGradeItem?.length > 0" class="selected-items-hover">
+                <span class="selected-items-text">
+                  {{ getSelectedItemsText(selectedGradeItem) }}
+                </span>
+                
+                <!-- Hoverable dropdown container -->
+                <div class="hover-dropdown">
+                  <ul>
+                    <li *ngFor="let item of selectedGradeItem; let index = index">
+                      {{ item.name }}
+                      <!-- Remove button/icon next to each selected item -->
+                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Grad',-1)"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="floating-error"
+              [ngClass]="{'hide': !(addFarm.get('selectedGrade').errors && (addFarm.get('selectedGrade').dirty || addFarm.get('selectedGrade').touched))}">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path
+                    d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                    fill="#EA4E40" />
+                </svg>
+              </i>
+              <div class="floating-error-text">
+                <div
+                  *ngIf="addFarm.get('selectedGrade').errors && (addFarm.get('selectedGrade').dirty || addFarm.get('selectedGrade').touched)">
+                  Please Select Grade!
+                </div>
+              </div>
+            </div>
+    
+          </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ng-select-box required">
+              <label for="industrySelect">Select Subject</label>
+              <ng-select
+                class="form-control"  
+                [clearable]="true"
+                 bindLabel="name"  
+                 [multiple]="true"        
+                [closeOnSelect]="true"
+                [dropdownPosition]="'bottom'"
+                [items]="SubjectList"
+                [virtualScroll]="true"
+                formControlName = "selectedSubject"
+                [(ngModel)]="selectedSubjectItem"
+                (ngModelChange) = "onchangeSubjectEvent($event)"
+                
+                >
+                 <!-- Custom option template for Create New Industry -->
+              <ng-template ng-option-tmp let-item="item">
+                <span *ngIf="item.id !== -1">{{ item.name }}</span>
+                <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewSubject($event)">
+                  Create New Subject
+                </button>
+              </ng-template>
+              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
+                <!-- Empty span to prevent displaying items in the control -->
+                <span></span>
+              </ng-template>
+              </ng-select>
+              <div *ngIf="selectedSubjectItem?.length > 0" class="selected-items-hover">
+                <span class="selected-items-text">
+                  {{ getSelectedItemsText(selectedSubjectItem) }}
+                </span>
+                
+                <!-- Hoverable dropdown container -->
+                <div class="hover-dropdown">
+                  <ul>
+                    <li *ngFor="let item of selectedSubjectItem; let index = index">
+                      {{ item.name }}
+                      <!-- Remove button/icon next to each selected item -->
+                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Subject',-1)"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="floating-error"
+              [ngClass]="{'hide': !(addFarm.get('selectedSubject').errors && (addFarm.get('selectedSubject').dirty || addFarm.get('selectedSubject').touched))}">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path
+                    d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                    fill="#EA4E40" />
+                </svg>
+              </i>
+              <div class="floating-error-text">
+                <div
+                  *ngIf="addFarm.get('selectedSubject').errors && (addFarm.get('selectedSubject').dirty || addFarm.get('selectedSubject').touched)">
+                  Please Select Subject!
+                </div>
+              </div>
+            </div>
+    
+          </div>
+          </div>
+          <div class="col-md-4">
+            <label for="industrySelect">Curriculum Points</label>
+            <app-anc-input-box formControlName="CurriculumPoints" placeholder=" " [numeric]="false" [mandatory]="true"
+              [displayError]="
+                addFarm.controls.CurriculumPoints.errors &&
+                (addFarm.controls.CurriculumPoints.dirty ||
+                  addFarm.controls.CurriculumPoints.touched)
+              ">
+              <ng-template>
+                <div *ngIf="
+                    addFarm.controls.CurriculumPoints.errors?.required &&
+                    (addFarm.controls.CurriculumPoints.dirty ||
+                      addFarm.controls.CurriculumPoints.touched)
+                  ">
+                  Curriculum Points  is required
+                </div>
+              </ng-template>
+              >
+            </app-anc-input-box>
+          </div>
+        </div>
+        <hr class="sidebar-divider">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="upload-box">
+              <!-- Icon for Uploading/Browsing Files -->
+              <input
+                type="file"
+                id="img"
+                style="display: none"
+                name="Images"
+                (change)="onFileChange($event)"
+                multiple
+              />
+              <label for="img" style="cursor: pointer;">
+                <i class="bi bi-upload" style="font-size: 2rem; color: #007bff;"></i> <!-- Upload Icon -->
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ml-3" *ngFor="let image of selectedImages; let i = index" class="image-container">
+              <img class="ml-3" [src]="image" alt="Selected Image" width="100" height="100">
+              <span (click)="removeImage(i)" style="cursor: pointer; color: red;">
+                <i class="bi bi-trash"></i> <!-- Trash Icon -->
+              </span>
+            </div> 
+        </div>
+        <!-- Week Details Section -->
+        <div>
+          <hr class="sidebar-divider">
+           <button class="btn btn-sm btn-primary shadow-sm" (click)="addWeek()">
+            <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
+            Add Week
+          </button>
+          
+<!-- Collapse All Button with Icon -->
+<div class="row mb-2">
+  <div class="col-md-12 text-right">
+    <span  (click)="toggleCollapseAll()">
+      <span style="cursor: pointer; margin-right: 5px;">Expand/Collapse All</span><i class="bi bi-chevron-bar-up"></i> <!-- Collapse All Icon -->
+    </span>
+  </div>
+</div>
+
+<!-- Week Details Section -->
+<div formArrayName="weeks">
+  <div *ngFor="let week of weeks.controls; let i = index" [formGroupName]="i">
+    
+    <!-- Toggle Collapse Button for Each Week -->
+    <div class="row">
+      <div class="col-md-10">
+        <h5>Week {{ i + 1 }}</h5>
+      </div>
+      <div class="col-md-2 text-right">
+        <span (click)="toggleCollapse(i)">
+          <i *ngIf="isCollapsed[i]" class="bi bi-chevron-down"></i> <!-- Expand Icon -->
+          <i *ngIf="!isCollapsed[i]" class="bi bi-chevron-up"></i> <!-- Collapse Icon -->
+        </span>
+        <span (click)="removeWeek(i)">
+          <i class="bi bi-trash" style="cursor: pointer; color: red; margin-left: 5px;"></i> <!-- Trash Icon -->
+        </span>
+      </div>
+    </div>
+    
+    <!-- Week Content: Collapsible Section -->
+    <div [hidden]="isCollapsed[i]">
+      <div class="row">
+        <!-- Lesson Plan -->
+        <div class="col-md-4">
+          <app-anc-input-box formControlName="lessonPlan" placeholder="Lesson Plan" [numeric]="false" [mandatory]="true"
+            [displayError]="week.get('lessonPlan').errors && (week.get('lessonPlan').dirty || week.get('lessonPlan').touched)">
+            <ng-template>
+              <div *ngIf="week.get('lessonPlan').errors?.required && (week.get('lessonPlan').dirty || week.get('lessonPlan').touched)">
+                Lesson Plan is required
+              </div>
+            </ng-template>
+          </app-anc-input-box>
+        </div>
+
+        <!-- Objectives -->
+        <div class="col-md-4">
+          <app-anc-input-box formControlName="objectives" placeholder="Objectives" [numeric]="false" [mandatory]="true"
+            [displayError]="week.get('objectives').errors && (week.get('objectives').dirty || week.get('objectives').touched)">
+            <ng-template>
+              <div *ngIf="week.get('objectives').errors?.required && (week.get('objectives').dirty || week.get('objectives').touched)">
+                Objectives are required
+              </div>
+            </ng-template>
+          </app-anc-input-box>
+        </div>
+
+        <!-- Activities -->
+        <div class="col-md-4">
+          <app-anc-input-box formControlName="activities" placeholder="Activities" [numeric]="false" [mandatory]="false"
+            [displayError]="week.get('activities').errors && (week.get('activities').dirty || week.get('activities').touched)">
+          </app-anc-input-box>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Tools Selection -->
+        <div class="col-md-4">
+          <div class="ng-select-box required">
+            <label for="industrySelect">Select Tool</label>
+            <ng-select class="form-control"  [clearable]="true" bindLabel="name" [multiple]="true"
+              [closeOnSelect]="true" [dropdownPosition]="'bottom'" [items]="ToolList" [virtualScroll]="true" formControlName="selectedTool"
+              (change)="onchangeToolEvent($event, i)">
+              <!-- Custom option template for Create New Tool -->
+              <ng-template ng-option-tmp let-item="item">
+                <span *ngIf="item.id !== -1">{{ item.name }}</span>
+                <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewTool($event)">
+                  Create New Tool
+                </button>
+              </ng-template>
+              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
+                <!-- Empty span to prevent displaying items in the control -->
+                <span></span>
+              </ng-template>
+            </ng-select>
+            <div *ngIf="selectedToolItem?.length > 0" class="selected-items-hover">
+              <span class="selected-items-text">
+                {{ getSelectedItemsText(weeks.controls[i].get('selectedTool').value) }}
+              </span>
+              
+              <!-- Hoverable dropdown container -->
+              <div class="hover-dropdown">
+                <ul>
+                  <li *ngFor="let item of weeks.controls[i].get('selectedTool').value; let index = index">
+                    {{ item.name }}
+                    <!-- Remove button/icon next to each selected item -->
+                    <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Tool',i)"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- Error Handling -->
+            <div *ngIf="week.get('selectedTool').errors && (week.get('selectedTool').dirty || week.get('selectedTool').touched)"
+              class="invalid-feedback d-block">
+              <i class="bi bi-exclamation-circle-fill text-danger"></i> Please Select Tool!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+          <!-- Tool Selection with Dropdown -->
+            
+  
+          <!-- Submit Button -->
+          
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 text-right"> <!-- Align button to the right -->
+            <button class="btn btn-sm btn-primary shadow-sm" (click)="onSubmit()">
+              <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
+              Create Project
+            </button>
+          </div>
+        </div>        
+      </div>
+    </form>
+  </div>
+  
+
+  <div class="popup-content card" *ngIf="createIndustry">
+    <div class="card-header" style="background-color: white;">
+      <h5 class="card-title bg-none" >Create New Iindustry</h5>
+      <button type="button" class="btn-close" (click)="createRole = false"></button>
+    </div>
+    <form [formGroup]="addIndustry">
+      <div class="row">
+        <div class="col-md-4">
+          <app-anc-input-box formControlName="industryName" placeholder="Name" [numeric]="false" [mandatory]="true"
+            [displayError]="
+              addIndustry.controls.industryName.errors &&
+              (addIndustry.controls.industryName.dirty ||
+              addIndustry.controls.industryName.touched)
+            ">
+            <ng-template>
+              <div *ngIf="
+                  addIndustry.controls.industryName.errors?.required &&
+                  (addIndustry.controls.industryName.dirty ||
+                  addIndustry.controls.industryName.touched)
+                ">
+                industry Name required
+              </div>
+            </ng-template>
+            >
+          </app-anc-input-box>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="onSubmitIndustry()">
+            Create
+          </button>
+        </div>
+      </div>
+      
+    </form>
+   </div>
+   <div class="popup-content card" *ngIf="createRole">
+    <div class="card-header" style="background-color: white;">
+      <h5 class="card-title bg-none" >Create New Role</h5>
+      <button type="button" class="btn-close" (click)="createRole = false"></button>
+    </div>
+    <form [formGroup]="addRole">
+      <div class="row">
+        <div class="col-md-4" style="margin-top: 10px;">
+          <app-anc-input-box formControlName="roleName" placeholder="Name" [numeric]="false" [mandatory]="true"
+            [displayError]="
+              addRole.controls.roleName.errors &&
+              (addRole.controls.roleName.dirty ||
+              addRole.controls.roleName.touched)
+            ">
+            <ng-template>
+              <div *ngIf="
+                  addRole.controls.roleName.errors?.required &&
+                  (addRole.controls.roleName.dirty ||
+                  addRole.controls.roleName.touched)
+                ">
+                Role Name required
+              </div>
+            </ng-template>
+            >
+          </app-anc-input-box>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="onSubmitRole()">
+            Create
+          </button>
+        </div>
+      </div>
+      
+    </form>
+   </div>
+   <div class="popup-content card" *ngIf="createSubject">
+    <div class="card-header" style="background-color: white;">
+      <h5 class="card-title bg-none" >Create New Subject</h5>
+      <button type="button" class="btn-close" (click)="createSubject = false"></button>
+    </div>
+    <form [formGroup]="addSubject">
+      <div class="row">
+        <div class="col-md-4" style="margin-top: 10px;">
+          <app-anc-input-box formControlName="subjectName" placeholder="Name" [numeric]="false" [mandatory]="true"
+            [displayError]="
+              addSubject.controls.subjectName.errors &&
+              (addSubject.controls.subjectName.dirty ||
+              addSubject.controls.subjectName.touched)
+            ">
+            <ng-template>
+              <div *ngIf="
+                  addSubject.controls.subjectName.errors?.required &&
+                  (addSubject.controls.subjectName.dirty ||
+                  addSubject.controls.subjectName.touched)
+                ">
+                Subject Name required
+              </div>
+            </ng-template>
+            >
+          </app-anc-input-box>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="onSubmitSubject()">
+            Create
+          </button>
+        </div>
+      </div>
+      
+    </form>
+   </div>
+   <div class="popup-content card" *ngIf="createGrade">
+    <div class="card-header" style="background-color: white;">
+      <h5 class="card-title bg-none" >Create New Grade</h5>
+      <button type="button" class="btn-close" (click)="createGrade = false"></button>
+    </div>
+    <form [formGroup]="addGrade">
+      <div class="row">
+        <div class="col-md-4" style="margin-top: 10px;">
+          <app-anc-input-box formControlName="gradeName" placeholder="Name" [numeric]="false" [mandatory]="true"
+            [displayError]="
+              addGrade.controls.gradeName.errors &&
+              (addGrade.controls.gradeName.dirty ||
+              addGrade.controls.gradeName.touched)
+            ">
+            <ng-template>
+              <div *ngIf="
+                  addGrade.controls.gradeName.errors?.required &&
+                  (addGrade.controls.gradeName.dirty ||
+                  addGrade.controls.gradeName.touched)
+                ">
+                Grade Name required
+              </div>
+            </ng-template>
+            >
+          </app-anc-input-box>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="onSubmitGrade()">
+            Create
+          </button>
+        </div>
+      </div>
+      
+    </form>
+   </div>
+   <div class="popup-content card" *ngIf="createTool">
+    <div class="card-header" style="background-color: white;">
+      <h5 class="card-title bg-none" >Create New Tool</h5>
+      <button type="button" class="btn-close" (click)="createTool = false"></button>
+    </div>
+    <form [formGroup]="addTool">
+      <div class="row">
+        <div class="col-md-4" style="margin-top: 10px;">
+          <app-anc-input-box formControlName="ToolName" placeholder="Name" [numeric]="false" [mandatory]="true"
+            [displayError]="
+              addTool.controls.ToolName.errors &&
+              (addTool.controls.ToolName.dirty ||
+              addTool.controls.ToolName.touched)
+            ">
+            <ng-template>
+              <div *ngIf="
+                  addTool.controls.ToolName.errors?.required &&
+                  (addTool.controls.ToolName.dirty ||
+                  addTool.controls.ToolName.touched)
+                ">
+                Tool Name required
+              </div>
+            </ng-template>
+            >
+          </app-anc-input-box>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success" type="submit" (click)="onSubmitTool()">
+            Create
+          </button>
+        </div>
+      </div>
+      
+    </form>
+   </div>
+</div>

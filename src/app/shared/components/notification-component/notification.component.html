@@ -1,0 +1,53 @@
+<ngb-alert id="alrt" class="animated slideInRight notification ngb-custom" *ngIf="message" [type]="message.type" (close)="close()" [dismissible]="message.type != 'upload'">
+
+    <span id='message-icon' class="ngb-icon-pos">
+        <i id='success-message' *ngIf="message.type === 'success'" class="far fa-check-circle color-success"></i>
+        <i id='warning-message' *ngIf="message.type === 'warning'" class="fa fa-exclamation-triangle color-warning"></i>
+        <i id='warning-message' *ngIf="message.type === 'info'" class="fas fa-info-circle text-info"></i>
+        <i id='danger-message' *ngIf="message.type === 'danger'" class="fa fa-exclamation-circle color-error"></i>
+        <i id='upload-message' *ngIf="message.type === 'upload'" class="fas fa-cloud-upload-alt color-upload"></i>
+        <!-- <i ></i> -->
+
+      </span>
+    <label id='lable-icon' class="ngb-label-icon">
+      </label>
+
+    <label id='message' class="mb-0 ngb-label-msg">
+        <!-- Your new authentication method has been created successfully -->
+        {{ message.message }}
+      </label>
+    <div class="d-block progress-main" *ngIf="message.type === 'upload'">
+        <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{message.progress}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: message.progress + '%' }">
+                {{ message.progress }}%
+            </div>
+        </div>
+        <!-- <div class="ta-c">File upload in progress. Please wait</div> -->
+
+    </div>
+
+</ngb-alert>
+
+<div id='notification-loading' *ngIf="notification.loading === true" [ngClass]="{'waiting z-12000': notification.loading === true}">
+
+    <!-- New Iphone Spinner #Start -->
+    <div class="overlay overlay-loader" [ngClass]="{'waiting z-12100': notification.loading === true}">
+        <div class="mob-spinner ispinner center ispinner-large">
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+            <div class="ispinner-blade"></div>
+        </div>
+    </div>
+    <!-- New Iphone Spinner #End -->
+
+
+</div>

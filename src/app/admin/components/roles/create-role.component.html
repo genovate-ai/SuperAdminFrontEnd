@@ -1,0 +1,91 @@
+<form [formGroup]="form">
+    <div class="popup-body mt-2 p-0">
+        <div class="popup-card h-sm-popup p-t-10px p-b-10px p-r-25px p-l-25px ">
+            <div class=" ">
+
+                <div class="form-group">
+                    <app-anc-input-box formControlName="fcName" [placeholder]="'roles.role'" [numeric]="false" [translate]="true" [mandatory]="true" id="nameId" [displayError]="form.controls.fcName.errors && (form.controls.fcName.dirty || form.controls.fcName.touched)">
+                        <ng-template>
+                            <div *ngIf="
+                                form.get('fcName').errors?.required &&
+                                (form.get('fcName').dirty || form.get('fcName').touched) ||
+                                form.get('fcName').errors?.required && isNavigated
+                              ">
+
+                                {{ "roles.namerequired" | translation | async }}
+                            </div>
+                            <div *ngIf="form.get('fcName').errors?.maxlength && (form.get('fcName').dirty || form.get('fcName').touched)">
+                                {{ "dataFormat.lengthSixtyMax" | translation | async }}
+                            </div>
+                            <div
+                              *ngIf="form.controls.fcName.hasError('pattern') && (form.controls.fcName.dirty || form.controls.fcName.touched)">
+                              {{ "reportRole.invalidName" | translation | async }}
+                            </div>
+                        </ng-template>
+                    </app-anc-input-box>
+                    <!-- <label>{{
+                        "roles.role" | translation | async
+                      }}*</label>
+                    <input type="text" formControlName="fcName" id="nameId" name="nmeName" class="form-control" inputMask placeholder="{{ 'fieldText.name' | translation | async }}" required />
+                    <div class="form-error" *ngIf="
+                      form.get('fcName').errors?.required &&
+                      form.get('fcName').touched ||
+                      form.get('fcName').errors?.required && isNavigated">
+                        {{ "roles.namerequired" | translation | async }}
+                    </div> -->
+
+
+                </div>
+
+                <div class="form-group ">
+                    <app-anc-input-box formControlName="fcDesc" [placeholder]="'roles.description'" [numeric]="false" [translate]="true" [mandatory]="true" id="descId" [displayError]="form.controls.fcDesc.errors && (form.controls.fcDesc.dirty || form.controls.fcDesc.touched)">
+                        <ng-template>
+                            <div *ngIf="
+                                form.get('fcDesc').errors?.required &&
+                                (form.get('fcDesc').dirty || form.get('fcDesc').touched) ||
+                                form.get('fcDesc').errors?.required && isNavigated
+                              ">
+
+                                {{ "roles.descrequired" | translation | async }}
+                            </div>
+                            <div *ngIf="form.get('fcDesc').errors?.maxlength && (form.get('fcDesc').dirty || form.get('fcDesc').touched)">
+                                {{ "dataFormat.lengtTwoHundredMax" | translation | async }}
+                            </div>
+                        </ng-template>
+                    </app-anc-input-box>
+
+
+
+                </div>
+                <div class="d-flex align-items-center">
+                    <label class="lbl-user mb-0 mr-2  font-weight-bold" style="color:black">{{ "userAccount.status" | translation | async }}</label>
+                    <app-custom-radio-button-v3 id="role-status" value1="true" value2="false" label1="Active" label2="Active" formControlName="fcIsActive" name="nmeIsActive">
+                    </app-custom-radio-button-v3>
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="popup-footer f-r">
+        <div *ngIf="this.isSaveButtonAllow" class="w-100">
+            <button type="button" *ngIf="!isFromUpdateComponent" (click)="reset()" id="btn-reset" class="apl-btn-v3  m-l-10px">
+                <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+              </button>
+            <button type="submit" (click)="submit(form.value)" *ngIf="this.isSaveButtonAllow" id="btn-save" class="apl-btn-v3 primary-2 m-l-10px" [ngClass]="{'disabled-v2': this.form.invalid}">
+        <i class="fa fa-save"></i> {{"buttons.Submit" | translation | async}}
+      </button>
+
+
+        </div>
+    </div>
+
+
+
+</form>

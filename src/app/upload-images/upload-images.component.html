@@ -1,0 +1,152 @@
+<app-manage-profile-component class="report-profile-section" *ngIf="getProfileView()">
+</app-manage-profile-component>
+<div class="upload-border" *ngIf="this.screenPermission.isCreateAllow">
+  <div class="upload-box">
+    <span>Upload file or import file from your computer</span>
+    <input
+    accept="image/jpeg,image/png,TIF"
+      type="file"
+      id="img"
+      style="display: none"
+      name="Images"
+      (change)="onFileChange($event)"
+      webkitdirectory 
+      multiple
+      directory
+    />
+    <label for="img">
+      <svg
+        width="15"
+        height="17"
+        viewBox="0 0 15 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13.7729 1.22714C12.1367 -0.409047 9.4747 -0.409047 7.83852 1.22714L1.59031 7.47532C1.39748 7.66815 1.39748 7.98054 1.59031 8.17337C1.78314 8.3662 2.09553 8.3662 2.28836 8.17337L8.53654 1.92519C9.74943 0.713263 11.8619 0.713263 13.0748 1.92519C14.3258 3.17618 14.3258 5.21201 13.0748 6.463L4.35005 15.286C3.6038 16.0322 2.30363 16.0322 1.55741 15.286C0.787528 14.5161 0.787528 13.2637 1.55741 12.4938L9.93314 4.01933C10.2127 3.73974 10.7006 3.73974 10.9802 4.01933C11.2689 4.30806 11.2689 4.77812 10.9802 5.06689L2.95398 13.1918C2.7875 13.3583 2.7875 13.7234 2.95398 13.8899C3.14681 14.0827 3.4592 14.0827 3.65203 13.8899L11.6782 5.76491C12.3522 5.09094 12.3522 3.99521 11.6782 3.32127C11.0255 2.66855 9.88682 2.66951 9.23509 3.32127L0.859351 11.7957C-0.28645 12.9415 -0.28645 14.8382 0.859351 15.984C1.41906 16.5437 2.16288 16.8452 2.95394 16.8452C3.74501 16.8452 4.48889 16.5437 5.04811 15.984L13.7729 7.16102C15.409 5.52483 15.409 2.86329 13.7729 1.22714Z"
+          fill="white"
+        />
+      </svg>
+      Browse
+    </label>
+    <!-- <button>
+            <svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.7729 1.22714C12.1367 -0.409047 9.4747 -0.409047 7.83852 1.22714L1.59031 7.47532C1.39748 7.66815 1.39748 7.98054 1.59031 8.17337C1.78314 8.3662 2.09553 8.3662 2.28836 8.17337L8.53654 1.92519C9.74943 0.713263 11.8619 0.713263 13.0748 1.92519C14.3258 3.17618 14.3258 5.21201 13.0748 6.463L4.35005 15.286C3.6038 16.0322 2.30363 16.0322 1.55741 15.286C0.787528 14.5161 0.787528 13.2637 1.55741 12.4938L9.93314 4.01933C10.2127 3.73974 10.7006 3.73974 10.9802 4.01933C11.2689 4.30806 11.2689 4.77812 10.9802 5.06689L2.95398 13.1918C2.7875 13.3583 2.7875 13.7234 2.95398 13.8899C3.14681 14.0827 3.4592 14.0827 3.65203 13.8899L11.6782 5.76491C12.3522 5.09094 12.3522 3.99521 11.6782 3.32127C11.0255 2.66855 9.88682 2.66951 9.23509 3.32127L0.859351 11.7957C-0.28645 12.9415 -0.28645 14.8382 0.859351 15.984C1.41906 16.5437 2.16288 16.8452 2.95394 16.8452C3.74501 16.8452 4.48889 16.5437 5.04811 15.984L13.7729 7.16102C15.409 5.52483 15.409 2.86329 13.7729 1.22714Z" fill="white"/>
+                </svg>
+            Browse</button> -->
+  </div>
+</div>
+<h5 *ngIf="this.screenPermission.isCreateAllow">Details of Drone Images</h5>
+<div class="detail-images" *ngIf="this.screenPermission.isCreateAllow">
+    <div class="datatable-container">
+        <div class="table-responsive apl-data-log-table apl-scrollbar scrollbar--2">
+            <div id="table-user-log" class="mb-0">
+              <table id="dc-table-graph" class="table__data-log">
+                <thead>
+                  <tr  id="table-header-user-log" class="text-uppercase">
+                    <th>No. of Images</th>
+                    <th>Images Type</th>
+                    <th>Farm Name</th>
+                    <th>Flight Height</th>
+                    <th>Flight Date</th>
+                    <th>Drone</th>
+                    <th>Camera</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td>{{count}}</td>
+                    <td>{{type}}</td>
+                    <td>{{farmName}}</td>
+                    <td>{{altitude | number:'1.1-2'}}</td>
+                    <td>{{ this.datePipe.transform(imageTakenDate, 'dd MMMM yyyy')}}</td>
+                    <td>{{make}}</td>
+                    <td>{{model}}</td>
+                  </tr>
+                </tbody>
+                <thead>
+                  <tr  id="table-header-user-log" class="text-uppercase">
+                    <th style="color:#86B741">Uploaded Images</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td style="color:#86B741" >{{uploadedImages}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+</div>
+<div class="upload-bar" *ngIf="this.screenPermission.isCreateAllow">
+  <!-- <div class="progressBar" >
+    <ngb-progressbar type="dark" [value]="progress"></ngb-progressbar>
+  </div> -->
+  <div class="progress progressBar">
+    <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width': progressStr}" style="background-color: #86B741" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+    <button class="upload" (click)="onUploadImages()">Upload</button>
+    <button class="preview" (click)="onPreviewImages()">Preview Images</button>
+</div>
+<div class="upload-table" *ngIf="this.screenPermission.isCreateAllow">
+    <div class="datatable-container">
+        <div class="table-responsive apl-data-log-table apl-scrollbar scrollbar--2">
+            <div id="table-user-log" class="mb-0">
+              <table id="dc-table-graph" class="table__data-log">
+                <thead>
+                  <tr id="table-header-user-log" class="text-uppercase">
+                    <th>Image Name</th>
+                    <th>Image Type</th>
+                    <th>Farm Name</th>
+                    <th>Flight Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr *ngFor="let file of MetaDatalst; let i = index;" >
+                    <td>{{file.name}}</td>
+                    <td>{{file.type}}</td>
+                    <td>{{farmName}}</td>
+                    <td>{{ this.datePipe.transform(file.imageTakenDate, 'dd/MM/yyyy')}}</td>
+                    <td><svg
+                      (click)="deleteFromArray(i,file)"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="20" height="20" rx="2" fill="#0E0E2B" />
+                          <path
+                            d="M8.07709 7.82019H8.84632V13.974H8.07709V7.82019Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M9.61517 7.82019H10.3844V13.974H9.61517V7.82019Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M11.1539 7.82019H11.9231V13.974H11.1539V7.82019Z"
+                            fill="white"
+                          />
+                          <path d="M5 5.51306H15V6.28229H5V5.51306Z" fill="white" />
+                          <path
+                            d="M11.8976 5.89743H11.1796V5.1282C11.1796 4.89743 11.0002 4.71795 10.7694 4.71795H9.23093C9.00016 4.71795 8.82067 4.89743 8.82067 5.1282V5.89743H8.10272V5.1282C8.10272 4.51282 8.61554 4 9.23093 4H10.7694C11.3848 4 11.8976 4.51282 11.8976 5.1282V5.89743Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M12.3078 16.2822H7.69243C7.07704 16.2822 6.53858 15.7694 6.4873 15.154L5.76935 5.92323L6.53858 5.87195L7.25653 15.1027C7.28217 15.3335 7.4873 15.513 7.69243 15.513H12.3078C12.5386 15.513 12.7437 15.3078 12.7437 15.1027L13.4617 5.87195L14.2309 5.92323L13.5129 15.154C13.4617 15.795 12.9232 16.2822 12.3078 16.2822Z"
+                            fill="white"
+                          />
+                        </svg></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+</div>

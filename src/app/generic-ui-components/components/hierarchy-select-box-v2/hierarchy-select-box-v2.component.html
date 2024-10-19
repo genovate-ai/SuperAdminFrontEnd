@@ -1,0 +1,149 @@
+<div class="anc-form-floating" clickOutsideElem (clickOutside)="showList = false" [clickOutsideEnabled]="showList"
+  [clickOutsideEvents]="'click,touchstart'">
+  <div #input class="anc-form-floating__input-control form-control positive-relative z-i-200"
+    [ngClass]="{'focus': this.selectedList.length > 0, 'cursor-not-allowed': disabled}">
+    <div class="selected-item selected-item-ellipsis selected-item-tag"
+      *ngFor="let item of this.selectedList | slice:0:tagLimit; trackBy:identity">
+      <span (click)="clearItem(item)" *ngIf="clearable" class="value-icon right"
+        [ngClass]="{'cursor-not-allowed': disabled}">x</span>
+      <span class="value-text" id="selected-{{item[bindValue]}}"
+        title="{{item['siteUniqueNumber']}} - {{ item[bindLabel] }}">
+        {{item['siteUniqueNumber']}} - {{ item[bindLabel] }}
+      </span>
+    </div>
+    <div class="selected-item selected-item-ellipsis" *ngIf='selectedList.length > tagLimit'>
+      <span class="selected-item-text"> {{ separatorKey | translation | async }}{{selectedList.length - tagLimit}} {{
+        pluralKey
+        | translation | async }}</span>
+    </div>
+    <i class="toggle-list fas " (click)="openHierarchyBox(); this.onTouch()"
+      [ngClass]="{'fa-chevron-up up': showList, 'fa-chevron-down down': !showList }"></i>
+  </div>
+  <div class="anc-form-floating__label-container" id="{{ id }}-error-container">
+    <div class="anc-form-floating__error" [ngClass]="{'hide': !displayError}">
+      <i (mouseover)="setErrorVisible()" (mouseout)="setErrorHidden()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path
+            d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+            fill="#EA4E40" />
+          <path
+            d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+            fill="#EA4E40" />
+          <path
+            d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+            fill="#EA4E40" />
+        </svg>
+      </i>
+      <div class="anc-form-floating__error-text" #errorText [ngClass]="{'show': displayError && errorVisible}">
+        <ng-container *ngTemplateOutlet="layoutTemplate;">
+        </ng-container>
+      </div>
+    </div>
+    <label for="{{ id }}" [ngClass]="{'cursor-not-allowed': disabled}">
+      {{ !translate ? placeholderKey : (placeholderKey | translation | async) }}
+      <span *ngIf="mandatory" class="is-mandatory">*</span>
+    </label>
+  </div>
+  <div class="anc-form-floating__tree" [ngClass]="{'d-none': !showList}">
+    <div class="anc-form-floating__search">
+      <input class="search-control form-control" placeholder="Search" type="text" id="{{id}}_search" autocomplete="off"
+        #searchbox [disabled]="disabled" [ngClass]="{'cursor-not-allowed': disabled}">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <div class="apl-scrollbar anc-form-floating__items-list">
+      <table >
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: itemsList }">
+        </ng-container>
+      </table>
+
+
+      <ng-template #recursiveList let-list>
+        <ng-container>
+          <ng-container *ngFor="let item of list;">
+            <tr *ngIf="item.item.visibleState" (click)="selectNode(item.item)" class="{{ getHoverClass(item.item) }}"
+              [ngClass]="{'d-none': item.item.searched === false}">
+              <td [style.paddingLeft.px]="getPaddingLeftByLevel(item.level)">
+                <div class="d-flex align-items-center">
+                  <i class="fas item-icon--caret"
+                    [ngClass]="{'fa-caret-right': !item.item.expandChildren, 'fa-caret-down': item.item.expandChildren}"
+                    (click)="expandChildren(item)"></i>
+                  <div class="item-text">
+
+                    <label class="mb-0" for="site-{{item.item.siteId}}"
+                      [ngClass]="{'pointer-events-none': item.item.disabled}"
+                      [style.width.px]="getWidthByLevel(item.level)">
+                      <div class="d-inline-block pull-left">
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.CorporateOffice" class="fas fa-warehouse item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level1-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Farms" class="fas fa-sitemap item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level2-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Houses" class="fas fa-home item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level3-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.ProcessingPlants" class="fas fa-spa item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level4-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Integrator" class="fas fa-cogs item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level5-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Region" class="fas fa-landmark item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level6-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.FeedMill" class="fas fa-city item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level7-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Hatchery" class="fas fa-cubes item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level8-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Laboratory" class="fas fa-flask item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level9-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Default" class="fas fa-check-double item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level10-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Rehang" class="fas fa-weight-hanging item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level11-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.BirdWash" class="fab fa-earlybirds item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level16-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.BirdRinse" class="fas fa-dove item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level12-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.Chiller" class="fas fa-air-freshener item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level13-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.WingDip" class="far fa-circle item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level14-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab" class="fas fa-vial item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level15-color -->
+                        <i *ngIf="item.item.siteTypeId == siteTypeID.SubRegion" class="fas fa-map-marked-alt item-icon"
+                          [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                        <!--level15-color -->
+                        <!-- <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab"  class="fas fa-map-marked-alt m-l-10px level16-color"></i> -->
+                      </div>
+                      <label class="mb-0" for="site-{{item.item.siteId}}"
+                        [innerHTML]="item.item.siteName | boldStr:searchTxt"></label>
+                    </label>
+
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+            <ng-container *ngIf="item.children.length > 0">
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }">
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+
+      </ng-template>
+    </div>
+  </div>
+</div>

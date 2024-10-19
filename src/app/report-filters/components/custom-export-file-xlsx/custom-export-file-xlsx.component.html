@@ -1,0 +1,46 @@
+<div class="w-0px">
+
+  <span title="{{ 'toolTips.exportFile' | translation | async }}" class="cursor-pointer font-1rem icon"
+    (click)="manageList()">
+    <i class="fa fa-download grayColor" aria-hidden="true" *ngIf="!latestVersion"></i>
+    <img src="../../../../assets/images/components-icons/export-icon.png" height="14" width="13"
+      *ngIf="latestVersion" />
+  </span>
+
+  <div *ngIf="showDataformatList" class="modalCustomListStyle " [ngClass]="{'modalCustomListStyle--2': !latestVersion}">
+    <ul class="ulModalList" *ngFor="let data of dataFormats, let ind = index">
+      <li class="cursorPoiner liModalList hoverHighlight" (click)="exportFile(data.dataFormId, data.dataFormName)">
+        <label title="{{ data.dataFormName }}" id="{{data.dataFormName.replaceAll(' ','-')}}"
+          class="cursorPoiner overflowDotted mb-1">
+          <span class="font3pdding4"><i class="fas fa-file" aria-hidden="true"></i></span>
+          {{ data.dataFormName }} </label>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="showList" class="modalListStyle " [ngClass]="{'modalListStyle--2': !latestVersion}">
+    <ul class="ulModalList">
+      <li class="cursorPoiner liModalList hoverHighlight" (click)="exportCSV()">
+        <label id="export-csv" class="cursorPoiner">
+          <span class="font3pdding4"><i class="fas fa-file" aria-hidden="true"></i></span>
+          {{ 'exportDropDown.exportCSV' | translation | async }}
+        </label>
+      </li>
+      <li *ngIf="auditTrail" class="cursorPoiner liModalList hoverHighlight" (click)="exportAuditCSV()">
+        <label id="export-audit-csv" class="cursorPoiner">
+          <span class="font3pdding4"><i class="fas fa-file" aria-hidden="true"></i></span>
+          {{ 'exportDropDown.exportAuditCSV' | translation | async }}
+        </label>
+      </li>
+      <hr class="horizontalLineModal" *ngIf="dataFormats.length != 0" />
+      <div *ngIf="dataFormats.length != 0">
+        <li id="export-data-template" class="cursorPoiner liModalList hoverHighlight" (click)="manageDataformatList()">
+          <span class="alignSpan"><i class="fas fa-chevron-left" aria-hidden="true"></i></span>
+          <label class="cursorPoiner vertical-align-top" style="vertical-align: top;">
+            {{ 'exportDropDown.exportDataTemplate' | translation | async }} </label>
+        </li>
+      </div>
+    </ul>
+  </div>
+</div>
+<app-custom-export-file tableId="{{tableId}}" fileName="{{fileName}}"> </app-custom-export-file>

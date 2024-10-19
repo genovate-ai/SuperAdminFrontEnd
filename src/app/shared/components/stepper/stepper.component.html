@@ -1,0 +1,7 @@
+<div id="msform">
+    <ul id="progressbar">
+        <li *ngFor="let step of stepNames; let i = index" id="progressbar-{{i + 1}}" [ngClass]="{'active': isActiveClasses[i], 'darkTheme' : darkTheme}" (click)="listClick(i+1)" [ngStyle]="{'width': widthPercent+'%'}">
+            {{ stepNames[i] }}
+        </li>
+    </ul>
+</div>

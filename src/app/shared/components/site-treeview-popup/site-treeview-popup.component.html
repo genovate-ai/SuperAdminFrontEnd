@@ -1,0 +1,100 @@
+<form [formGroup]="form" autocomplete="off">
+
+    <div class="form-group">
+        <div class="input-group">
+
+            <div class="form-control apl-form-control-inv ng-select-container b-r-5">
+                <div *ngFor="let item of siteTagData | slice:0:selectItemLimit" class="d-inline">
+                    <p class="select-box">{{ item.siteName }}</p>
+                </div>
+                <div class="ng-value text-plane d-inline" title='{{ "app.selectNote" | translation | async }}' *ngIf='siteTagData.length > selectItemLimit'>
+                    <span class="ng-value-label">
+                        {{ "app.plus" | translation | async }}{{siteTagData.length - selectItemLimit}}
+                        {{ "app.more" | translation | async }}</span>
+                </div>
+            </div>
+            <button id="btn-show-tree" (click)="showTree1(true)" class="apl-btn b-md btn-ok m-l-10px">
+                {{"userAccount.sites" | translation | async}}
+            </button>
+        </div>
+    </div>
+    <div class="myanim overlay-blur" *ngIf="showTreeComp">
+        <div class="popup-on-top1">
+            <div class="header-popup">
+                <label class="popup-heading">{{ "userAccount.testSites" | translation | async }}</label>
+                <span class="backG-hover-red btn-close-popup" id="close-demo-client-sites" (click)="hideTree()" aria-hidden="true">x</span>
+            </div>
+            <div style="padding: 20px; height: 60vh;">
+                <div class="row" *ngIf="!loadAllSites">
+                <div class="form-group col-md-6">
+                    <label>{{
+                        "userAccount.organizationType" | translation | async
+                        }}*</label>
+
+                    <ng-select class="form-control" name="nmeOrgType" id="orgTypeId" placeholder="{{ 'fieldText.Select' | translation | async }}" [(ngModel)]="selectedValueOrgType" [items]="lstOrgType" [clearable]="false" bindValue="codeID" bindLabel="name" formControlName="fcOrganizationType"
+                        (change)="selectedOrgType(selectedValueOrgType, true)" [multiple]="false">
+                    </ng-select>
+
+
+                    <div class="form-error" *ngIf="
+              form.get('fcOrganizationType').errors?.required &&
+              form.get('fcOrganizationType').touched ||
+              form.get('fcOrganizationType').errors?.required && isNavigated
+              ">
+                        {{ "userAccount.OrganizaionTypeRequired" | translation | async }}
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>{{
+                        "userAccount.organization" | translation | async
+                        }}*</label>
+
+                    <ng-select class="form-control" name="nmeOrganization" id="organizationId" placeholder="{{ 'fieldText.Select' | translation | async }}" [(ngModel)]="selectedValueOrganization" [items]="lstOrganizationsFiltered" [clearable]="false" bindValue="codeID" bindLabel="name"
+                        formControlName="fcOrganization" [multiple]="false" (change)="LoadLocationTree(selectedValueOrganization, true,[], false)">
+                    </ng-select>
+
+                    <div class="form-error" *ngIf="
+              form.get('fcOrganization').errors?.required &&
+              form.get('fcOrganization').touched ||
+              form.get('fcOrganization').errors?.required && isNavigated
+            ">
+                        {{ "userAccount.OrganizaionRequired" | translation | async }}
+                    </div>
+                </div>
+            </div>
+            <fieldset class="fieldsetCustomReport mb-0"><legend class="legendFontWidth mb-0">{{ "userAccount.testSites" | translation | async }}</legend>
+                <div class="control-ngx-treeview-view tree-height-inc of-hidden"  [ngClass]="{'h-15rem': unselectParent, 'h-50vh': !unselectParent}">
+                    <div *ngIf="errorNoSitesAttached" style="padding: 20px;">
+                        {{ "userAccount.errorNoSitesAttached" | translation | async }}
+                    </div>
+                    <div *ngIf="!errorNoSitesAttached" class="custom-treeview"  [ngClass]="{'piper-sites-view': unselectParent, 'all-sites-view': !unselectParent}">
+                        <ngx-dropdown-treeview id="sites-tree" [buttonClass]="'d-none'" [config]="config" [items]="itemsLst2" (selectedChange)="ValueChanged($event)" (filterChange)="onFilterChange($event)">
+                        </ngx-dropdown-treeview>
+                    </div>
+                </div>
+                </fieldset>
+                <div class="form-error" *ngIf="showLengthError">
+                    {{ "userAccount.select1TestSite" | translation | async }}
+                </div>
+                <div class="form-error" *ngIf="showRequiredError">
+                    {{ "userAccount.showRequiredError" | translation | async }}
+                </div>
+            </div>
+
+            <div class="p-point-625">
+                <div class="w-100">
+                    <button type="button" id="btn-cancel-sites" (click)="hideTree()" class="apl-btn b-md btn-ok m-l-10px">
+                      <i class="fa fa-times"></i> {{"buttons.cancel" | translation | async}}
+                    </button>
+
+                    <button type="submit" id="btn-ok-sites" (click)="saveClientSites()" [disabled]="showLengthError || showRequiredError" class="apl-btn b-md btn-ok m-l-10px">
+                      <i class="fa fa-check"></i> {{"buttons.OK" | translation | async}}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

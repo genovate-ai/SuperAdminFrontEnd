@@ -1,0 +1,138 @@
+.upload-border {
+  height: 160px;
+  width: 100%;
+  padding: 7px;
+  // background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%239B9B9BFF' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  .upload-box {
+    background-color: rgba(134, 183, 65, 0.2);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    span {
+      font-family: "Open Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.7px;
+      color: #1c1c1d;
+    }
+    label {
+      svg {
+        margin-right: 6px;
+        vertical-align: text-top;
+      }
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+      margin-bottom: 0rem;
+      width: 100px;
+      height: 44px;
+      background: #0e0e2b;
+      border-radius: 4px;
+      font-family: "Open Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    //     button {
+    //         svg{
+    //             margin-right: 2px;
+    //     vertical-align: text-top;
+    //         }
+    //         width: 100px;
+    // height: 44px;
+    //       background: #0e0e2b;
+    //       border-radius: 4px;
+    //       font-family: "Open Sans";
+    //       font-style: normal;
+    //       font-weight: 400;
+    //       font-size: 16px;
+    //       color: #ffffff;
+    //     }
+  }
+}
+h5{
+    font-family: 'Open Sans';
+font-style: normal;
+font-weight: 700;
+color: #000000;
+margin-top: 15px;
+}
+.detail-images{
+    .datatable-container {
+        width: 100%;
+    padding: 0.5rem 0 0.25rem 0rem;
+    background-color: #F3F5F9;
+    border: 1px solid #D0D0D0;
+border-radius: 4px;
+
+      }
+      .apl-data-log-table .table__data-log thead th {
+        color: #868E96;
+        font-family: 'OpenSans';
+        background-color: #F3F5F9;
+    }
+      #table-user-log,
+      #table-orgn-log {
+        height: 128px;
+      }
+      
+}
+.upload-bar{
+  margin: 12px 0px;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  .progressBar{
+    width: 91%;
+  }
+}
+    .upload{
+        border: 1px solid #86B741;
+    width: 116px;
+        height: 44px;
+        background: #86B741;
+        border-radius: 4px;
+        font-family: 'Open Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+color: #FFFFFF;
+    }
+    .preview{
+      border: 1px solid #86B741;
+  width: 160px;
+      height: 44px;
+      background: #86B741;
+      border-radius: 4px;
+      font-family: 'Open Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+color: #FFFFFF;
+  }
+.upload-table{
+    .datatable-container {
+        width: 100%;
+        padding: 0.5rem 0 0.25rem 0rem;
+        background-color: #ffffff;
+        border: 1px solid rgba(155, 155, 155, 0.7);
+        border-radius: 10px;
+        tr{
+          td{
+            svg{
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      #table-user-log,
+      #table-orgn-log {
+        height: 400px;
+      }
+}

@@ -1,0 +1,39 @@
+.backdrop {
+    z-index: 1000;
+    background-color: rgba($color: #000000, $alpha: 0);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .container1 {
+    z-index: 1500;
+
+    background-color: #ffffff;
+
+    width: 431px;
+
+    height: 75px;
+
+    position: fixed;
+
+    border: 3px solid rgba(134, 183, 65, 1);
+
+    border-radius: 10px;
+
+    top: 28%;
+
+    left: 29%;
+
+    padding: 9px;
+  }
+  button{
+    background-color: rgba(0, 0, 0, 1);
+    border-color: rgba(0, 0, 0, 1);
+  }
+  .btn-success:hover {
+    color: #fff;
+    background-color: #86B741;
+    border-color:  #86B741;
+}

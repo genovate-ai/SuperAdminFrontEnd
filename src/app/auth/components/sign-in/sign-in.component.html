@@ -1,0 +1,112 @@
+<div class="auth-body">
+    <div class="auth-body-wrapper">
+
+        <div class="auth-body-content">
+            <div class="auth-card-head">
+                <label class="mb-0 mb-sm-2">Agrilift Intelligence Engine</label>
+            </div>
+            <div class="auth-card-header">
+                <label class="mb-0 mb-sm-2">Sign In to Continue</label>
+            </div>
+
+
+            <div class="pl-sm-4 pr-sm-4 pl-3 pr-3">
+                <form #signInForm="ngForm" class="login-form" style="margin-left: 230px;">
+
+
+                    <div class="form-internal">
+                        <div class="e-mail">
+                            <label>Email</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" #email="ngModel" class="form-control" id="email" required
+                                email ngModel placeholder="Email" />
+                            <div class="form-error" *ngIf="
+                            signInForm.form.get('email').errors?.required && signInForm.form.get('email').touched  ||
+                            signInForm.form.get('email').errors?.required && isNavigated">
+                                Email is required
+                            </div>
+                        </div>
+                        <div class="e-mail">
+                            <label>Password</label>
+                        </div>
+
+                        <div class="form-group passw">
+
+                            <input [type]="this.showPassword ? 'text':'password'" name="password" ngModel
+                                #password="ngModel" class="form-control" id="pwd" required placeholder="Password" />
+                            <div class="form-error" *ngIf="
+                            signInForm.form.get('password')?.errors?.required && signInForm.form.get('password')?.touched  ||
+                            signInForm.form.get('password')?.errors?.required && isNavigated">
+                                Password is required
+                            </div>
+                            <svg *ngIf="showPassword == false" (click)="showPassword = true" class="eye" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M21.27 9.18005C20.98 8.72005 20.67 8.29005 20.35 7.89005C19.98 7.42005 19.28 7.38005 18.86 7.80005L15.86 10.8001C16.08 11.4601 16.12 12.2201 15.92 13.0101C15.57 14.4201 14.43 15.5601 13.02 15.9101C12.23 16.1101 11.47 16.0701 10.81 15.8501C10.81 15.8501 9.38001 17.2801 8.35001 18.3101C7.85001 18.8101 8.01001 19.6901 8.68001 19.9501C9.75001 20.3601 10.86 20.5701 12 20.5701C13.78 20.5701 15.51 20.0501 17.09 19.0801C18.7 18.0801 20.15 16.6101 21.32 14.74C22.27 13.2301 22.22 10.6901 21.27 9.18005Z"
+                                    fill="#ffffff" />
+                                <path
+                                    d="M14.02 9.98001L9.98001 14.02C9.47001 13.5 9.14001 12.78 9.14001 12C9.14001 10.43 10.42 9.14001 12 9.14001C12.78 9.14001 13.5 9.47001 14.02 9.98001Z"
+                                    fill="#ffffff" />
+                                <path
+                                    d="M18.25 5.75005L14.86 9.14005C14.13 8.40005 13.12 7.96005 12 7.96005C9.76 7.96005 7.96 9.77005 7.96 12.0001C7.96 13.1201 8.41 14.1301 9.14 14.8601L5.76 18.2501H5.75C4.64 17.3501 3.62 16.2001 2.75 14.8401C1.75 13.2701 1.75 10.7201 2.75 9.15005C3.91 7.33005 5.33 5.90005 6.91 4.92005C8.49 3.96005 10.22 3.43005 12 3.43005C14.23 3.43005 16.39 4.25005 18.25 5.75005Z"
+                                    fill="#ffffff" />
+                                <path
+                                    d="M14.86 12C14.86 13.57 13.58 14.86 12 14.86C11.94 14.86 11.89 14.86 11.83 14.84L14.84 11.83C14.86 11.89 14.86 11.94 14.86 12Z"
+                                    fill="#ffffff" />
+                                <path
+                                    d="M21.77 2.23C21.47 1.93 20.98 1.93 20.68 2.23L2.23 20.69C1.93 20.99 1.93 21.48 2.23 21.78C2.38 21.92 2.57 22 2.77 22C2.97 22 3.16 21.92 3.31 21.77L21.77 3.31C22.08 3.01 22.08 2.53 21.77 2.23Z"
+                                    fill="#ffffff" />
+                            </svg>
+                            <svg *ngIf="showPassword == true" class="eye" (click)="showPassword = false" width="19"
+                                height="18" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M21.2524 9.15005C18.9424 5.52005 15.5624 3.43005 12.0024 3.43005C10.2224 3.43005 8.49244 3.95005 6.91244 4.92005C5.33244 5.90005 3.91244 7.33005 2.75244 9.15005C1.75244 10.7201 1.75244 13.2701 2.75244 14.8401C5.06244 18.4801 8.44244 20.5601 12.0024 20.5601C13.7824 20.5601 15.5124 20.0401 17.0924 19.0701C18.6724 18.0901 20.0924 16.6601 21.2524 14.8401C22.2524 13.2801 22.2524 10.7201 21.2524 9.15005ZM12.0024 16.0401C9.76244 16.0401 7.96244 14.2301 7.96244 12.0001C7.96244 9.77005 9.76244 7.96005 12.0024 7.96005C14.2424 7.96005 16.0424 9.77005 16.0424 12.0001C16.0424 14.2301 14.2424 16.0401 12.0024 16.0401Z"
+                                    fill="#ffffff" />
+                                <path
+                                    d="M12.0025 9.14001C10.4325 9.14001 9.15247 10.42 9.15247 12C9.15247 13.57 10.4325 14.85 12.0025 14.85C13.5725 14.85 14.8625 13.57 14.8625 12C14.8625 10.43 13.5725 9.14001 12.0025 9.14001Z"
+                                    fill="#ffffff" />
+                            </svg>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group text-right" style="font-weight: 600;">
+
+                        <label (click)="forgotPassword()" id="forgot-password-1">Forgot Password?</label>
+
+                    </div>
+                    <div>
+                        <button id="sign-in" type="submit" id="btn-sign-in"
+                            (click)="signIn(signInForm,signInForm.value)" class="apl-btn b-md btn-ok-solid">
+                            Sign In
+                        </button>
+
+                    </div>
+                    <div class="form-group-color">
+
+                        <label (click)="forgotPassword()" id="forgot-password-2">Forgot Password</label>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+<!-- <app-confirmation-component *ngIf="showConfirmationFlag" (positive)="relogin()" (negative)="showConfirmationFlag = false" [message]="confirmationMessage">
+</app-confirmation-component>
+<div class="view-eula-comp">
+    <app-general-modal></app-general-modal>
+</div> -->

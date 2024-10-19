@@ -1,0 +1,148 @@
+<form [formGroup]="form" autocomplete="off">
+  <div class="m-t-12 popup-body p-0" id="create-rights">
+
+    <div class="apl-resp-table">
+      <div class="table-resp apl-resp-table-v5 h-table-popup--lg apl-scrollbar pr-1">
+        <table>
+          <thead class="outer-index">
+            <tr>
+              <th class="width-45-p">
+                <label class="mb-0 pos-r l-20px">{{ "rights.screenname" | translation | async }}</label>
+                <!-- <img src="../../../../assets/images/filter_list_ico.svg"> -->
+              </th>
+
+              <th class="width-15-p text-center">
+                <label class="mb-0">{{ "rights.create" | translation | async }}</label>
+              </th>
+
+              <th class="width-15-p text-center">
+                <label class="mb-0">{{ "rights.update" | translation | async }}</label>
+              </th>
+
+              <th class="width-15-p text-center">
+                <label class="mb-0">{{ "rights.view" | translation | async }}</label>
+              </th>
+              <th class="width-10-p text-center">
+                <label class="mb-0">{{ "reportRights.fieldAccess" | translation | async }}</label>
+              </th>
+            </tr>
+          </thead>
+          <tbody formArrayName="fcLstAccessRights">
+            <ng-container *ngFor="let right of formData.controls; let i = index let lastcall=last" [formGroupName]="i">
+
+              <!-- <tr *ngFor="let right of formData.controls; let i = index" [formGroupName]="i"> -->
+              <tr>
+                <td class="width-45-p">
+                  <label>{{i+1}}</label> <label
+                    class="mb-0 pos-r l-15px">{{right.controls['fcScreenName'].value}}</label>
+                </td>
+                <td class="width-15-p text-center">
+                  <label>
+                    <div *ngIf="right.controls['fcIsCreateAble'].value" class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input v2" formControlName="fcIsCreate"
+                        id="isCreate{{right.controls['fcScreenName'].value}}" name="isCreate">
+                      <label class="custom-control-label v2"
+                        for="isCreate{{right.controls['fcScreenName'].value}}"></label>
+                    </div>
+                  </label>
+                </td>
+                <td class="width-15-p text-center">
+                  <label>
+                    <div *ngIf="right.controls['fcIsUpdateAble'].value" class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input v2" formControlName="fcIsUpdate"
+                        id="isUpdate{{right.controls['fcScreenName'].value}}">
+                      <label class="custom-control-label v2"
+                        for="isUpdate{{right.controls['fcScreenName'].value}}"></label>
+                    </div>
+                  </label>
+                </td>
+                <td class="width-10-p text-center">
+                  <label>
+                    <div *ngIf="right.controls['fcIsViewAble'].value" class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input v2" formControlName="fcIsView"
+                        id="isView{{right.controls['fcScreenName'].value}}">
+                      <label class="custom-control-label v2"
+                        for="isView{{right.controls['fcScreenName'].value}}"></label>
+                    </div>
+                  </label>
+                </td>
+                <td class="width-15-p text-center">
+                  <span *ngIf="right.controls['fcFieldAccess'].value" (click)="showHideFields(right)"
+                    class="cursor-pointer">
+                    <img src="../../../../assets/images/components-icons/field-access.png" width="26"
+                      alt="Field Access" />
+                    <!-- <i class="fas fa-sliders-h fa-lg text-primary-app cursor-pointer"></i> -->
+                  </span>
+                </td>
+              </tr>
+              <tr class="b-0  fadeIn" *ngIf="right.controls['fcShowFieldAccess'].value">
+                <td colspan="5" class="field-access p-0 pl-1">
+                  <div class="field-access__container position-relative" id="field-container-{{ i }}"
+                    [ngClass]="{'h-1': right.controls['fcShowFieldAccess'].value}"
+                    [ngClass]="{'h-collapse': !right.controls['fcShowFieldAccess'].value}">
+                    <i class="fas fa-caret-up caret-up cursorPoiner fa-lg position-absolute r-31px t-neg-13px"
+                      (click)="showHideFields(right)"></i>
+                    <div class="w-100 mb-2">
+                      <div class="position-relative w-25 pl-2 fadeIn"
+                        *ngIf="right.controls['fcShowAllFields'].value == true">
+                        <input class="search-field-access form-control" placeholder="Search" type="text"
+                          id="{{i}}_search" autocomplete="off" formControlName="fcSearchFieldAccess">
+                        <i class="fas fa-search search-field-access-icon"></i>
+                        <img class="search-field-access-icon remove cursor-pointer" id="{{ i }}_search-remove"
+                          (click)="right.controls['fcSearchFieldAccess'].setValue('')"
+                          *ngIf="(right.controls['fcSearchFieldAccess'].value || '').length > 0"
+                          src="../../../../../assets/images/components-icons/text-remove.png" />
+                      </div>
+                    </div>
+
+                    <div
+                      *ngFor="let item of right.controls['fcAdminRoleReportFieldsAcess'].value | filterObjects:'fieldDisplayName': right.controls['fcSearchFieldAccess'].value: right.controls['fcShowAllFields'].value == true ? right.controls['fcAdminRoleReportFieldsAcess'].value.length : 5 trackBy:trackByFieldId, let j = index"
+                      id="field-{{i}}" class="field-access field-access__item fadeIn cursor-pointer"
+                      [ngClass]="{'selected': item.isViewAllow && !item.sysIndicator, 'disabled cursor-not-allowed': item.isViewAllow && item.sysIndicator}"
+                      (click)="markUnmarkAccessField(item)">
+                      <label class="mb-0 cursor-pointer"
+                        [ngClass]="{'cursor-not-allowed': item.isViewAllow && item.sysIndicator}">
+                        {{(item.fieldDisplayName || '').trim().toLowerCase()}}
+                      </label>
+                    </div>
+                    <div  *ngIf="right.controls['fcShowAllFields'].value == false">
+                      <img src="../../../../../assets/images/components-icons/ellipse-h-icon.png"
+                        class="h-auto w-22px m-t-11px" />
+                    </div>
+                    <div class="field-access field-access__item selected cursor-pointer"
+                      *ngIf="right.controls['fcShowAllFields'].value == false"
+                      (click)="right.controls['fcShowAllFields'].value = true">
+                      {{ right.controls['fcAdminRoleReportFieldsAcess'].value.length > 0 ?
+                      right.controls['fcAdminRoleReportFieldsAcess'].value.length - 5 : '' }}
+                      <img src="../../../../assets/images/components-icons/expand-counter.png"
+                        class="h-auto w-14px m-t-4px" />
+                    </div>
+                  </div>
+                </td>
+
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="popup-footer f-r m-t-neg-10px">
+    <div *ngIf="this.isSaveButtonAllow" class="width-100-p ">
+
+      <button type="submit" (click)="submit(form.value)" *ngIf="this.isSaveButtonAllow"
+        class="apl-btn-v3 primary m-l-10px">
+        <i class="fa fa-save"></i> {{"buttons.save" | translation | async}}
+      </button>
+
+      <button type="button" *ngIf="!isFromUpdateComponent" (click)="resetForm()" class="apl-btn-v3 m-l-10px">
+        <i class="fa fa-undo"></i> {{"buttons.reset" | translation | async}}
+      </button>
+
+
+    </div>
+  </div>
+
+</form>

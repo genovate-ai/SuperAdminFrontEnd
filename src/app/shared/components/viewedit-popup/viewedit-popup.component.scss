@@ -1,0 +1,76 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0);
+    z-index: 50;
+}
+
+.popup {
+    position: absolute;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: fit-content;
+    top: 0px;
+    right: 70px;
+    border-radius: 5px;
+    padding: 3px;
+    z-index: 100;
+    width: 150px;
+    button {
+        background-color: #FFFFFF;
+        border: none;
+        border-radius: 5px;
+        height: 29px;
+        width: 100%;
+        white-space: nowrap;
+        color: #4b506d;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 16px;
+        text-align: left;
+        padding: 5px 10px;
+        cursor: pointer;
+        svg {
+            width: 16px;
+            font-size: 16px;
+            margin-right: 5px;
+            color: #1C1C1D;;
+        }
+        div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        p {
+            margin: 0px;
+            font-size: 12px;
+            color: #1C1C1D;;
+        }
+    }
+    button:hover {
+        background-color: #014f410d;
+    }
+}
+.download{
+    top: 24px;
+    left: -49px;
+    right: unset;
+}
+.cloud{
+    top: 24px;
+    left: -31px;
+    right: unset;
+}
+.lastcell{
+    top: unset;
+    bottom: 21px;
+    left: -34px;
+    right: unset;
+}

@@ -1,0 +1,53 @@
+<div class="popup-body mt-2">
+  <div class="popup-card pr-1">
+
+    <div class="apl-resp-table">
+      <div class="table-resp apl-resp-table-v5 h-table-popup apl-scrollbar">
+        <table class="w-98p">
+          <thead class="outer-index">
+            <tr>
+              <th class="width-10-p table-header-report pr-0">
+              </th>
+              <th class="width-10-p table-header-report pl-0">
+                <label>Field Order</label>
+              </th>
+              <th class="width-60-p table-header-report">
+                <label>Field Name</label>
+              </th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let data of lstReportFields; let i = index">
+              <td class="width-10-p pr-0">
+                <i class="fas fa-grip-vertical drag-handle cursor-move fs-1r"></i>
+              </td>
+              <td class="width-10-p pl-0">
+                <label>{{ i + 1 }}</label>
+              </td>
+              <td class="width-60-p text-dark">
+                <label>{{ data.fieldDisplayName }}</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="popup-footer">
+  <div class="w-100 d-flex flex-row-reverse pr-2">
+
+    <button type="submit" (click)="saveFieldsOfUsers()" class="apl-btn apl-btn-filled b-md m-l-10px" id="btn-save">
+      <i class="fa fa-save"></i> Save
+    </button>
+    <button type="button" (click)="this.resetToDefault()" id="btn-reset" class="apl-btn b-md btn-ok m-l-10px">
+      <i class="fa fa-undo"></i> Reset Default
+    </button>
+
+
+  </div>
+</div>
+
+
+

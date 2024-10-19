@@ -1,0 +1,95 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-fluid">           
+  <div class="row">
+    <div class="col-md-4">
+      <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="CreateFarm()"><i class="fas fa-download fa-sm text-white-50"></i> Create Project</button>
+    </div>
+   </div>
+  </div> 
+   <div class="container-fluid mt-3">
+    <div class="card shadow-sm mb-3 w-100">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="text-muted text-uppercase small">Project Name</div>
+
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="text-muted text-uppercase small">Grade Level</div>
+            <div class="fw-bold">
+             
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="text-muted text-uppercase small">curriculumPoints</div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="text-muted text-uppercase small">Start Date</div>
+
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="text-muted text-uppercase small">End Date</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card shadow-sm mb-3 w-100" *ngFor="let item of lstFarms; let i = index">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-lg-2 col-md-6 col-sm-6">
+           
+            <div class="fw-bold">{{item.projectName}}</div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            
+            <div class="fw-bold">
+              <span class="badge bg-danger text-white">{{item.gradeLevel}}</span>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            
+            <div class="fw-bold text-gray-800">{{item.curriculumPoints}}</div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            
+            <div class="fw-bold">Nov 5, 2022</div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="fw-bold">Dec 2, 2022</div>
+          </div>
+          
+          <div class="col-lg-1 col-md-6 col-sm-6 text-end">
+            <div class="edit">
+              <svg (click)="onShowEditPopup(item.projectId)" id="item.projectId" width="5" height="15" viewBox="0 0 3 12" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="1.5" cy="1.5" r="1.5" fill="#1C1C1D" />
+                <circle cx="1.5" cy="5.69995" r="1.5" fill="#1C1C1D" />
+                <circle cx="1.5" cy="9.8999" r="1.5" fill="#1C1C1D" />
+              </svg>
+              <app-viewedit-popup *ngIf=" showEditDeletePopup == item.projectId" [popupScreen]="'farmManagment'"
+                (close1)="onCloseEditPopup($event)" (edit)="onEditFarm(item)"
+                (delete)="onDeleteFarm(item.id,item.farmName)" 
+                [isExplorer]="screenPermission2.isViewAllow" [isReprot]="screenPermission3.isViewAllow"></app-viewedit-popup>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+     <div class="row">
+
+    <app-popup-component></app-popup-component>
+    </div>
+  <div class="row">
+    <app-confirm-farm-create *ngIf="cnfrmPopup" [popupText]="popupText" [popupText1]="popupText1" [popupFor]="popupFor"
+    (close)="onclosePopup()" (deleteFarm)="ondelete()"></app-confirm-farm-create> 
+  </div>
+
+  </div>
+   
+
+
+  

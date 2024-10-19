@@ -1,0 +1,53 @@
+<div class="w-100 filter-group mt-2 brdr-bot-grey" [ngClass]="{'fullMenuFilters': isVisible}">
+    <div id='{{titleForId}}-group-head' class="filter-group__head" (click)="isVisible = !isVisible" [ngClass]="{'bbrdr-bot-grey': !isVisible}">
+        <span *ngIf="savedValues.length>0 && !showIcon" id="-{{titleForId}}-filter-indicator" class="filters-count" (mouseover)="showIcon = true"></span>
+        <i *ngIf="showIcon && savedValues.length>0" (click)="removeSelectedItems($event)" class="fa fa-times filters-clear" aria-hidden="true" (mouseout)="showIcon = false"></i>
+        <label class="width-100" [ngClass]="{'mb-0': isVisible}">
+            <i id='{{titleForId}}-i-chevron-rotate'
+                class="fontsize-525r fas fa-chevron-right chevron-rotate ml-2 hideonmobileInline"
+                [ngClass]="{'right-down': isVisible}"></i>
+            <i id='i-arrow-left'
+                class="fas fa-arrow-left ml-2 hideInlineonweb margin15" [ngClass]="{'d-none': !isVisible}"></i>
+            <span id='filter-{{titleForId}}' class="ml-2 font-weight-bold">{{title | translation | async}} </span>
+            <i id='{{titleForId}}-i-chevron-right'
+                class="fa-lg fas fa-chevron-right chevron-rotate ml-2 hideInlineonweb move-chevron-right"
+                [ngClass]="{'d-none': isVisible}"></i>
+        </label>
+    </div>
+    <div id='{{titleForId}}-group-body' class="filter-group__body mb-2 checkbox-brdr-clr padding-2rem-mob" [ngClass]="{'d-block bbrdr-bot-grey': isVisible,'d-none': !isVisible}">
+
+        <div class="clearable-input override pl-2-web">
+            <input id='{{titleForId}}-place-holder-search' type="text" class="form-control cutomcolorTextField colorFieldMobView filter-textbox pr-16px" placeholder="{{ 'fieldText.searchh' | translation | async }}" #searchbox />
+            <span id='{{titleForId}}-clear-input' class="clear-input" (click)="clearSearch()" data-clear-input>&times;</span>
+        </div>
+        <div id='{{titleForId}}-report-scroll' class="report-scroller {{heightClass}} mt-2">
+            <div *ngIf="selectAll" [ngClass]="{'d-none': hideSelectAll}" class="custom-control label-button remove-checkbox custom-checkbox pl-1-7rem p-0-mob">
+                <input id='filter-checkbox' type="checkbox" [(ngModel)]="selected" (change)="onSelectAll()" class="custom-control-input" id="{{selectAllId}}">
+                <label id='select-all-lst' class="custom-control-label custom-label-mob width-100" for="{{selectAllId}}">
+                    <span ></span>
+                    <p id='select-all-text-{{title}}' class="d-inline ml-neg-5px">{{"d3Reporting.selectAll" |
+                        translation | async}}</p>
+                </label>
+            </div>
+            <!-- savedValues.includes(item.code) -->
+            <ul style="list-style: none;" class="wrapper-div optionsList" id="ul-{{titleForId}}" #optionsList>
+                <li class="custom-control custom-checkbox pl-1-7rem pl-1-5rem-mob {{searchSavedValues(item)}}" [ngClass]="{'d-block': item.searched === true, 'd-none': item.searched === false}" id="{{item.name}}" *ngFor="let item of options, let i = index">
+                    <input type="checkbox" [(ngModel)]="item.checked" (change)="onToggle()" class="custom-control-input" id="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}">
+                    <label class="custom-control-label text-nowrap width-100" for="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}" title="{{item.name}}">
+
+                        <span class="{{item.borderClr}}"
+                            [ngClass]="{'mr-2': item.borderClr}"></span>
+                          <p *ngIf="!isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{replaceDot(item)}}" class="d-inline ml-neg-5px" [innerHTML]="item.name | boldStr:searchTxt">
+                            <!-- {{item.name}} -->
+                          </p>
+                          <p *ngIf="isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{item.name}}" class="d-inline ml-neg-5px" [innerHTML]="item.date !== null ? (item.date | date: this.datezoneFormat | boldStr:searchTxt) : item.name | boldStr:searchTxt">
+                            <!-- {{item.date !== null ? (item.date | date: this.datezoneFormat) : 'Blank' }} -->
+                          </p>
+                    </label>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0);
+    z-index: 50;
+}
+
+.popup {
+    position: absolute;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: 247px;
+    width: 175px;
+    top: 40px;
+    left: -42px;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 100;
+    button{
+        background-color: #000000;
+    margin-left: 23px;
+    border: none;
+    color: #ffffff;
+    border-radius: 10px;
+    height: 40px;
+    width: 138px;
+    }
+    button:hover{
+        border:none;
+        outline:none;
+    }
+    
+}

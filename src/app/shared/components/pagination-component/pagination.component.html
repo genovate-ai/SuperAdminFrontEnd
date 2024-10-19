@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-between align-content-center" *ngIf="totalRecord > 0">
+
+  <div class="showCount">
+    <p id='count-1' class="hideonmobile" *ngIf="activePageNumber != maxPageCount" style="padding: 3px 3px !important">{{
+      'pagination.showing' | translation | async }} {{ ((activePageNumber -1 )*rowNumber) + 1}} - {{activePageNumber
+      *rowNumber}} {{ 'pagination.of' | translation | async }} {{totalRecord | number}} {{ 'pagination.results' |
+      translation | async }}</p>
+    <p id='count-2' class="hideonmobile" *ngIf="activePageNumber == maxPageCount" style="padding: 3px 3px !important">{{
+      'pagination.showing' | translation | async }} {{ ((activePageNumber -1 )*rowNumber) + 1}} - {{totalRecord |
+      number}} {{ 'pagination.of' | translation | async }} {{totalRecord | number}} {{ 'pagination.results' |
+      translation | async }}</p>
+  </div>
+
+  <div class="d-flex justify-content-center clearfix page-container">
+
+
+
+    <div id='pagination' class="row row1" style="margin-top: -3px;">
+
+
+      <div id='first-page' *ngIf="pages.length > 0" (click)="firstPage()"
+        title="{{ 'toolTips.firstPage' | translation | async }} " class="pagination-cell">
+        <i class="fas fa-angle-double-left"></i>
+
+      </div>
+      <div id='previous-page' *ngIf="pages.length > 0" (click)="previousPage()"
+        title="{{ 'toolTips.previousPage' | translation | async }} " class="pagination-cell">
+        <i class="fas fa-angle-left"></i>
+
+      </div>
+
+
+      <div id="{{pageNo+x}}" *ngFor="let pageNo of pages;let x = index" class="pagination-cell-container">
+        <div id='{{pageNo}}' (click)="onPageClick(pageNo)" class="pagination-cell"
+          [class.paginaction-cell-active]="pageNo==activePageNumber">
+          <p>{{pageNo}}</p>
+        </div>
+
+      </div>
+
+      <div id='next-page' *ngIf="pages.length > 0" (click)="nextPage()"
+        title="{{ 'toolTips.nextPage' | translation | async }}" class="pagination-cell">
+        <i class="fas fa-angle-right"></i>
+      </div>
+      <div id='last-page' *ngIf="pages.length > 0" (click)="lastPage()"
+        title="{{ 'toolTips.lastPage' | translation | async }}" class="pagination-cell">
+        <i class="fas fa-angle-double-right"></i>
+      </div>
+
+      <div id='pagination-cell' class="pagination-cell">
+        <p id='activePageNumber' class="countLbl countLbl1 mb-0">{{activePageNumber}}/{{maxPageCount}}</p>
+      </div>
+
+    </div>
+
+    <div id='show-filters' (click)="showFilters()" class="filterBottom hideonweb">
+      <i id='i-show-filters' style="margin: 10px;padding:5%;font-size: 16px;" class="fas fa-filter pull-right"></i>
+    </div>
+
+  </div>
+
+  <div class="hideonmobile m-t-neg-3px per-page-container">
+    <label id='Row-per-page'>{{ 'pagination.rowsperPage' | translation | async }}&nbsp;</label>
+    <select id='row-no-change' class="pagin-row-no-change" name="rows" id="rows" (change)="rowNumberChange($event)">
+      <option class="row-100" id='rows-100' value="100">100</option>
+      <option class="row-250" id='rows-250' [disabled]="totalRecord <= 250" value="250">250</option>
+      <option class="row-500" id='rows-500' [disabled]="totalRecord <= 500" value="500">500</option>
+    </select>
+
+  </div>
+
+</div>

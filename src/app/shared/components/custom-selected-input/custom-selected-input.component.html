@@ -1,0 +1,31 @@
+<div class="custom-selected-input-section" appClickOutside (clickoutside)="showRemainingList = false">
+  <div class="custom-selected-input-container {{containerClass}}">
+    <div class="selected-item selected-item-ellipsis" [ngClass]="{'max-w-95p': itemList.length == 1}" *ngFor="let item of itemList | slice:0:tagLimit">
+      <span *ngIf="ArrayOfObjects" class="selected-item-tag" id="selected-{{item[bindValue]}}"
+        title="{{item[bindLabel]}}">
+        {{item[bindLabel]}}
+      </span>
+      <span *ngIf="!ArrayOfObjects" class="selected-item-tag" id="selected-{{item}}" title="{{item}}">
+        {{item}}
+      </span>
+    </div>
+    <div class="selected-item selected-item-ellipsis" title='{{ pluralNoteKey | translation | async }}'
+      (click)="showRemainingList = !showRemainingList" *ngIf='itemList.length > tagLimit'>
+      <span class="selected-item-text"> {{ separatorKey | translation | async }}{{itemList.length - tagLimit}} {{
+        pluralKey
+        | translation | async }}</span>
+    </div>
+  </div>
+  <div class="drop-list apl-scrollbar" [ngClass]="{'d-block': showRemainingList, 'd-none': !showRemainingList}"
+    *ngIf="itemList.length > tagLimit">
+    <ng-container>
+      <label *ngFor="let item of itemList | slice : tagLimit" id="selected-{{item[bindValue]}}"
+        class="drop-list-item">{{item[bindLabel]}}</label>
+    </ng-container>
+    <ng-container>
+      <label *ngFor="let item of itemList | slice : tagLimit" id="selected-{{item}}"
+        class="drop-list-item">{{item}}</label>
+    </ng-container>
+
+  </div>
+</div>

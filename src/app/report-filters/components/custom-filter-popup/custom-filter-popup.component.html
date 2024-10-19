@@ -1,0 +1,228 @@
+<div class="filter-popup">
+  <div class="filter-popup__container">
+
+    <div class="filter-popup__header">
+      <div id="{{titleForId}}_close" class="filter-popup__close" (click)="this.onClose.emit(true)">
+        &times;
+      </div>
+      <div class="filter-popup__search-container">
+        <div class="filter-popup__search-input">
+          <input class="form-control" placeholder="Search" type="text" id="{{titleForId}}_search-input"
+            autocomplete="off" #searchbox>
+          <i class="fas fa-search search-icon"></i>
+          <!-- <div class="filter-popup__wildcard" *ngIf="wildcardEnable">
+            <img [ngClass]="{'d-block': wildcardActive}" class="d-none data-log-wildcard"
+              (click)="switchWildcard(wildcardActive)" id="{{titleForId}}_inactive-wildcard"
+              src="../../../../assets/images/components-icons/wildcard.png" alt="wildcard-search" />
+            <img [ngClass]="{'d-block': !wildcardActive}" class="d-none data-log-wildcard"
+              (click)="switchWildcard(wildcardActive)" id="{{titleForId}}_active-wildcard"
+              src="../../../../assets/images/components-icons/wildcard-disabled.png" alt="wildcard-search" />
+          </div> -->
+        </div>
+
+
+      </div>
+      <div class="filter-popup__action data-log-switch">
+        <span class="filter-popup__action--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{
+          "filterpopup.ClearAll" | translation | async }}</span>
+        <!-- <span class="filter-popup__action--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{
+          "filterpopup.ClearAll" | translation | async }}</span> -->
+        <!-- <span class="filter-popup__action--clear-all custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="{{titleForId}}-wildcard"
+            (change)="switchWildcard(wildcardActive)">
+          <label class="custom-control-label cursor-pointer" for="{{titleForId}}-wildcard">
+            <small >Wildcard Mode</small>
+          </label>
+        </span> -->
+        <div class="filter-popup__action--wildcard" [ngClass]="{'d-none': !wildcardEnable}">
+          <label class="mb-0 cursor-pointer" for="{{titleForId}}-wildcard">{{
+            "d3Reporting.wildCardMode" | translation | async }}</label>
+          <div class="custom-control custom-switch d-inline-block vertical-align-middle">
+            <input type="checkbox" class="custom-control-input cursor-pointer" id="{{titleForId}}-wildcard" [checked]="wildcardActive"
+              (change)="switchWildcard(wildcardActive)">
+            <label class="custom-control-label m-l-15px m-t-neg-1px m-r-neg-7px" for="{{titleForId}}-wildcard"></label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="filter-popup__wildcard-options data-log-radio" *ngIf="wildcardActive && wildcardEnable"
+        [ngClass]="{'mt-2': wildcardActive}">
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option1" (change)="this.wildcard = '2'" value='2'
+            [checked]="this.wildcard == '2'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option1"
+            (click)="this.wildcard = '2'">
+            {{ "filterpopup.StartsWith" | translation | async }}
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option2" (change)="this.wildcard = '4'" value='4'
+            [checked]="this.wildcard == '4'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option2"
+            (click)="this.wildcard = '4'">
+            {{ "filterpopup.Contains" | translation | async }}
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option3" (change)="this.wildcard = '3'" value='3'
+            [checked]="this.wildcard == '3'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option3"
+            (click)="this.wildcard = '3'">
+            {{ "filterpopup.EndsWith" | translation | async }}
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-popup__body" *ngIf="!wildcardActive">
+      <div class="filter-popup__filter-container apl-scrollbar {{heightClass}}">
+
+        <ul class="data-log-checkbox checkbox-filter" id="ul-{{titleForId}}" #optionsList>
+
+          <li *ngIf="filterApplied && this.persistCheckedOption.length === this.options.length && this.options.length !== 0"
+            class="custom-control custom-checkbox checkbox-brdr-clr" [ngClass]="{'d-none': visibleCount == 0}">
+            <input type="checkbox" [(ngModel)]="selectedAll" class="custom-control-input"
+              id="{{titleForId}}_cust-cb-lst_selectAll" (change)="onSelectAll()">
+            <label class="custom-control-label mb-0 checkbox-brdr-clr p-t-1px"
+              for="{{titleForId}}_cust-cb-lst_selectAll" title='{{"d3Reporting.selectAll" | translation | async}}'>
+              <small id="{{titleForId}}_cust-cb-lst-txt_selectAll"
+                [ngClass]="{'ml-1': showBorder}">{{"d3Reporting.selectAll" | translation
+                | async}}</small>
+            </label>
+          </li>
+
+          <li class="custom-control custom-checkbox checkbox-brdr-clr"
+            [ngClass]="{'d-block': item.searched === true, 'd-none': item.searched === false}" id="{{item.name}}"
+            *ngFor="let item of persistCheckedOption trackBy:trackByName, let i = index">
+            <input type="checkbox" [(ngModel)]="item.checked" class="custom-control-input" (change)="onItemChecked($event)"
+              id="{{titleForId}}_cust-cb-lst_{{trimSpaces(replaceDot(item))}}">
+            <label class="custom-control-label mb-0 checkbox-brdr-clr p-t-1px"
+              for="{{titleForId}}_cust-cb-lst_{{trimSpaces(replaceDot(item))}}" title="{{item.name}}">
+
+              <span *ngIf="item.borderClr" class="{{item.borderClr}} mr-1"></span>
+
+              <small *ngIf="!isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{trimSpaces(replaceDot(item))}}"
+                [ngClass]="{'ml-1': item.borderClr}" [innerHTML]="item.name | boldStrSpChar:searchTxt"></small>
+
+              <small *ngIf="isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{item.name}}"
+                [ngClass]="{'ml-1': item.borderClr}"
+                [innerHTML]="item.date !== null ? (item.date | date: this.datezoneFormat | boldStrSpChar:searchTxt) : item.name | boldStrSpChar:searchTxt">
+                <!-- {{item.date !== null ? (item.date | date: this.datezoneFormat) : 'Blank' }} -->
+              </small>
+            </label>
+          </li>
+
+          <li class="divider" *ngIf="this.persistCheckedOption.length>0" [ngClass]="{'d-none': visibleCount == 0}"></li>
+
+          <li *ngIf="!(filterApplied && this.persistCheckedOption.length === this.options.length && this.options.length !== 0)"
+            class="custom-control custom-checkbox checkbox-brdr-clr" [ngClass]="{'d-none': visibleCount == 0}">
+            <input type="checkbox" [(ngModel)]="selectedAll" class="custom-control-input"
+              id="{{titleForId}}_cust-cb-lst_selectAll" (change)="onSelectAll()">
+            <label class="custom-control-label mb-0 checkbox-brdr-clr p-t-1px"
+              for="{{titleForId}}_cust-cb-lst_selectAll" title='{{"d3Reporting.selectAll" | translation | async}}'>
+              <small id="{{titleForId}}_cust-cb-lst-txt_selectAll" [ngClass]="{'ml-1': showBorder}">
+                {{"d3Reporting.selectAll" | translation | async}}</small>
+            </label>
+          </li>
+
+          <li class="custom-control custom-checkbox"
+            [ngClass]="{'d-block': item.searched === true, 'd-none': item.searched === false}" id="{{item.name}}"
+            *ngFor="let item of unCheckedOptions trackBy:trackByName, let i = index">
+            <input type="checkbox" [(ngModel)]="item.checked" class="custom-control-input" (change)="onItemChecked($event)"
+              id="{{titleForId}}_cust-cb-lst_{{trimSpaces(replaceDot(item))}}">
+            <label class="custom-control-label mb-0 checkbox-brdr-clr p-t-1px"
+              for="{{titleForId}}_cust-cb-lst_{{trimSpaces(replaceDot(item))}}" title="{{item.name}}">
+
+              <span *ngIf="item.borderClr" class="{{item.borderClr}} mr-1"></span>
+
+              <small *ngIf="!isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{trimSpaces(replaceDot(item))}}"
+                [ngClass]="{'ml-1': item.borderClr}" [innerHTML]="item.name | boldStrSpChar:searchTxt"></small>
+
+              <small *ngIf="isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{item.name}}"
+                [ngClass]="{'ml-1': item.borderClr}"
+                [innerHTML]="item.date !== null ? (item.date | date: this.datezoneFormat | boldStrSpChar:searchTxt) : item.name | boldStrSpChar:searchTxt">
+                <!-- {{item.date !== null ? (item.date | date: this.datezoneFormat) : 'Blank' }} -->
+              </small>
+            </label>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-popup__footer">
+      <span class="filter-popup__footer--view-all" id="{{titleForId}}_view-all" (click)="showAllFilters()"
+        [ngClass]="{'hide-visibility': wildcardActive}">
+        {{ "general.viewAll" | translation | async }}
+      </span>
+      <span class="filter-popup__footer--apply" [ngClass]="{'filter-btn-disabled': selectionCount === 0 && !this.wildcardActive}" id="{{titleForId}}_apply" (click)="emitList()">
+        {{ "filterpopup.Apply" | translation | async }}</span>
+    </div>
+    <div class="filter-popup__footer pt-0" *ngIf="!wildcardActive && showFooter">
+      <span class="w-100 filter-popup__footer--count">
+        {{ "filterpopup.Showing" | translation | async }}
+        {{visibleCount || 0}} - {{totalCount || 0}}
+        {{ "filterpopup.Results" | translation | async }}
+      </span>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- <div _ngcontent-tei-c4="" style="
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+">
+      <div _ngcontent-tei-c4=""><label _ngcontent-tei-c4="" style="
+      font-size: .75rem;
+      font-weight: normal;
+      text-transform: none;
+  ">Show more</label></div>
+      <div _ngcontent-tei-c4=""><label _ngcontent-tei-c4="" style="
+      font-size: .75rem;
+      font-weight: normal;
+      text-transform: none;
+  "> 12 / {{this.options.length}}</label></div>
+      <div _ngcontent-tei-c4=""><button _ngcontent-tei-c4=""  (click)="updateList()" style="
+      background-color: #74a3d7;
+      /* display: inline-block; */
+      vertical-align: middle;
+      text-align: center;
+      border-radius: 20px;
+      padding: 0;
+      font-size: .75rem;
+      color: #fff;
+      border: 0;
+      width: fit-content;
+      padding: .125rem 1.75rem .3rem 1.75rem;
+      margin-top: -.25rem;
+  ">Apply</button></div>
+    </div> -->
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- <div class="data-log">
+      <div class="checkbox checkbox-sm">
+        <input type="checkbox" class="form-radio-input" id="exampleCheck1">
+        <label class="checkboxsmall" for="exampleCheck1"><small>Keep me looged in</small></label>
+      </div>
+    </div> -->

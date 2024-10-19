@@ -1,0 +1,92 @@
+/* You can add global styles to this file, and also import other style files */
+
+.search-grid {
+    position: absolute;
+    right: 100px
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.search-component {
+    position: relative;
+    min-width: 250px;
+    max-width: 350px;
+    border-bottom: 1px solid gray;
+    form {
+        display: inline !important;
+    }
+    input {
+        border: none !important;
+        display: inline !important;
+        width: 125px;
+        background: transparent !important;
+        color: #3d3d41 !important;
+        position: relative;
+        bottom: -5px;
+    }
+    textarea:focus,
+    input:focus {
+        outline: none;
+    }
+    .column-list {
+        font-size: 0.84rem;
+        background: white !important;
+        position: absolute;
+        z-index: 10;
+        color: #3d3d41;
+        top: 36px;
+        width: 250px;
+        min-height: 20px;
+        box-shadow: 0px 2px 4px lightgray;
+        border-radius: 2px;
+        label {
+            display: block;
+            border-radius: 1px;
+            padding: 5px;
+            span {
+                font-weight: bold;
+                ;
+            }
+        }
+        label:hover,
+        label:focus {
+            background: #CDEAEC;
+        }
+        .move {
+            background: #CDEAEC;
+        }
+    }
+    .input-tags {
+        display: inline !important;
+        .tags {
+            display: inline-block;
+            margin-right: 2px;
+            padding: 1px 0px;
+            font-size: 0.7rem;
+            box-shadow: 0px 1px 2px lightgray;
+            border: 0.5px solid black;
+            position: relative;
+            bottom: -5px;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            .tag-name {
+                padding: 2px;
+                background: #6bccd1;
+                border-radius: 2px;
+                color: white;
+            }
+            .tag-value {
+                border-radius: 2px;
+                padding: 1px 2px 1.5px 2px;
+            }
+            .tag-del {
+                padding: 1px 2px 1.5px 2px;
+            }
+            .tag-del:hover {
+                color: red !important
+            }
+        }
+    }
+}

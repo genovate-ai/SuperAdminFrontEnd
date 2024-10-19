@@ -1,0 +1,30 @@
+<div class="input-component" (click)="focusInput()">
+
+
+  <form [formGroup]="form" class="pos-r d-inline">
+    <input #myInput type="text" formControlName="fcSearch"
+      (input)="goSearch($event.target.value)" class="form-control txt-input {{ this.cssClass }}"
+      placeholder='{{ !translatePlaceholder ? placeholder : (placeholder | translation | async) }}'
+      [attr.disabled]="disabledControl"
+      [ngClass]="{'cursor-not-allowed': form.controls['fcSearch'].disabled}" />
+    <!-- <input [ngClass]="{'d-none': translatePlaceholder}" #myInput type="text" formControlName="fcSearch"
+      (input)="goSearch($event.target.value)" class="form-control txt-input {{ this.cssClass }}"
+      placeholder="{{placeholder}}" [ngClass]="{'cursor-not-allowed': form.get('fcSearch').disabled}" /> -->
+
+  </form>
+  <img src="assets/images/list.svg" *ngIf="lstFiltered?.length > 0 " class="pos-a list-icon"
+    (click)="getFilteredList()">
+  <!-- <div class="tag-list d-none" [ngClass]="{'d-block':showTags}">
+        <label *ngFor="let item of lstTags" class="tags" title="{{item.name}}" (click)="selectItem(item)">{{item.name}}</label>
+    </div> -->
+  <div #droplist class="drop-list d-none apl-scrollbar {{id}}" id="{{id}}">
+    <label *ngFor="let item of lstFiltered;let i =index" id="tag-{{i}}-{{id}}" class="drop-list-item"
+      (click)="selectItem(item)" [innerHTML]="item.name | boldStr:keyword"></label>
+    <label *ngIf="existingItem?.length==0 && keyword?.length > 0" id="btnAddNew-{{id}}" class="drop-list-item"
+      (click)="addNewItem()">Add New +</label>
+  </div>
+  <div class="drop-list d-none {{id}}" [ngClass]="{'d-block': showAddNew && keyword?.length>0}"
+    *ngIf="lstFiltered?.length==0">
+    <label class="drop-list-item" id="btnAddNewItem-{{id}}" (click)="addNewItem()">Add New +</label>
+  </div>
+</div>

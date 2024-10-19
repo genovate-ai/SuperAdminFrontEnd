@@ -1,0 +1,32 @@
+<div>
+
+  <div class="apl-scrollbar" style="height: 60vh;">
+    <div class="p-1 h-100">
+      <ngx-doc-viewer class="h-100" [url]="docUrl" [viewer]="viewer"></ngx-doc-viewer>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="gen-modal__footer pr-1 pl-1" *ngIf="showButtons">
+
+
+  <button type="button" (click)="markAcceptEula()" class="footer__btn footer__btn-main">
+    <i class="fas fa-check"></i>
+    Accept
+  </button>
+
+  <button type="button" (click)="rejectEula()" class="footer__btn footer__btn-secondary">
+    <i class="fas fa-times"></i>
+    Reject
+  </button>
+
+
+</div>
+<div id="eula-rejection-confirmation">
+  <app-confirmation-component *ngIf="showConfirmationFlag" (positive)="markRejectEula()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage" [popupOpen]="showConfirmationFlag">
+  </app-confirmation-component>
+</div>
+

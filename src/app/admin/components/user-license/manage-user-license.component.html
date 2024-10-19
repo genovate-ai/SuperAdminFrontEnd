@@ -1,0 +1,304 @@
+<app-manage-profile-component *ngIf="getProfileView()"></app-manage-profile-component>
+
+
+<div class="container-12">
+    <div class="user-license-stepper">
+        <app-stepper [stepNames]="stepperStepNames" [activeStep]="stepperActiveStep" (clickStepEvent)="onStepChange($event)" [isValid]="true">
+        </app-stepper>
+    </div>
+
+    <div class="d-none" [ngClass]="{'d-block': stepperActiveStep === 1}">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group" *ngIf="this.screenPermission.isCreateButtonAllow">
+
+                    <div class="drop-zone upload" *ngIf="lstEulaFiles?.length == 0">
+                        <label for="file-license" class="text drop-zone-label">{{ "manageEula.chooseFile" | translation | async }}</label>
+                        <input id="file-license" title="" class="input-file" accept="application/pdf" (change)="handleFileInput($event,$event.target.files)" type="file" multiple />
+                    </div>
+
+                    <div class="drop-zone dropped-data" *ngIf="lstEulaFiles?.length > 0">
+                        <div class="overflow-y mh-100">
+                            <div class="row m-0">
+                                <ng-container *ngFor="let item of lstEulaFiles; trackBy:trackByEulaId, let i = index">
+                                    <div class="col-sm-3 col-md-2 file-details mb-2 mr-2">
+                                        <i *ngIf="this.screenPermission.isDeleteButtonAllow" id="del-license-ic-{{i}}" class="fa fa-trash input-file-delete" (click)="activeDeactiveRemove('remove', i, null, item, $event)"></i>
+                                        <p class="mb-1 text-ellipsis font-weight-bold mw-100" style="max-width: 100%; font-weight: 700; font-size: 0.7rem; white-space: normal;">
+                                            {{item.eulaName}}</p>
+                                        <p class="mb-0" style="color: gray; font-weight: 400; font-size: .7rem;">
+                                            {{ item.sizeInKbs / 1024 | number : '1.2-2' }} MB
+                                        </p>
+                                    </div>
+                                </ng-container>
+
+                                <input id="file-license" title="" class="input-file2" accept="application/pdf" (change)="handleFileInput($event,$event.target.files)" type="file" multiple />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form [formGroup]="formGroupEula" autocomplete="off">
+
+                <div class="row" *ngIf="lstEulaFiles?.length > 0">
+                    <div class="col-12">
+                        <div class="apl-resp-table">
+                            <div class="table-resp apl-resp-table-v3 apl-scrollbar eula-mang-grid">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="font-weight-bold width-30-p">{{ "manageEula.fileName" | translation | async }}</th>
+                                            <th class="font-weight-bold width-35-p">{{ "manageEula.eulaName" | translation | async }}</th>
+                                            <th class="font-weight-bold width-10-p">{{ "manageEula.sizeMB" | translation | async }}</th>
+                                            <th class="font-weight-bold width-15-p">{{ "manageEula.action" | translation | async }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of lstEulaFiles; trackBy:trackByEulaId, let i = index" id="lst-eula-files-{{i}}">
+                                            <td class="_0">{{item?.eulaFileName}}</td>
+                                            <td class="_1">
+                                                <label contenteditable="true" class="mb-0 w-75 white-space-normal" id="eula-name-{{item.eulaId}}" (blur)="UpdateEulaName($event, $event.target.innerText, i, item)">
+                          {{item?.eulaName}}
+                        </label>
+                                            </td>
+                                            <td class="_2">{{item?.sizeInKbs /1024 | number : '1.2-2' }}</td>
+                                            <td class="_3">
+
+                                                <label for="" class="mb-0 mr-1 action-view-icon" id="view-license-{{i}}" (click)="viewEula(i, item, $event)">
+                          <i class="fas fa-eye" (click)="viewEula(i, item, $event)"></i>
+                        </label>
+                                                <img *ngIf="this.screenPermission.isDeleteButtonAllow" src="../../../../assets/images/delete_ico.svg" (click)="activeDeactiveRemove('remove', i, null, item, $event)" id="delete-license-{{i}}" class="mt-sm-1 mt-md-0 mr-1">
+
+                                                <div class="d-inline-block vertical-align-middle">
+                                                    <div *ngIf="this.screenPermission.isCreateButtonAllow || this.isSaveButtonAllow">
+                                                        <app-custom-radio-button id="toggle-btn-{{item.eulaId}}-{{i}}" id="status-license-{{i + 1}}" value1="true" value2="false" label1="Active" label2="InActive" [formControlName]="item.eulaId" (click)="$event.stopPropagation();activeDeactiveRemove('activeDeactive', i, item.eulaId, item, $event)"
+                                                            name="nmeIsActive">
+                                                        </app-custom-radio-button>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-none" [ngClass]="{'d-block': stepperActiveStep === 2}">
+
+        <form [formGroup]="formGroupApplyEula" autocomplete="off">
+
+            <div class="form-row mb-n3 position-relative">
+                <div class="col-8 col-sm-6 col-md-3 col-lg-2">
+                    <ng-select class="form-control cutomcolorDropdown" name="nmeApplyEula" id="ApplyEulaId" placeholder="{{ 'fieldText.Selectuseragreement' | translation | async }}" [(ngModel)]="selectedEula" [items]="lstEulaFilesDDL" formControlName="fcApplyEula" [clearable]="false"
+                        bindValue="codeID" bindLabel="name" [multiple]="false" (change)="loadUserEulaConfig()" required>
+                    </ng-select>
+                    <div>
+                        <div class="form-error" *ngIf="
+            formGroupApplyEula.get('fcApplyEula').errors?.required &&
+            formGroupApplyEula.get('fcApplyEula').touched ||
+            formGroupApplyEula.get('fcApplyEula').errors?.required && isNavigated">
+                            {{ "userAccount.selectEulaRequired" | translation | async }}
+                        </div>&#8203;
+                    </div>
+                </div>
+
+                <div class="col-4 col-sm-6 col-md-2 col-lg-2">
+                    <button (click)="saveUserEulaConfigToDB()" id="apply-license" class="apl-btn btn-ok-solid" *ngIf="this.screenPermission.isCreateButtonAllow">
+            <i class="fa fa-save"></i> {{"buttons.save" | translation | async}}
+          </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+
+            <div class="col-sm-12 section-main__head-search u-bb-1-5p-primary-light bg-transparent pl-3 pr-1">
+
+                <div class="d-inline-block">
+                    <label class="font-weight-bold mb-0 m-t-3px">{{ "userAccount.organizations" | translation | async }}</label>
+                </div>
+
+                <div class="pull-right d-inline-block">
+                    <div class="search-box-wrapper">
+                        <input type="text" (keyup.enter)="searchByUser()" (keyup)="onKeyUp()" class="search-box-input" [ngClass]="{'search-box-input-highlight': showSearchBoxHighlighting}" id='userSearchId' placeholder="{{ 'fieldText.search' | translation | async }}" [value]="saveSearchForDisplay"
+                            autocomplete="off">
+                        <span class="search-box-button" [ngClass]="{'search-box-button-hightlight': showSearchBoxHighlighting}" (click)="searchByUser()">
+              <i class="search-icon-black fa fa-search"></i>
+            </span>
+                    </div>
+                </div>
+
+                <div class="search-query-results pull-right" *ngIf="showQueryResult">
+                    <label class="search-query-label "><span [(innerHTML)]="queryResultsFound"></span><span
+              class="font-weight-normal">
+              {{ "userAccount.resultsFor" | translation | async }}
+            </span><span [(innerHTML)]="searchQuery"></span></label>
+                    <span (click)="resetSearchByUser()"><i class="fa fa-times-circle-o search-query-times"></i></span>
+                </div>
+
+            </div>
+
+            <div class="section-main__body apl-scrollbar">
+                <div class="col-12 toggle-border" *ngFor="let orgnType of lstOrganTypes, let indexFirst = index">
+
+                    <div class="row">
+                        <div class="col-6 toggle-padding" [ngClass]="{'toggle-selected': toggle[indexFirst]}">
+                            <div class="custom-control custom-checkbox ml-1 d-inline-block" style="vertical-align: bottom;">
+                                <input class="custom-control-input" [(ngModel)]="orgnType.boolStatus" [disabled]="disableSelection" (change)="markAllOrgnsWithEula(indexFirst,orgnType,$event)" id="select-all-orgnChkBx-{{orgnType.id}}" type="checkbox">
+                                <label class="custom-control-label" for="select-all-orgnChkBx-{{orgnType.id}}"></label>
+                            </div>
+                            <i class="fas fa-lg" id="ic-orgnType-{{orgnType.id}}" (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().orgnName, true, true);" [ngClass]="{'fa-chevron-circle-down': toggle[indexFirst], 'fa-chevron-circle-right':!toggle[indexFirst]}"></i>
+                            <label (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().orgnName, true, true);" class="lh-100-p toggle-heading mb-0 m-l-10px">{{ orgnType.name }}</label>
+
+                        </div>
+                        <div class="col-6 pr-2" [ngClass]="{'toggle-selected': toggle[indexFirst]}">
+                            <div class="pull-right search-query-results-toggle" *ngIf="showQueryResult">
+                                <label class="search-query-label"><span [(innerHTML)]="queryResultsArray[indexFirst].count"></span><span
+                    class="font-weight-normal">
+                    {{ "userAccount.resultsFor" | translation | async }}
+                  </span><span [(innerHTML)]="searchQuery"></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="CheckToggle(indexFirst) &&  !ShouldShowAnceraUsers(orgnType.id)">
+                        <div class="col-12">
+                            <div>
+                                <ul class="collapsible-popout" [@listAnimation]="lstOrganizations.length">
+                                    <ng-container *ngFor="let organ of lstOrganizations, let i = index">
+                                        <li [ngClass]="{'active': toggle1[i]}" id="{{ organ.orgnName }}-{{i}}">
+
+                                            <div class="collapsible-header" [ngClass]="{'toggle-selected': toggle1[i]}">
+                                                <div class="custom-control custom-checkbox ml-1 d-inline-block vertical-align-middle">
+                                                    <input (change)="markOrgnWithEula(organ, $event)" class="custom-control-input" [(ngModel)]="organ.boolStatus" id="orgnChkBx-{{organ.orgnId}}" type="checkbox">
+                                                    <label for="orgnChkBx-{{organ.orgnId}}" class="custom-control-label"></label>
+                                                </div>
+                                                <div (click)="LoadManageUserUsersData(organ.orgnId,i,indexFirst, getColManageUserEnum().userId,true,true)" class="d-inline-block vertical-align-middle">
+                                                    <img src="{{ organ.orgnLogoThumbnail }}" class="org-list-logo" alt="">
+                                                    <label class="ml-3 mb-0" style="vertical-align: sub;">{{ organ.orgnName }}</label>
+                                                    <label class="ml-3 mb-0 font-weight-bold" style="vertical-align: sub;">({{ organ.totalAccepted }}/{{ organ.totalAssigned }})</label>
+                                                </div>
+
+                                                <div (click)="LoadManageUserUsersData(organ.orgnId,i,indexFirst, getColManageUserEnum().userId,true,true)" class="pull-right mr-3" id="ic-orgn-{{i}}">
+                                                    <i [ngClass]="{'fa-chevron-right': toggle1[i], 'fa-chevron-down': !toggle1[i]  }" style="line-height: 1.7rem; color: #303D42;" class="arrow-sign fas fa-lg"></i>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="collapsible-body apl-resp-table" @fadeAnimation *ngIf="toggle1[i]" [ngClass]="{'d-block': toggle1[i]}">
+                                                <div class="inner-table-margin">
+                                                    <div class="table-resp table-card apl-resp-table-v2 u-of-table-height apl-scrollbar">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <div class="custom-control custom-checkbox ml-1 d-inline-block" style="vertical-align: middle;">
+                                                                            <input class="custom-control-input" [(ngModel)]="allUsersMarked" (change)="markAllUsersWithEula($event)" id="select-all-userChkBx" type="checkbox">
+                                                                            <label class="custom-control-label" for="select-all-userChkBx"></label>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th>
+                                                                        <label>{{ "userAccount.firstName" | translation | async }}</label>
+                                                                        <div class="sortingArrow">
+                                                                            <i class="fas fa-caret-up fa-lg sortingUpArrow" *ngIf="orgColName ===  getColManageUserEnum().firstName && orgSort === 2"></i>
+                                                                            <i class="fas fa-caret-down fa-lg sortingDownArrow" *ngIf="orgColName ===  getColManageUserEnum().firstName && orgSort === 3"></i>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th>
+                                                                        <label>{{ "userAccount.lastName" | translation | async }}</label>
+                                                                        <div class="sortingArrow">
+                                                                            <i class="fas fa-caret-up fa-lg sortingUpArrow" *ngIf="orgColName ===  getColManageUserEnum().lastName && orgSort === 2"></i>
+                                                                            <i class="fas fa-caret-down fa-lg sortingDownArrow" *ngIf="orgColName ===  getColManageUserEnum().lastName && orgSort === 3"></i>
+
+                                                                        </div>
+
+                                                                    </th>
+                                                                    <th>
+                                                                        {{ "manageEula.status" | translation | async }}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{ "manageEula.assigned" | translation | async }} {{ "manageEula.date" | translation | async }}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{ "manageEula.acceptedRejected" | translation | async }} {{ "manageEula.date" | translation | async }}
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody [@listAnimation]="lstOrganizationUsers.length">
+                                                                <tr *ngFor="let user of lstOrganizationUsers,  let i = index" id="{{i}}" [ngClass]="{'bg-lightgray':user?.userEulaStatusId === 2}">
+
+                                                                    <td class="_0">
+                                                                        <div class="custom-control custom-checkbox ml-1 d-inline-block uk-vertical-align-middle">
+                                                                            <input (change)="markUserWithEula(user, $event)" class="custom-control-input" [(ngModel)]="user.boolStatus" [disabled]="user.userEulaStatusId === 2" id="userChkBx-{{user.userId}}" type="checkbox">
+                                                                            <label for="userChkBx-{{user.userId}}" class="custom-control-label"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="_1">
+                                                                        <label>{{ user.userFirstName }}</label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label>{{ user.userLastName }}</label>
+                                                                    </td>
+                                                                    <td class="_2">
+                                                                        <svg height="30" width="30">
+                                      <circle cx="15" cy="15" r="5" fill="gray"
+                                        title='{{ "manageEula.assigned" | translation | async }}'
+                                        *ngIf="user?.userEulaStatusId === 1" />
+                                      <circle cx="15" cy="15" r="5" fill="green"
+                                        title='{{ "manageEula.accepted" | translation | async }}'
+                                        *ngIf="user?.userEulaStatusId === 2" />
+                                      <circle cx="15" cy="15" r="5" fill="red"
+                                        title='{{ "manageEula.rejected" | translation | async }}'
+                                        *ngIf="user?.userEulaStatusId === 3" />
+                                    </svg>
+                                                                    </td>
+                                                                    <td class="_3">
+                                                                        <label *ngIf="user?.userEulaAssignedDate">{{ user?.userEulaAssignedDate | date:' MM/dd/yy hh:mm a'}}</label>
+                                                                    </td>
+                                                                    <td class="_4">
+                                                                        <label *ngIf="user?.userEulaActionDate">{{ user?.userEulaActionDate | date:' MM/dd/yy hh:mm a'}}</label>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </ng-container>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveAction()" (negative)="negativeAction()" [message]="confirmationMessage"></app-confirmation-component>
+<div class="view-eula-comp">
+    <app-general-modal></app-general-modal>
+</div>

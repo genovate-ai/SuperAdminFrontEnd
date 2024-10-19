@@ -1,0 +1,16 @@
+<div class="w-100 btn-width-40" style="padding-top: 10px; padding-bottom: 5px;">
+
+    <button id='filter-icon' (click)="onFilterCLick()" class="apl-btn btn-ok m-l-10px p-r-point75" [ngClass]="{'btn-background-solid': unsavedChanges}">
+        <i class="fas fa-filter" aria-hidden="true"></i>
+        {{"filters.apply" | translation | async}}
+    </button>
+
+    <button id='reset-icon' (click)="onResetCLick()" class="apl-btn btn-ok p-r-point75  m-l-10px">
+        <i class="fas fa-undo" aria-hidden="true"></i>
+        {{"filters.reset" | translation | async}}
+    </button>
+
+    <span><i id='un-save-icon' *ngIf="toggleIcon" class="{{saveIconClass}} u-c-btn-filter m-l-10px"  aria-hidden="true" title="{{saveIconTooltip}}" (click)='onSaveCLick()'></i></span>
+    <span><i id='save-icon' *ngIf="!toggleIcon" class="{{unsaveIconClass}} u-c-btn-filter m-l-10px" aria-hidden="true" title="{{unsaveIconTooltip}}" (click)='onUnsaveCLick()'></i></span>
+
+</div>

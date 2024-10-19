@@ -1,0 +1,49 @@
+<div class="gen-modal gen-modal__overlay" [ngClass]="{'gen-modal__show': visible}">
+
+    <div (window:resize)="onResize($event)" [ngClass]="{'gen-modal__dialog animated fadeInDown': visible,'gen-modal__hide': !visible,'gen-modal__dialog-center':xsCenter}" [style.width.%]="width">
+
+        <div class="gen-modal__content">
+            <div class="gen-modal__header">
+                <div class="gen-modal__header-text" *ngIf="popupController.popupHeader !== ''">
+                    <label for="" class="mb-0">{{ popupController.popupHeader }}</label>
+                </div>
+
+                <div *ngIf="visible" class="gen-modal__header-close-btn">
+                    <p class="close-text" id="close-popup-modal" (click)="close()">&times;</p>
+                </div>
+
+
+                <div class="gen-modal__stepper" *ngIf="stepperList.length > 0">
+                    <ul class="stepper__progressbar">
+                        <li *ngFor="let step of stepperList; let i = index" id="stepper__progressbar-{{i + 1}}" [ngClass]="{'active-stepper': stepperList[i]}" (click)="stepperStepClicked(i)">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="gen-modal__body">
+                <ng-container #popupcontainer></ng-container>
+            </div>
+
+            <div class="gen-modal__footer" *ngIf="stepperList.length > 0" [ngClass]="{'flex-row-reverse': stepperIndexVal <= 0 }">
+
+                <button *ngIf="stepperIndexVal > 0 && stepperList.length > 0" type="button" id="btn-back" (click)="goBack()" class="footer__btn footer__btn-back">
+                    {{"general.back" | translation | async}}
+        </button>
+
+                <button *ngIf="stepperIndexVal < stepperList.length - 1" type="button" id="btn-next" (click)="goNext()" class="footer__btn">
+                    {{"general.next" | translation | async}}
+        </button>
+                <button *ngIf="stepperIndexVal === stepperList.length - 1" type="button" id="btn-finish" (click)="goSave()" class="footer__btn">
+            {{"general.finish" | translation | async}}
+        </button>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>

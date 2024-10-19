@@ -1,0 +1,8 @@
+<div class="wrapper-v2 row" (click)="toggleCheck()" [ngClass]="{'wrapper-true': isValueTrue &&  (colorChange !== index) }" [ngClass]="(selectedValue===value1) && (colorChange === index) ? 'bg-white  border-white' : colorChange === index ? 'bg-dark  border-white': isValueTrue ? 'bg-primary' : ''">
+
+    <input type="radio" class="row-md-3" [disabled]="disabled" [checked]="selectedValue===value1" [disabled]="disabled" [value]="value1" id="yes_radio">
+    <input type="radio" [disabled]="disabled" class="row-md-3" [value]="value2" [checked]="selectedValue===value2" id="no_radio" >
+
+    <div style="margin-left: 0px;" class="toggle" [ngClass]="(selectedValue===value1) && (colorChange === index) ? 'bg-dark' : colorChange === index ? 'bg-white': isValueTrue ? 'bg-white' : ''">
+    </div>
+</div>

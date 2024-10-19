@@ -1,0 +1,29 @@
+.router-div {
+    margin-left: 70px;
+    //padding: 20px;
+    margin-top: 106px;
+    margin-right: 20px;
+}
+
+.overlay {
+    display: none
+}
+
+.burger-menu-icon {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.side-nav {
+    width: 15%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(270deg, #36454f, #222a30);
+    // background-color: #221F73;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    z-index: 1000;
+}

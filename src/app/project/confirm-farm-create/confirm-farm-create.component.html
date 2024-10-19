@@ -1,0 +1,30 @@
+<div class="backdrop"
+  (click)="onClose()"></div>
+<div class="container">
+  <div class="close" id="closeId" (click)="onClose()">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M10.31 9.00247L17.7077 1.64516C18.0624 1.29408 18.0624 0.72572 17.7077 0.375543C17.354 0.0244677 16.7793 0.0244677 16.4256 0.375543L9.03412 7.72657L1.57445 0.266C1.22068 -0.0886666 0.646032 -0.0886666 0.292263 0.266C-0.0615053 0.621564 -0.0615053 1.19711 0.292263 1.55178L7.74655 9.00696L0.265326 16.4469C-0.0884422 16.798 -0.0884422 17.3663 0.265326 17.7165C0.619095 18.0676 1.19374 18.0676 1.54751 17.7165L9.02245 10.2829L16.4525 17.7138C16.8063 18.0685 17.3809 18.0685 17.7347 17.7138C18.0884 17.3582 18.0884 16.7827 17.7347 16.428L10.31 9.00247Z"
+        fill="#121313" />
+    </svg>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Confirmation</h1>
+      <br />
+    </div>
+  </div>
+
+  <p *ngIf="popupText">{{popupText}}</p>
+  <p *ngIf="popupText1">{{popupText1}}</p>
+  <div class="row">
+    <div class="col-sm-12 text-center mt-3">
+      <button *ngIf="!onlyYes" class="btn btn-light" id="NoId" type="No" (click)="onClose()">{{okCancel ?
+        'Cancel':'No'}}</button>
+      <button class="btn btn-success" id="YesId" type="submit" (click)="CreateFarm()">
+        {{okCancel ? 'Ok':'Yes'}}
+      </button>
+    </div>
+  </div>
+</div>

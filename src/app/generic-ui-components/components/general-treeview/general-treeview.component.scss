@@ -1,0 +1,89 @@
+.gen-treeview {
+
+    & .treeview-container {
+        max-width: inherit;
+        overflow: auto !important;
+        padding-left: .3rem;
+    }
+  
+    // & .treeview-item {
+    //     margin-left: 1.5rem !important;
+    // }
+  
+    & label.form-check-label {
+      position: relative;
+      vertical-align: top;
+      white-space: normal;
+      cursor: pointer;
+
+      font-size: 0.8rem;
+  
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0.1rem;
+        left: -1.5rem;
+        display: block;
+        // width: 1rem;
+        // height: 1rem;
+        pointer-events: none;
+        width: 1rem;
+        height: 1rem;
+        background-color: transparent;
+        border: #6bccd1 solid 1.5px;
+        border-radius: 0.5rem;
+        transition: background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+  
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0.1rem;
+        left: -1.5rem;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        background: no-repeat 50%/50% 50%;
+        box-sizing: border-box;
+      }
+    }
+  
+    & .form-check-input {
+      opacity: 0;
+  
+      &:checked ~ label.form-check-label::before {
+        background-color: #6bccd1;
+        border-color: #6bccd1;
+        color: #fff;
+      }
+  
+      &:checked ~ label.form-check-label::after {
+        left: -19px;
+        top: 4.5px;
+        width: 5px;
+        height: 9px;
+        border: solid white;
+        border-width: 0px 2px 2px 0px;
+        transform: rotate(45deg);
+      }
+    }
+  
+    & .form-inline .form-check {
+      padding-left: 4px;
+    }
+
+    & .dropdown-toggle::after {
+      border-width: 5px 5px 2.5px !important;
+      border-color: #999 transparent transparent
+    }
+    & .dropdown button::after {
+      margin-top: .5rem !important;
+    }
+    & .dropdown-menu {
+      background-color: #ededed !important;
+    }
+    & .treeview-text {
+      font-size: 0.8rem;
+    }
+  }

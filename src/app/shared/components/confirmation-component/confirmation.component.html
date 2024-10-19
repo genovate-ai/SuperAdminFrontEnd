@@ -1,0 +1,39 @@
+<div class="overlay" [ngClass]="{'popup-confirmation-overlay': popupOpen}">
+    <div class="confirmationBox">
+        <div class="popupHeading">
+            <h4 *ngIf='isDelete'>
+                {{ "confirmationBox.confirmation" | translation | async }}
+            </h4>
+            <h4 *ngIf='!isDelete'>
+                {{ "confirmationBox.confirmationMap" | translation | async }}
+            </h4>
+
+        </div>
+        <div class="confirmationBoxLine">
+
+        </div>
+        <div class="popupContent confirmationBoxComponent">
+            <h6>{{message}}</h6>
+
+
+            <div class="confirmationBoxButtons ">
+                <div class="confirmationBoxLine">
+
+                </div>
+
+                <button *ngIf='isDelete' (click)="Positive()" class="apl-btn b-md btn-ok" id="btn-yes"> {{ "confirmationBox.yes" |
+                    translation | async }}
+                </button>
+
+                <button *ngIf='isDelete' (click)="Negative()" class="apl-btn b-md btn-ok-solid-1 m-l-10px" id="btn-no"> {{
+                    "confirmationBox.no" | translation | async }}
+                </button>
+
+                <button *ngIf='!isDelete' (click)="Negative()" class="apl-btn b-md btn-ok" id="btn-no"> {{ "confirmationBox.ok" |
+                    translation | async }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,180 @@
+<div id="manage-orgn">
+    <app-manage-profile-component *ngIf="getProfileView()"></app-manage-profile-component>
+    <button (click)="createOrganization()" id="create-organization" *ngIf="this.screenPermission.isCreateButtonAllow" class="apl-btn btn-ok-solid pl-2 pr-2">
+  <!-- <i class="fa fa-plus"></i> -->
+  {{"app.createNew" | translation | async}}</button>
+
+    <div class="container-12 section-main section-main-fix pl-0">
+
+        <div class="row ">
+            <div class="col-sm-12 section-main__head-search u-bb-1-5p-primary-light bg-transparent pl-3 pr-1">
+                <div class="d-inline-block">
+                    <label class="font-weight-bold mb-0 m-t-3px">{{ "organizations.organizations" | translation | async }}</label>
+                </div>
+
+                <div class="pull-right d-inline-block ">
+                    <div class="search-box-wrapper">
+                        <input type="text" (keyup.enter)="searchByUser()" (keyup)="onKeyUp()" class="search-box-input" [ngClass]="{'search-box-input-highlight': showSearchBoxHighlighting}" id='organSearchId' placeholder="{{ 'fieldText.search' | translation | async }}" [value]="saveSearchForDisplay"
+                            autocomplete="off">
+                        <span id="search-orgn" class="search-box-button" [ngClass]="{'search-box-button-hightlight': showSearchBoxHighlighting}" (click)="searchByUser()">
+            <i class="search-icon-black fa fa-search"></i>
+          </span>
+                    </div>
+                </div>
+
+                <div class="search-query-results pull-right" *ngIf="showQueryResult">
+                    <label class="search-query-label "><span [(innerHTML)]="queryResultsFound"></span><span
+            class="font-weight-normal">
+            {{ "organizations.resultsFor" | translation | async }}
+          </span><span [(innerHTML)]="searchQuery"></span></label>
+                    <span (click)="resetSearchByUser()" id="reset-orgn"><i class="fa fa-times-circle-o search-query-times"></i></span>
+                </div>
+
+            </div>
+
+
+            <div class="section-main__body apl-scrollbar">
+                <div class="col-12 toggle-border" *ngFor="let orgnType of lstOrganTypes, let indexFirst = index">
+
+                    <div class="row">
+
+                        <div class="col-6 toggle-padding" id="orgnType-{{indexFirst + 1}}" (click)="LoadManageOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().orgnId, true, true);" [ngClass]="{'toggle-selected': toggle[indexFirst]}">
+
+                            <i *ngIf="toggle[indexFirst] " class="fas fa-chevron-circle-down fa-lg"></i>
+                            <i *ngIf="!toggle[indexFirst] " class="fas fa-chevron-circle-right fa-lg"></i>
+                            <label class="lh-100-p toggle-heading mb-0 m-l-10px">{{ orgnType.name }}</label>
+
+                        </div>
+
+                        <div class="col-6 pr-2" [ngClass]="{'toggle-selected': toggle[indexFirst]}">
+                            <div class="pull-right search-query-results-toggle" *ngIf="showQueryResult">
+                                <label class="search-query-label"><span [(innerHTML)]="queryResultsArray[indexFirst].count"></span><span
+                  class="font-weight-normal">
+                  {{ "organizations.resultsFor" | translation | async }}
+                </span><span [(innerHTML)]="searchQuery"></span></label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="CheckToggle(indexFirst) &&  !ShouldShowAnceraUsers(orgnType.id)">
+                        <div class="apl-resp-table table-margin">
+                            <div class="table-resp table-card apl-resp-table-v2 u-of-table-height apl-scrollbar">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label>{{ "organizations.logo" | translation | async }}</label>
+                                            </th>
+                                            <th (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().orgnName,true,false)" id="sort-orgn-name">
+                                                <label>{{ "organizations.name" | translation | async }}</label>
+                                                <span class="sortingArrow">
+                        <i class="fas fa-caret-up fa-lg sortingUpArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().orgnName && orgSort === 2"></i>
+                        <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().orgnName && orgSort === 3"></i>
+
+                      </span>
+                                            </th>
+                                            <th (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().orgnPhoneNo,true,false)" id="sort-orgn-phone">
+                                                <label>{{ "organizations.phoneNo" | translation | async }}</label>
+                                                <span class="sortingArrow">
+                        <i class="fas fa-caret-up fa-lg sortingUpArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().orgnPhoneNo && orgSort === 2"></i>
+                        <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().orgnPhoneNo && orgSort === 3"></i>
+
+                      </span>
+                                            </th>
+                                            <th (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().cityName,true,false)" id="sort-city">
+                                                <label>{{ "organizations.city" | translation | async }}</label>
+                                                <span class="sortingArrow">
+                        <i class="fas fa-caret-up fa-lg sortingUpArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().cityName && orgSort === 2"></i>
+                        <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().cityName && orgSort === 3"></i>
+
+                      </span>
+                                            </th>
+                                            <th (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().provinceName,true,false)" id="sort-province">
+                                                <label>{{ "organizations.state" | translation | async }}</label>
+                                                <span class="sortingArrow">
+                        <i class="fas fa-caret-up fa-lg sortingUpArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().provinceName && orgSort === 2"></i>
+                        <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().provinceName && orgSort === 3"></i>
+
+                      </span>
+                                            </th>
+                                            <th (click)="LoadManageUserOrgansLstData(orgnType.id, indexFirst, getColManageOrganEnum().countryName,true,false)" id="sort-country">
+                                                <label>{{ "organizations.country" | translation | async }}</label>
+                                                <span class="sortingArrow">
+                        <i class="fas fa-caret-up fa-lg sortingUpArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().countryName && orgSort === 2"></i>
+                        <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                          *ngIf="orgColName === getColManageOrganEnum().countryName && orgSort === 3"></i>
+                      </span>
+                                            </th>
+                                            <th>
+                                                <label>{{ "organizations.action" | translation | async }}</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let organ of lstOrganizations, let i = index">
+
+                                            <td>
+                                                <img src="{{ organ.orgnLogoThumbnail }}" style="object-fit:contain;" class="org-list-logo" alt="">
+                                                <div></div>
+                                            </td>
+                                            <td>
+                                                <label>{{ organ.orgnName }}</label>
+                                            </td>
+                                            <td>
+                                                <label>{{ organ.cfCellPhoneNo }}</label>
+                                            </td>
+                                            <td>
+                                                <label>{{ organ.cityName }}</label>
+                                            </td>
+                                            <td>
+                                                <label>{{ organ.provinceName }}</label>
+                                            </td>
+                                            <td>
+                                                <label>{{ organ.countryName }}</label>
+                                            </td>
+                                            <td>
+                                                <label>
+                        <img src="../../../../assets/images/view-icon.png"
+                          *ngIf="this.screenPermission.isEditButtonAllow" (click)="editOrganization(organ.orgnId)"
+                          class="grid-icon  btn-inline-margin cursor-pointer" id="edit-orgn-{{i + 1}}">
+                        <img src="../../../../assets/images/delete_ico.svg" (click)="DeleteOrganization(organ.orgnId)"
+                          *ngIf="this.screenPermission.isDeleteButtonAllow" class="btn-inline-pading cursor-pointer" id="delete-orgn-{{i + 1}}">
+                        
+                      </label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()" (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component>
+
+
+    <div class="anc-modal rpt audit-v2">
+        <app-popup-component></app-popup-component>
+    </div>
+</div>
+<!-- <app-popup-component></app-popup-component> -->

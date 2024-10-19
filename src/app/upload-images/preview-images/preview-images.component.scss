@@ -1,0 +1,255 @@
+
+
+
+.header{
+    
+
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 27px;
+display: flex;
+align-items: flex-end;
+
+color: #000000;
+svg{
+    margin-right: 20px;
+}
+
+}
+
+
+.map {
+    height: 100%;
+    position: relative;
+    
+
+#map { position: absolute; top: 0; bottom: 0; width: 100%; height:550px}
+}
+
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.tags{
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+}
+.btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 3px 13px;
+    gap: 10px;
+    
+    width: 111px;
+    height: 24px;
+    
+
+    background: #86B741;
+    border-radius: 5px;
+}
+.tag-headings{
+   svg{
+    margin-left: 20px;
+   }
+    span{
+        margin-left: 8px;
+        width: 67px;
+        height: 18px;
+
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 150%;
+        /* identical to box height, or 18px */
+        letter-spacing: 0.02em;
+        
+    }
+    .first{
+        color: #86B741;
+    }
+    .last{
+        color: #FF0000;
+    }
+    .upload{
+        color: #0385E2;
+    }
+    .drop{
+        color: #acacacf9;
+    }
+}
+
+.action-btn{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 3px 13px;
+    gap: 10px;
+ 
+    width: 125px;
+    height: 24px;
+    //border-color: #000000;
+    
+    margin-left: 15px;
+    margin-top: 15px;
+    background: white;
+   
+    border-radius: 5px;
+}:focus{ outline: none;}
+.color-green{
+
+    color: #86B741;
+    border: 2px solid #86B741;
+}
+.color-blue{
+    color: #0385E2;
+    border: 2px solid #0385E2;
+   
+}
+.color-grey{
+    color: #acacacf9;
+    border: 2px solid #acacacf9;
+    
+}
+
+.btn-first{
+    background: #86B741;
+    
+    //border: 2px solid #86B741;
+    
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    letter-spacing: 0.02em;
+
+    color: #FFFFFF;
+    
+}
+.btn-last{
+    background: #FF0000;
+    border: none;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    letter-spacing: 0.02em;
+
+    color: #FFFFFF;
+}
+.btn-upload{
+    background: #0385E2;
+    border: 2px solid #0385E2;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    letter-spacing: 0.02em;
+
+    color: #FFFFFF;
+}
+
+.btn-drop{
+    background: #acacacf9;
+    border: 2px solid #acacacf9;
+    
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    letter-spacing: 0.02em;
+
+    color: #FFFFFF;
+}
+
+.btn-view{
+    background: #86B741;
+    border: 2px solid #86B741;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    letter-spacing: 0.02em;
+
+    color: #FFFFFF;
+ }
+
+.btn-cancl{
+    position: absolute;
+    box-sizing: border-box;
+
+   
+    width: 110px;
+    height: 44px;
+    background-color: #FFFFFF;
+    margin-right: 20px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height, or 100% */
+    
+    letter-spacing: 0.187895px;
+    
+    color: #1C1C1D;
+    margin-left: 79%;
+}
+
+.btn-save{
+    display: flex;
+    position: absolute;
+    margin-left: 87%;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    color: #FFFFFF;
+    border: none;
+    margin-right: 15px;
+    
+    width: 110px;
+    height: 44px;
+    
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    background: #86B741;
+    border-radius: 4px;
+    }
+    .img{
+        position: absolute;
+        left: 810px;
+        top: 22px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+    }

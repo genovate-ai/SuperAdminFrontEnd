@@ -1,0 +1,824 @@
+@import "src/variables";
+.link-active-rpt {
+    background-color: #364A50 !important;
+    border-right: 3px solid #6BCCD1;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    display: block;
+    z-index: 1051;
+    width: 50px;
+    top: 0;
+    left: 0;
+    // background: $sidebar-bg-color;
+    background-color: black;
+    -webkit-transition: width 0.4s ease-in-out;
+    -moz-transition: width 0.4s ease-in-out;
+    -o-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.sidebar-max {
+    width: 260px;
+    -webkit-transition: width 0.4s ease-in-out;
+    -moz-transition: width 0.4s ease-in-out;
+    -o-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.sidebar .menu .item-group {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar .menu .item-group i {
+    color: $sidebar-item-color;
+    padding-left: 19px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: $f-s-card-title;
+    line-height: 50px;
+}
+
+.sidebar .menu .item-group .group-label {
+    font-size: $f-s-h;
+    padding-left: 11px;
+    line-height: 50px;
+}
+
+.sidebar .menu a {
+    display: block;
+    color: $sidebar-item-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: $f-s-card-title;
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.sidebar .menu a img {
+    height: auto;
+    width: 25px;
+    margin-left: 12px;
+}
+
+.line-height-50 {
+    line-height: 50px;
+}
+
+.sidebar .menu label {
+    padding-left: 52px;
+    font-size: $f-s-n;
+    display: inline;
+    margin: 0;
+    line-height: 30px;
+}
+
+.sidebar .menu a.active {
+
+    background-color: blue;
+    color: $t-c-primary !important;
+}
+
+.sidebar .menu a:hover:not(.active) {
+   // background: linear-gradient(270deg, green , gray);
+    color: $t-c-primary;
+    background-color: rgba(162, 164, 166, 0.3);
+}
+
+.topbar .app-logo {
+    height: 9px;
+    width: 50px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    margin-left: 0%;
+}
+
+.topbar .app-logo .small {
+    margin: 0;
+    height: 22px;
+    width: auto;
+    // background-image: url(../../../../assets/images/ancera_logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.sidebar .app-logo {
+    height: 40px;
+    width: 80%;
+    margin-top: 25px;
+    margin-bottom: 45px;
+}
+
+.sidebar .app-logo .small {
+    // display: table;
+    margin: auto;
+    height: 25px;
+    width: auto;
+    margin-top: 10px;
+    margin-left: 5px;
+    background-image: url(../../../../assets/images/Leaf-logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.sidebar .app-logo .fulls {
+    // display: table;
+    margin: auto;
+    height: 25px;
+    width: auto;
+    margin-top: 10px;
+    margin-left: 20px;
+    background-image: url(../../../../assets/images/Leaf-logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+
+.sidebar .app-logo .full {
+    // display: table;
+    margin: auto;
+    height: 55px;
+    width: auto;
+    margin-top: 3px;
+    margin-left: 40px;
+    background-image: url(../../../../assets/images/agrilift-logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.sidebar .items a:hover {
+    // background: $b-c-primary-light-hover !important;
+    background-color: rgba(162, 164, 166, 0.3);
+}
+
+.app-header {
+    height: 80px;
+    background-color: $header-background-color;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding-left: 70px;
+    position: fixed;
+    // padding-top: 15px;
+    z-index: 1049;
+    -webkit-transition: padding 0.4s ease-in-out;
+    -moz-transition: padding 0.4s ease-in-out;
+    -o-transition: padding 0.4s ease-in-out;
+    transition: padding 0.4s ease-in-out;
+
+    padding-top: 20px;
+
+}
+
+// .screen-title {
+//   padding-top: 15px;
+// }
+// .screen-name {
+//   font-family: Heebo;
+//   font-style: normal;
+//   font-weight: bold;
+//   font-size: 28px;
+//   line-height: 19px;
+//   letter-spacing: 0.466667px;
+//   color: #0E0E2B !important;
+// }
+
+.app-header-fm {
+    padding-left: 270px;
+    -webkit-transition: padding 0.4s ease-in-out;
+    -moz-transition: padding 0.4s ease-in-out;
+    -o-transition: padding 0.4s ease-in-out;
+    transition: padding 0.4s ease-in-out;
+}
+
+
+.profile-setting-icon
+{
+    position: absolute;
+    bottom: 9px;
+    left : 6px;
+}
+.close-profile-icon
+{
+    position: absolute;
+    bottom: 9px;
+    left : 6px;
+}
+.heading-text {
+    font-size: $f-s-app-heading;
+    font-weight: bold !important;
+    background-color: #F7F7F7 !important;
+    color: $sidebar-bg-color;
+    margin: 0;
+    // font-family: Heebo;
+    // font-style: normal;
+    // font-weight: bold;
+    // font-size: 50px;
+    // line-height: 28px;
+    // letter-spacing: 0.7px;
+    // color: #1C1C1D;
+}
+.heading-text.background-white {
+  background-color: #fff !important;
+}
+.heading-text.data-log {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 28px;
+  letter-spacing: 0.7px;
+  color: #1C1C1D;
+  margin-bottom: 15px;
+}
+
+
+.user-info {
+    display: inline;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.menu-lock {
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    left: 13px;
+}
+
+.menu-icon-locked {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    -webkit-transition: transform 0.4s ease-in-out;
+    -moz-transition: transform 0.4s ease-in-out;
+    -o-transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+}
+
+.menu-icon-unlocked {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: transform 0.4s ease-in-out;
+    -moz-transition: transform 0.4s ease-in-out;
+    -o-transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+}
+
+.link-active {
+    // background-color: $sidebar-link-active-c !important;
+    // border-right: 3px solid $b-c-primary-light;
+    background-color: rgba(162, 164, 166, 0.3);
+    border-right: 3px solid #FFFFFF;
+}
+
+.credit {
+    position: fixed;
+    bottom: 0px;
+    //top: 30px;
+    left: 0px;
+    margin-left: 15px;
+}
+
+.languageOption-div {
+    color: $t-c-primary;
+    position: relative;
+    display: table;
+    right: 20px;
+    top: 0px;
+    transform: translateY(10px);
+    display: inline;
+}
+
+.screen-title {
+    width: 100%;
+}
+
+.screen-name {
+    // background-color: #F7F7F7 !important;
+    // color: $t-c-primary-light;
+    // font-size: 18px;
+    background-color: #F7F7F7 !important;
+    color: $t-c-primary-light;
+    font-size: 18px;
+}
+.screen-name.background-white {
+  background-color: #fff !important;
+}
+// .screen-title {
+//   padding-top: 15px;
+// }
+.screen-name.data-log {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 19px;
+  letter-spacing: 0.466667px;
+  color: #0E0E2B !important;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+@media only screen and (max-width: 1368px) {
+    .screen-name.data-log {
+        margin-bottom: .5rem;
+    }
+
+    .m-r-icon-bar {
+        margin-right: 42px !important;
+    }
+
+    .cross-icon-mbl {
+        font-size: 20px;
+        font-weight: 900;
+        // margin-right: 18px;
+    }
+}
+
+
+.profile-name:hover {
+    background-color: #221F73;
+    color: $t-c-primary !important;
+    border-radius: 3px;
+}
+
+.profile-name {
+    margin-left: 5px;
+    padding: 5px;
+    color: $t-c-primary-light !important;
+    font-weight: bold;
+}
+
+.popover {
+    z-index: 10;
+    background-color: $t-c-primary;
+    color: black;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    right: 10;
+    left: auto;
+    margin-top: 50px;
+}
+
+.chosen-language {
+    cursor: pointer;
+}
+
+.popover a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    border-width: 0px;
+    border-bottom-width: 0.5px;
+    border-color: lightgray;
+    border-style: solid;
+}
+
+.popover a:hover {
+    background-color: lightgray;
+}
+
+// Mobile view css #Start
+.cross-icon {
+    font-size: 32px;
+    cursor: pointer;
+    position: absolute;
+    top: -6px;
+    left: 9.5rem;
+    color: white;
+}
+
+.dview {
+    display: inline-block;
+    visibility: unset;
+}
+
+.mview {
+    display: none;
+}
+
+.bar-style {
+    float: right;
+    color: $bg-c-body;
+    padding-right: 3%;
+    padding-top: 12px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .sidebar .menu .item-group i {
+        line-height: 57px;
+    }
+    .heading-text {
+        font-weight: bolder;
+        font-size: 1.2rem !important;
+    }
+    .screen-name {
+        font-size: 1rem !important;
+    }
+    //Reports :START
+    .topbar .app-logo {
+        // margin-top: 1.6%;
+        height: 1%;
+        //width: 6%;
+        margin-left: 38%;
+    }
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/agrilift-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 7rem;
+    }
+    .dview {
+        display: none;
+    }
+    .topbar .app-logo .small {
+        margin-top: 22%;
+    }
+    .heading-text {
+        padding-left: 7px;
+        padding-top: 17px;
+    }
+    .screen-name {
+        padding-left: 6px;
+    }
+    .navbar-scroll-mob {
+        max-height: 56vh;
+        //overflow: scroll;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .settings_mob {
+        position: absolute;
+        bottom: 50px;
+        left: 15px;
+    }
+    .logout_mob {
+        position: absolute;
+        bottom: 100px;
+        right: 15px;
+    }
+    .app-header {
+        padding-left: 10px !important;
+        height: 65px !important;
+        width: 100% !important;
+        right: unset !important;
+        left: 0 !important;
+        padding-top: 45px !important;
+    }
+    .topbar {
+        margin: 0;
+        padding: 0;
+        position: fixed;
+        overflow: auto;
+        display: block;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        // background: $sidebar-bg-color;
+        background: none;
+        height: 87px;
+        width: 100% !important;
+    }
+    .sidebar {
+        background: $sidebar-bg-color-mob !important;
+        top: 87px;
+        max-height: 100%;
+        bottom: unset;
+        height: 100%;
+        left: unset;
+        right: 0;
+        visibility: none;
+        opacity: 0;
+    }
+    .sidebar-max {
+        // width: 260px;
+        width: 100%;
+        -webkit-transition: width 0.4s ease-in-out;
+        -moz-transition: width 0.4s ease-in-out;
+        -o-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    .link-active {
+        background-color: transparent !important;
+        border-right: 0px solid $b-c-primary-light;
+        // border-left: 3px solid $b-c-primary-light;
+    }
+
+    .cross-icon-mbl {
+        font-size: 20px;
+        font-weight: 900;
+        margin-right: 18px;
+    }
+}
+
+.topbar-bg-clr {
+    background: #303D42 !important;
+}
+
+@media only screen and (max-width: 601px) {
+    .m-r-icon-bar {
+        margin-right: 30px !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .heading-text {
+        padding-top: 0px;
+    }
+    .topbar .app-logo {
+        margin-top: 10px;
+        height: 1%;
+        //  width: 7%;
+        margin-left: 38%;
+    }
+    .topbar .app-logo .small {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/Leaf-logo.svg);
+    }
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/Agrilift-main-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 7rem;
+    }
+    .app-header {
+        padding-left: 10px !important;
+        height: 65px !important;
+        width: 50% !important;
+        right: unset !important;
+        left: 0 !important;
+        padding-top: 45px !important;
+    }
+    .sidebar {
+        top: 85px;
+    }
+
+    .topbar {
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      overflow: auto;
+      display: block;
+      z-index: 100000;
+      top: 0;
+      left: 0;
+      background: none;
+      height: 50px;
+      width: 100% !important;
+    }
+
+    .cross-icon-mbl {
+        font-size: 20px;
+        font-weight: 900;
+        margin-right: 13px;
+    }
+
+    .m-r-icon-bar {
+        margin-right: 35px !important;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .app-header {
+        width: 60% !important;
+        left: 0 !important;
+        right: unset !important;
+        padding-top: 30px !important;
+    }
+    .topbar .app-logo {
+        margin-top: 0px;
+        height: 1%;
+        //width: 10%;
+        margin-left: 29%;       
+    }
+    .sidebar {
+        top: 85px;
+        ;
+    }
+    .heading-text {
+        padding-top: 0px;
+    }
+    .topbar .app-logo .small {
+        margin-top: -3%;
+        background-image: url(../../../../assets/images/Leaf-logo.svg);
+    }
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/Agrilift-main-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 7rem;
+    }
+    .bar-style {
+        padding-right: 5%;
+        // padding-top: 1.5px;
+    }
+
+    .cross-icon-mbl {
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .m-r-icon-bar {
+        margin-right: 35px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .heading-text {
+        padding-top: 3%;
+    }
+    .topbar .app-logo .small {
+        margin-top: 0%;
+        background-image: url(../../../../assets/images/Leaf-logo.svg);
+    }
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        // background-image: url(../../../../assets/images/agrilift-logo.png);
+        background-image: url(../../../../assets/images/Agrilift-main-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 7rem;
+    }
+    .topbar .app-logo {
+        margin-top: 6px;
+        height: 1%;
+        margin-left: 29%;
+    }
+    .navbar-scroll-mob {
+        max-height: 72vh !important;
+    }
+    .sidebar {
+        top: 85px;;
+        max-height: 100%;
+        // z-index: 1000;
+    }
+    .app-header {
+        width: 100% !important;
+        right: 0 !important;
+    }
+    .dview {
+        display: none;
+        visibility: hidden;
+        transition-delay: display 0.5 ease-in-out;
+    }
+    .mview {
+        display: inline-block;
+    }
+    .sidebar-max {
+        width: 100%;
+    }
+    .sidebar .menu a img {
+        width: 19px;
+    }
+    .sidebar .menu .item-group i {
+        font-size: 18px;
+    }
+    .sidebar .menu .item-group .group-label {
+        font-size: 1rem;
+    }
+    .sidebar .menu label {
+        font-size: 0.95rem;
+    }
+
+    .dis-none {
+      display: none;
+    }
+
+    .topbar {
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      overflow: auto;
+      display: block;
+      z-index: 100000;
+      top: 0;
+      left: 0;
+      background: none;
+      height: 87px;
+      width: 100% !important;
+    }
+
+    .cross-icon-mbl {
+        font-size: 18px;
+        font-weight: 900;
+        margin-right: 10px;
+    }
+
+    .m-r-icon-bar {
+        margin-right: 30px !important;
+    }
+}
+
+@media (max-width: 368px) {
+    .topbar .app-logo .small {
+        margin-top: -3%;
+        background-image: url(../../../../assets/images/Leaf-logo.svg);
+    }
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/Agrilift-main-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 7rem;
+    }
+
+    .dis-none {
+      display: none;
+    }
+
+    .topbar .app-logo {
+        margin-top: 1%;
+        margin-left: 29%;        
+    }
+}
+
+
+.languageSelect {
+    margin-top: -5rem;
+    float: right;
+    width: 7rem;
+    margin-right: 6%;
+}
+.version-text{
+    position: absolute;
+    bottom: 0px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    right: 22px;
+}
+@media only screen and (max-width: 1024px) {
+    .mobile-tablet-menue{
+        width: 32px;
+        height: 24px;
+    }
+
+}
+
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .topbar {
+        margin: 0;
+        padding: 0;
+        position: fixed;
+        overflow: auto;
+        display: block;
+        z-index: 100000;
+        top: 0;
+        left: 0;
+        background: none;
+        height: 95px;
+        width: 100% !important;
+    }
+
+    .sidebar {
+        top: 85px;
+    }
+
+    .topbar .app-logo {
+        margin-top: 6px;
+        height: 1%;
+        margin-left: 40%;
+    }
+
+    .sidebar-max {
+        width: 100%;
+    }
+
+    .topbar .app-logo .full {
+        margin-top: 8%;
+        background-image: url(../../../../assets/images/Agrilift-main-logo.png);
+        width: 150px;
+        height: 55px;
+        // margin-left: 22rem;
+    }
+
+    .cross-icon-mbl {
+        font-size: 20px;
+        font-weight: 900;
+        margin-right: 15px;
+    }
+}
+// Mobile view css #End

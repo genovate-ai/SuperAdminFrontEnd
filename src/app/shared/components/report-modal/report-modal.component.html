@@ -1,0 +1,51 @@
+<div class="u-report-modal d-none" [ngClass]="{'d-block': visible, 'myanim': visible}">
+  <div class="u-report-modal-dialog" (window:resize)="onResize($event)" [ngClass]="{'u-center-vertical':xsCenter}"
+    [@dialog] [style.width.%]="width">
+
+    <div class="u-report-modal-content">
+
+      <div class="u-report-modal-header">
+        <div class="u-report-modal-close">
+          <img src="../../../../assets/images/components-icons/close-icon.png" alt="Close" height="14" width="14"
+            class="cursor-pointer" (click)="close()" id="close-gen-modal" />
+          <!-- <span class="u-report-modal-close-icon">
+          </span> -->
+        </div>
+        <!-- Header text comes here -->
+      </div>
+
+      <div>
+        <ng-container #popupcontainer></ng-container>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component>
+
+<!-- <div class="popup-overlay" [ngClass]="{'d-block': visible}" >
+
+  <div (window:resize)="onResize($event)" [ngClass]="{'u-popup-dialog animated fadeInDown': visible,'popup-hide': !visible,'u-center-vertical':xsCenter}" [@dialog] [style.width.%]="width">
+    <div class="popup-content">
+      <div *ngIf="visible" id="close-popup-modal" (click)="close()" class="dialog__close-btn">
+        <p class="close-text">x</p>
+      </div>
+
+      <div class="popup-head" style="border-bottom: 1px solid #cccccc; padding: .3rem 0;">
+        <div class="popup-header">
+          {{ popupController.popupHeader }}
+        </div>
+      </div>
+
+      <div><ng-container #popupcontainer></ng-container></div>
+
+
+    </div>
+  </div>
+
+</div>
+
+<app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component> -->

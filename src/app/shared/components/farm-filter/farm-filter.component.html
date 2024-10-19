@@ -1,0 +1,50 @@
+<div class="backdrop" (click)="onClose()" >
+    
+</div>
+<div class="popup">
+    <form [formGroup]="filter" (ngSubmit)="onSubmit()" >
+        
+        
+        <div class="row justify-content-center">
+            <div class="col">
+                <label for="farmName">
+                    <input formControlName="Orderby" name="Orderby" id="farmName" type="radio" value="farmName" />
+                    Farm Name</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <label for="farmNo">
+                    <input formControlName="Orderby" name="Orderby" id="farmNo" type="radio" value="farmNo" />
+                    Farm No</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <label for="Province">
+                    <input formControlName="Orderby" name="Orderby" id="Province" type="radio" value="Province" />
+                    Province</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <label for="District">
+                    <input formControlName="Orderby" name="Orderby" id="District" type="radio" value="District" />
+                    District</label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <label for="Tehsil">
+                    <input formControlName="Orderby" name="Orderby" id="Tehsil" type="radio" value="Tehsil" />
+                    Tehsil</label>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col">
+                <button type="submit" id="submitId" >Apply</button>
+            </div>
+        </div>
+    </form>
+</div>

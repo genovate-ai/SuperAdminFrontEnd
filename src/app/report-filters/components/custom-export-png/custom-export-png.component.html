@@ -1,0 +1,6 @@
+<i title="{{ 'toolTips.exportPNG' | translation | async }}" class="fa fa-file"
+  style="font-size: inherit; cursor: pointer; color: inherit;" class="cursor-pointer" (click)="ExportPNG()"
+  *ngIf="!latestVersion"></i>
+
+<img title="{{ 'toolTips.exportPNG' | translation | async }}" class="cursor-pointer" *ngIf="latestVersion"
+  src="../../../../assets/images/components-icons/download-2.png" height="16" width="16" (click)="ExportPNG()" />

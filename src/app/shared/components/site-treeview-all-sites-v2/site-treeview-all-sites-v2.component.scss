@@ -1,0 +1,78 @@
+.sites-container {
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+    0px 4px 16px rgba(51, 51, 51, 0.08);
+  border-radius: 4px;
+  height: 135px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: 8px;
+  padding: 10px;
+}
+
+.site-tree-card {
+  font-family: Mukta;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 140%;
+  position: relative;
+  width: 125px;
+  max-width: 125px;
+  background: rgba(14, 14, 43, 0.2);
+  border-radius: 4px;
+  color: #1c1c1d;
+  opacity: 0.8;
+  padding: 4px 8px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  & .close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+}
+
+.btn-sites {
+  background: #0e0e2b;
+  border-radius: 5px;
+  font-family: Mukta;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.btn-site-selection {
+  width: 196px;
+  height: 44px;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #ffffff;
+
+  font-family: Mukta;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.187895px;
+  color: #1c1c1d;
+  &:hover {
+    background-color: #0e0e2b;
+    color: #ffffff;
+  }
+}
+
+// .sites-area {
+//   padding-top: 8px;
+//   min-height: 15rem;
+//   border: 1px solid #a2a4a6;
+//   box-sizing: border-box;
+//   border-radius: 4px;
+// }

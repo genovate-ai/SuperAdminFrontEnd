@@ -1,0 +1,15 @@
+<div class="position-relative custom-date-picker w-100 m-t-5px">
+    <div >
+        <input *ngIf="calenderType == 'input'" type="text" [(ngModel)]="displayDate" name="nameStartDate" class="form-control date-field" placeholder="{{ placeholderKey | translation | async }}" [readOnly]="readonlyForm" />
+        <span *ngIf="calenderType == 'input'" class="log-header__filter-icon" (click)="openDatePicker();">
+            <i class="fas fa-calendar"></i></span>
+        <span *ngIf="clearable && calenderType == 'input' && displayDate != ''" class="clearable" (click)=clearDate()><i class="fas fa-times"></i></span>
+        <div *ngIf="calenderType == 'button'" [id]="btnId" class="btn-mode" (click)="openDatePicker();">
+            {{ btnTextKey | translation | async }}
+        </div>
+    </div>
+    <div [formGroup]="dateForm" class="custom-date-picker calendar-container" #container>
+        <input type="text" class="calender-view" formControlName="selectedDate" #dateSelected="dpDayPicker" [dpDayPicker]="dayPickerConfig" [theme]="'dp-material'" [mode]="calenderMode" [selectionEnd]="changeCalenderDesign()" (onChange)="dateChanged($event)"
+        />
+    </div>
+</div>

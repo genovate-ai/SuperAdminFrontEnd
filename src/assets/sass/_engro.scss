@@ -1,0 +1,180 @@
+body.engro-theme {
+
+    body {
+        font-family: $engro-font-family !important;
+    }
+
+    .sidebar {
+        font-family: $engro-font-family !important;
+    }
+
+    .slected-farm {
+        background-color: $engro-top-green !important;
+        font-family: $engro-font-family !important;
+    }
+
+    .sidebar .app-logo .full {
+        background-image: url(../images/engro_logo.png) !important;
+    }
+
+    .sidebar .app-logo .fulls {
+        background-image: none !important;
+    }
+
+    .sidebar .app-logo .small {
+        background-image: url(../images/engro_logo.png) !important;
+    }
+
+    .topbar .app-logo .full {
+        background-image: url(../images/engro_logo.png) !important;
+        height: 80px !important;
+    }
+
+    app-farm-explorer-sidebar {
+        nav {
+            background: linear-gradient(
+            to bottom, 
+            $engro-top-green 0%, 
+            $engro-middle-green 50%, 
+            $engro-bottom-green 100%
+          ) !important;
+        }
+
+        .timeline-rptview-box {
+            background-color: $engro-top-green !important;
+        }
+
+        .view-box-report-name {
+            color: white !important;
+        }
+
+        div {
+            font-family: $engro-font-family !important;
+        }
+    }
+
+    app-farm-explorer-imagery-layer {
+        .imgaery-layer-container {
+            background-color: $engro-bottom-green !important;
+            font-family: $engro-font-family !important;
+        }
+
+        .view-dropdown-week-content {
+            background-color: $engro-bottom-green !important;
+            font-family: $engro-font-family !important;
+
+            li {
+                font-family: $engro-font-family !important;
+            }
+        }
+
+        .view-dropdown-week-content-colormap {
+            background-color: $engro-bottom-green !important;
+
+            li {
+                font-family: $engro-font-family !important;
+            }
+
+            span {
+                font-family: $engro-font-family !important;
+            }
+
+            .create-button {
+                font-family: $engro-font-family !important;
+            }
+        }
+
+        .legend-table-container {
+            background-color: $engro-bottom-green !important;
+        }
+
+        .view-dropdown-week-content-custom-colormap {
+            background-color: $engro-bottom-green !important;
+        }        
+
+        .view-dropdown-week {
+            font-family: $engro-font-family !important;
+        }
+        
+    }
+
+    app-farm-explorer-imagery {
+        .imgaery-layer-container {
+            background-color: $engro-top-green !important;
+        }
+
+        .imagery-list-container {
+            background-color: $engro-top-green !important;
+            font-family: $engro-font-family !important;
+        }
+
+        .view-dropdown-week-content {
+            background-color: $engro-top-green !important;
+            font-family: $engro-font-family !important;
+        }
+
+        span {
+            font-family: $engro-font-family !important;
+        }
+
+        li {
+            font-family: $engro-font-family !important;
+        }
+    }    
+
+    app-layout-component {
+        .sidebar {
+            background: linear-gradient(
+            to bottom, 
+            $engro-top-green 0%, 
+            $engro-middle-green 50%, 
+            $engro-bottom-green 100%
+          ) !important;
+        }
+
+        .topbar-bg-clr {
+            background: $engro-top-green !important;
+        }
+        
+    }
+
+    .info-container {
+        background-color: $engro-middle-green !important;
+        font-family: $engro-font-family !important;
+    }
+
+    app-land-preparation-options {
+        .close-btn {
+            background: $engro-top-green !important;
+        }
+
+        .land-prep-data-box {
+            background: $engro-top-green !important;
+        }
+
+        .land-prep-comment-box {
+            background: $engro-top-green !important;
+        }
+
+        .land-prep-crop-name {
+            background: $engro-bottom-green !important;
+        }
+
+        div {
+            font-family: $engro-font-family !important;
+        }
+
+        p {
+            font-family: $engro-font-family !important;
+        }
+
+        h3 {
+            font-family: $engro-font-family !important;
+        }
+    }
+
+    .slide-window {
+        font-family: $engro-font-family !important;
+    }
+
+}

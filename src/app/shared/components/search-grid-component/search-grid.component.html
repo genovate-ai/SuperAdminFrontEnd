@@ -1,0 +1,12 @@
+<div class="search-component" (click)="focusInput()">
+
+    <div class="input-tags">
+        <label *ngFor="let item of lstConditions" class="tags"><span class="tag-name">{{item.name}}</span><span class="tag-value">{{item.keyword}}</span><span class="tag-del" (click)="deleteKeyword(item)" title="hovering"><i class="fas fa-times"></i></span></label>
+    </div>
+    <form [formGroup]="form">
+        <input id="search-bar" #myInput type="text" formControlName="fcSearch" (input)="goSearch($event.target.value)" class="form-control" placeholder="Search" />
+    </form>
+    <div class="column-list d-none" [ngClass]="{'d-block': keyword?.length>0}">
+        <label *ngFor="let item of columnList;let i = index" id="tag-{{i}}" (mouseenter)="removeFocus()" (click)="addCondition(item)">Search {{item.name}} for :  <span>{{keyword}}</span></label>
+    </div>
+</div>

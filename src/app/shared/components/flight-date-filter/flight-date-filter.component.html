@@ -1,0 +1,31 @@
+<div class="backdrop" (click)="onClose()">
+
+</div>
+<div class="popup">
+    <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-12 mb-2">
+                    <div class="padding">
+                        <p class="mb-0">Flight Date</p>
+                        <input id="flight-date" type="date" formControlName="flightDate" placeholder="Planting Date" class="flight-date-input" placeholder="Flight date"
+                        (ngModelChange)="onPlantingDateChange($event)"  />
+
+                        <!-- <app-date-select-box formControlName="flightDate" placeholder="Planting Date"
+                        (ngModelChange)="onPlantingDateChange($event)" [mandatory]="true"
+                        [displayError]="flightForm.controls.flightDate.errors && ( flightForm.controls.PlantingDate.touched)">
+                        <ng-template>
+                            <div
+                            *ngIf="flightForm.controls.PlantingDate.errors?.incorrect && ( flightForm.controls.PlantingDate.touched)">
+                        </div>
+                        <div
+                        *ngIf="flightForm.controls.PlantingDate.errors?.required && ( flightForm.controls.PlantingDate.touched)">
+                        Planting Date is required</div>
+                    </ng-template></app-date-select-box> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button id="SubmitId" type="submit">Apply</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,182 @@
+<div id="user-roles-right">
+  <div class="pop-head">
+    Roles & Rights
+  </div>
+  <div class="popup-body mt-2 pl-0 pr-0">
+    <div class="pr-1"
+      style="overflow-x: hidden; overflow-y:auto; height: calc(100vh - 21rem);max-height: calc(100vh - 21rem);">
+
+      <form [formGroup]="form" autocomplete="off">
+        <div class="form-group col-12">
+          <div class="ng-select-box required">
+
+            <ng-select class="form-control" name="nmeOrganization" id="organizationId"
+              placeholder="{{ 'fieldText.addOrganization' | translation | async }}"
+              [(ngModel)]="selectedValueOrganization" [items]="lstOrganizations" [clearable]="true" bindValue="codeID"
+              bindLabel="name" formControlName="fcOrganization" [multiple]="false" [closeOnSelect]="true">
+              <!-- (change)="LoadAllSitesRefData(form.get('fcOrganization').value)" -->
+              
+              <ng-template ng-option-tmp let-item="item">
+                <div>
+                  <label id="orgn-{{item.codeID}}" class="mb-0" for="">{{item.name}}</label>
+                </div>
+              </ng-template>
+            </ng-select>
+            <div class="floating-error"
+              [ngClass]="{'hide': !(form.get('fcOrganization').errors && (form.get('fcOrganization').dirty || form.get('fcOrganization').touched))}">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path
+                    d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                    fill="#EA4E40" />
+                </svg>
+              </i>
+              <div class="floating-error-text" #errorText>
+                <div 
+                  *ngIf=" form.get('fcOrganization').errors && (form.get('fcOrganization').dirty || form.get('fcOrganization').touched)">
+                  {{ "userAccount.OrganizaionRequired" | translation | async }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group col-12">
+
+          <div class="ng-select-box required">
+
+            <ng-select class="form-control apl-form-control-inv" name="nmeRoles" id="rolesId"
+              [(ngModel)]="selectedRoles" [items]="lstRoles"
+              placeholder="{{ 'fieldText.addAccessRole' | translation | async }}" [clearable]="roleClearable"
+              bindValue="codeID" bindLabel="name" formControlName="fcRoleId" [multiple]="true" [closeOnSelect]="false">
+              <ng-template ng-header-tmp>
+
+                <div class="ng-option">
+
+                  <div class="custom-control custom-checkbox m-l-4px">
+                    <input type="checkbox" class="custom-control-input" (change)="selectAllRoles($event)"
+                      id="roles-head" [checked]="this.lstRoles.length === this.selectedRoles.length">
+                    <label class="custom-control-label" for="roles-head">{{ "app.selectAll" | translation | async
+                      }}</label>
+                  </div>
+                </div>
+
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" [checked]="selectedRoles.indexOf(item.codeID) > -1"
+                    class="custom-control-input" id="{{'rolesId-'+item.codeID}}">
+                  <label class="custom-control-label">{{item.name}}</label>
+                </div>
+              </ng-template>
+
+              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                <div class="ng-value select-limit-width" *ngFor="let item of items | slice:0:selectItemLimit">
+                  <span *ngIf="item.name" class="ng-value-icon left" id="clear-rolesId-{{+item.codeID}}"
+                    (click)="clear(item)" aria-hidden="true">x</span>
+                  <span class="ng-value-label  select-limit-text" *ngIf="item.name"
+                    [ngClass]="{'max-w-90p': !roleClearable && !item.allowRemove}" title="{{item.name}}">
+                    {{item.name}}
+                  </span>
+                </div>
+                <div class="ng-value text-plane" title='{{ "app.selectNote" | translation | async }}'
+                  *ngIf='items.length > selectItemLimit'>
+                  <span class="ng-value-label max-w-99p">
+                    {{ "app.plus" | translation | async }}{{items.length - selectItemLimit}}
+                    {{ "app.more" | translation | async }}</span>
+                </div>
+              </ng-template>
+
+            </ng-select>
+            <div class="floating-error"
+              [ngClass]="{'hide': !(form.get('fcRoleId').errors && (form.get('fcRoleId').dirty || form.get('fcRoleId').touched))}">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path
+                    d="M5 0C2.24167 0 0 2.24167 0 5C0 7.75833 2.24167 10 5 10C7.75833 10 10 7.75833 10 5C10 2.24167 7.75833 0 5 0ZM5 9.16667C2.7 9.16667 0.833333 7.3 0.833333 5C0.833333 2.7 2.7 0.833333 5 0.833333C7.3 0.833333 9.16667 2.7 9.16667 5C9.16667 7.3 7.3 9.16667 5 9.16667Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00065 4.0415C4.76732 4.0415 4.58398 4.22484 4.58398 4.45817V7.2915C4.58398 7.52484 4.76732 7.70817 5.00065 7.70817C5.23398 7.70817 5.41732 7.52484 5.41732 7.2915V4.45817C5.41732 4.23317 5.23398 4.0415 5.00065 4.0415Z"
+                    fill="#EA4E40" />
+                  <path
+                    d="M5.00898 2.33339C4.79232 2.31673 4.59232 2.54173 4.58398 2.76673C4.58398 2.77506 4.58398 2.82506 4.58398 2.83339C4.58398 3.05839 4.75898 3.22506 4.99232 3.23339H5.00065C5.22565 3.23339 5.40898 3.03339 5.41732 2.81673C5.41732 2.80839 5.41732 2.72506 5.41732 2.72506C5.41732 2.48339 5.24232 2.33339 5.00898 2.33339Z"
+                    fill="#EA4E40" />
+                </svg>
+              </i>
+              <div class="floating-error-text" #errorText>
+                <div 
+                  *ngIf=" form.get('fcRoleId').errors && (form.get('fcRoleId').dirty || form.get('fcRoleId').touched)">
+                  {{ "userAccount.AssignedRolesRequired" | translation | async }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group col-12">
+
+          <div class="ng-select-box">
+            <ng-select class="form-control height140 apl-form-control-inv" name="nameReportRoles" id="reportRoleId"
+              [(ngModel)]="selectedReportRoles" [items]="lstReportRoles"
+              placeholder="{{ 'fieldText.assignReportingRole' | translation | async }}" [clearable]="true"
+              bindValue="codeID" bindLabel="name" formControlName="fcReportRoleId" [multiple]="false"
+              [closeOnSelect]="true">
+            </ng-select>
+          </div>
+
+        </div>
+        <!-- <div class="mb-2 col-12">
+          <label class="usr-label ml-1">{{"userRolesRights.assignSite" | translation | async}}</label>
+          <div class="w-100"> -->
+            <!-- <app-custom-treeview-component id="select-sites" [siteDetails]="siteDetails" [siteTagData]="taggedData"
+              [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+              [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+              [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+              [clientSites]="lstClientSites" [isPiperUser]="isPiperUser" (sitesSelected)="updateSites($event)"
+              (sendSiteTagData)="taggedData = $event" (removeSites)="removeOrgnSites($event)" style="width: 100%;">
+            </app-custom-treeview-component> -->
+            <!-- <app-site-treeview-all-sites-v2 class="w-100" id="select-sites" [siteDetails]="siteDetails"
+              [siteTagData]="taggedData" [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+              [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+              [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+              [clientSites]="lstClientSites" (sitesSelected)="updateSites($event)"
+              (sendSiteTagData)="taggedData = $event" (removeSites)="removeOrgnSites($event)"
+              (showSitesTree)="this.showSitesTree=!$event" [selectOrgnSite]="isSiteAdmin">
+            </app-site-treeview-all-sites-v2>
+          </div>
+        </div> -->
+
+      </form>
+
+    </div>
+  </div>
+  <div class="popup-footer">
+    <div class="w-100 d-flex flex-row-reverse pr-2">
+      <button type="submit" (click)="submit(form.value)"
+        class="apl-btn-v3 primary-2 b-md m-l-10px mt-0 mb-0" id="btn-save">
+        <i class="fa fa-save" style="font-size: .75rem"></i> {{ "app.save" | translation | async }}
+      </button>
+    </div>
+  </div>
+  <div class="user-roles-rights">
+    <app-site-treeview-all-sites-selection *ngIf="showSitesTree" id="select-sites" [siteDetails]="siteDetails"
+      [siteTagData]="taggedData" [lstSites]="lstAllSites" [allTestingSites]="lstAllTestingSitesIDs"
+      [allCollectionSites]="lstAllCollectionSitesIDs" [allExtraSites]="lstAllExtraSitesIDs"
+      [disableBtn]="disableSiteSelection" [userSites]="values" [testingSites]="lstTestingSites"
+      [clientSites]="lstClientSites" (sitesSelected)="updateSites($event); this.showSitesTree = false;"
+      (sendSiteTagData)="taggedData = $event" (removeSites)="removeOrgnSites($event)"
+      (hideSitesTree)="this.showSitesTree = !$event" [organId]="orgnId" [selectOrgnSite]="isSiteAdmin">
+    </app-site-treeview-all-sites-selection>
+  </div>
+
+
+  <app-confirmation-v3 *ngIf="showConfirmationFlag" [disableBold]="disableBold" (positive)="saveDataToServer()"
+    [boldTxt]="boldText" (negative)="showConfirmationFlag = false" [message]="confirmationMessage">
+  </app-confirmation-v3>
+</div>

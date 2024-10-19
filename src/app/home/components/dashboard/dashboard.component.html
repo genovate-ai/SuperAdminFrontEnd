@@ -1,0 +1,14 @@
+<div *ngIf="!viewReports.EntericDashboard">
+    <div *ngIf="reportsData.length > 1" style="height: 4rem;text-align: right;margin-bottom: 2rem;">
+        <div class="form-group" *ngFor="let obj of reportsData"
+            style="display: inline-block;text-align: center;margin-bottom: 0rem;">
+            <img title="{{ obj.reportName }}" src="{{ obj.reportIcon }}" class="bx" alt="Piper Report"
+                style="cursor: pointer; height: 3rem;width: 3rem;margin-left: 1.5rem;margin-right: 1.5rem;display: block;"
+                (click)="saveDafultReport(obj)">
+            <label style="font-weight: 600;font-size: 0.5rem;">
+                <i *ngIf="obj.setHome" class="fa fa-star" aria-hidden="true"></i>
+                {{ obj.reportName }}</label>
+        </div>
+        <hr class="horizontalLineReportTurquise" />
+    </div>
+</div>

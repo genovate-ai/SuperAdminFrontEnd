@@ -1,0 +1,109 @@
+@import "../../../../variables.scss";
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.005);
+    z-index: 1000;
+}
+
+.popup-hide {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    transition: all .25s ease-in-out;
+}
+
+.dialog {
+    // display: block !important;
+    display: inline-block !important;
+    // height: 90%;
+    z-index: 10001;
+    //right: 0;
+    //bottom: 0;
+    left: 15%;
+    // top: 5%;
+    top: 1.75rem;
+    //top: 90px;
+    position: fixed;
+    overflow-y: auto;
+    width: 70%;
+    padding: 12px;
+    background-image: linear-gradient(179deg, #303D42 0%, #3D3D41 100%);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
+    border-radius: 6px 0 0 6px;
+    border-top: 7px solid #6BCCD1;
+    //margin-right: auto;
+    //margin-left: auto;
+    //min-height: 200px;
+    //max-height: 500px;
+    /* max-height:85%; */
+    //max-width: 1250px;
+    //background-color: #fff;
+    //box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+}
+
+.u-popup-dialog {
+    position: relative;
+    width: auto;
+    pointer-events: none;
+    margin: 2rem auto;
+    display: -webkit-box;
+    display: flex;
+    max-height: calc(100% - 4rem);
+}
+
+.u-center-vertical {
+    margin: 8rem auto !important;
+}
+
+
+/* @media (min-width: 768px) {
+    .dialog {
+        top: 40px;
+    }
+} */
+
+.dialog__close-btn {
+    //border: 0;
+    background: none;
+    //color: #2d2d2d;
+    //top: 8px;
+    //right: 8px;
+    font-size: 1.2em;
+    //box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    cursor: pointer;
+    //background-color: red;
+    //border-radius: 100px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    // top: 0px;
+    top: 7px;
+    right: 10px
+}
+
+.container {
+    margin-top: 10px;
+}
+
+.dialog__close-btn:hover {
+    background-color: darkred
+}
+
+.close-text {
+    margin: auto;
+    display: table;
+    color: white
+}
+
+.popup-header {
+    color: white;
+    // font-size: $f-s-card-title;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}

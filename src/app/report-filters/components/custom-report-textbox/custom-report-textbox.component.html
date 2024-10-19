@@ -1,0 +1,15 @@
+<div class="w-100 filter-group mb-2 mt-2 brdr-bot-grey">
+  <div class="filter-group__head">
+    <label (click)="isVisible = !isVisible">
+      <i class="fontsize-525r fas fa-chevron-right chevron-rotate ml-2" [ngClass]="{'right-down': isVisible}"></i>
+      <span class="ml-2 font-weight-bold">{{title}}</span>
+    </label>
+  </div>
+  <div class="filter-group__body mb-2 checkbox-brdr-clr report-scroller" [ngClass]="{'d-none': !isVisible}">
+    <div class="override pl-2">
+      <input type="text" id="{{title}}-report-textbox" class="form-control cutomcolorTextField filter-textbox"
+        placeholder="{{fieldPlaceholder}}" (keyup)="onKeyUp()" #searchbox />
+    </div>
+  </div>
+
+</div>

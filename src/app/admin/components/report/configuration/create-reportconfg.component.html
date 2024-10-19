@@ -1,0 +1,82 @@
+<form [formGroup]="form" autocomplete="off">
+
+    <div class="popup-body mt-2">
+        <div class="popup-card h-sm-popup pr-2">
+            <div class="col-md-12 p-0">
+                <div class="form-group">
+                    <label>{{"reportsConfg.reportdsply" | translation | async  }}*</label>
+                    <input type="text" formControlName="fcReportName" id="reportNameId" name="nmeReportName" class="form-control" inputMask placeholder="{{ 'fieldText.DisplayName' | translation | async }}" required />
+
+                    <div class="form-error" *ngIf="
+                    form.get('fcReportName').errors?.required &&
+                    form.get('fcReportName').touched ||
+                    form.get('fcReportName').errors?.required && isNavigated">
+                        {{ "reportsConfg.dsplynamerequired" | translation | async }}
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>{{ "reportsConfg.reportdsc" | translation | async }}*</label>
+                    <input type="text" formControlName="fcReportDesc" id="reportDescId" name="nmeReportDesc" class="form-control" inputMask placeholder="{{ 'fieldText.ReportDescription' | translation | async }}" required />
+
+                    <div class="form-error" *ngIf="
+                    form.get('fcReportDesc').errors?.required &&
+                    form.get('fcReportDesc').touched ||
+                    form.get('fcReportDesc').errors?.required && isNavigated">
+                        {{ "reportsConfg.descrequired" | translation | async }}
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>{{ "reportsConfg.reportgrp" | translation | async }}*</label>
+                    <div class="input-group">
+                        <ng-select class="form-control" name="reportGrp" id="reportGrpId" placeholder="{{ 'fieldText.Select' | translation | async }}" [(ngModel)]="selectedReportGrp" [items]="lstReportGrp" formControlName="fcReportGrp" [clearable]="false" bindValue="codeID"
+                            bindLabel="name" [multiple]="false">
+                        </ng-select>
+                    </div>
+
+                    <div class="form-error" *ngIf="
+                     form.get('fcReportGrp').errors?.required &&
+                     form.get('fcReportGrp').touched ||
+                     form.get('fcReportGrp').errors?.required && isNavigated">
+                        {{ "reportsConfg.reportgrprequired" | translation | async }}
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>{{ "reportsConfg.report" | translation | async }}*</label>
+                    <div class="input-group">
+                        <ng-select class="form-control" name="reportType" id="reportTypeId" placeholder="{{ 'fieldText.Select' | translation | async }}" [(ngModel)]="selectedReportType" [items]="lstReport" formControlName="fcReport" [clearable]="false" bindValue="codeID" bindLabel="name"
+                            [multiple]="false">
+                        </ng-select>
+                    </div>
+
+                    <div class="form-error" *ngIf="
+                        form.get('fcReport').errors?.required &&
+                        form.get('fcReport').touched ||
+                        form.get('fcReport').errors?.required && isNavigated">
+                        {{ "reportsConfg.reportrequired" | translation | async }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ "reportsConfg.status" | translation | async }}</label>
+                    <div class="ml-2px">
+                        <app-custom-radio-button value1="true" value2="false" label1="Active" label2="InActive" formControlName="fcIsActive" name="nmeIsActive"></app-custom-radio-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-footer">
+        <div *ngIf="this.isSaveButtonAllow" class="w-100">
+
+            <button type="submit" (click)="submit(form.value)" class="apl-btn b-md btn-ok m-l-10px">
+        <i class="fa fa-save"></i> {{"buttons.save" | translation | async}}
+      </button>
+            <button type="button" (click)="resetForm()" class="apl-btn b-md btn-ok m-l-10px">
+        <i class="fa fa-times"></i> {{"buttons.reset" | translation | async}}
+      </button>
+
+        </div>
+    </div>
+
+</form>

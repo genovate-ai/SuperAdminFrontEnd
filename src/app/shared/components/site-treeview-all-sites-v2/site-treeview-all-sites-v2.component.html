@@ -1,0 +1,106 @@
+<div>
+  <div class="input-group">
+
+    <div class="sites-container">
+      <div *ngFor="let item of siteDetails | keyvalue, let i = index" >
+        <div class="site-tree-card">
+          <img src="../../../../assets/images/components-icons/close-icon.png" alt="Close" height="10" width="10"
+            class="cursor-pointer close" (click)="removeOrgn(item.key)" id="close-card-{{ i }}" />
+          <p class="mb-1 text-ellipsis max-w-99p" title="{{item.value.siteNameOrgnType}}">
+            {{item.value.siteNameOrgnType}}</p>
+          <p class="mb-1 text-ellipsis max-w-99p">
+            {{ "userAccount.CollectionSites" | translation | async }}
+            {{item.value.lstCollectionSites.length}}</p>
+          <p class="mb-1 text-ellipsis max-w-99p">
+            {{ "userAccount.TestingSites" | translation | async }}
+            {{item.value.lstTestingSites.length}}</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label id="btn-show-tree-1 cursor-pointer" (click)="showTree()" class="btn btn-sites pl-3 pr-3">
+        {{"userAccount.sites" | translation | async}}
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="showTreeComp"
+  style="position: fixed; top: 0; left: 0; background-color: transparent; z-index: 1200; height: 100%; width: 100%;">
+  <div style="background-color: #ffffff;
+    width: 42%;
+    height: calc(100vh - 13rem);
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -49%);
+    z-index: 1500;
+    border-top: 2px solid rgba(155, 155, 155, 0.7);
+    padding: 10;">
+    <div class="mt-2 mb-2">
+      <button class="btn btn-site-selection mr-2" id="select-testing-sites">
+        {{"userAccount.testingSites" | translation | async}}
+      </button>
+      <button class="btn btn-site-selection mr-2" id="select-collection-sites">
+        {{"userAccount.allSites" | translation | async}}
+      </button>
+    </div>
+    <div class="sites-area">
+      <div class="all-sites-view control-ngx-treeview-view tree-height-inc h-15rem">
+        <div class="custom-treeview piper-sites-view">
+          <ngx-treeview id="sites-tree" [config]="config" [items]="itemsLst2" (selectedChange)="ValueChanged($event)"
+            (filterChange)="onFilterChange($event)">
+          </ngx-treeview>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<!-- <div class="myanim overlay-blur" *ngIf="false">
+  <div class="popup-on-top1">
+    <div class="header-popup">
+      <label class="popup-heading">{{ "userAccount.testSites" | translation | async }}</label>
+      <span class="backG-hover-red btn-close-popup" id="close-demo-client-sites" (click)="hideTree()"
+        aria-hidden="true">x</span>
+    </div>
+    <div style="padding: 20px 20px 0px 20px; height: 60vh; overflow: scroll;">
+
+
+      <label id="btn-show-tree-1" (click)="selectAllTestSites()" class="apl-btn b-md btn-ok">
+        {{"userAccount.testingSites" | translation | async}}
+      </label>
+
+      <label id="btn-show-tree-1" (click)="SelectAllCollection()" class="apl-btn b-md btn-ok m-l-10px">
+        {{"userAccount.allSites" | translation | async}}
+      </label>
+
+      <fieldset class="fieldsetCustomReport mb-0">
+        <legend class="legendFontWidth mb-0">{{ "userAccount.allSITES" | translation | async }}</legend>
+
+        <div class="all-sites-view control-ngx-treeview-view tree-height-inc h-15rem">
+          <div class="custom-treeview piper-sites-view">
+            <ngx-treeview id="sites-tree" [config]="config" [items]="itemsLst2" (selectedChange)="ValueChanged($event)"
+              (filterChange)="onFilterChange($event)">
+            </ngx-treeview>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="p-point-625">
+      <div class="w-100">
+        <button type="button" id="btn-cancel-sites" (click)="hideTree()" class="apl-btn b-md btn-ok m-l-10px">
+          <i class="fa fa-times"></i> {{"buttons.cancel" | translation | async}}
+        </button>
+
+        <button type="submit" id="btn-ok-sites" (click)="saveClientSites()"
+          [disabled]="showLengthError || showRequiredError" class="apl-btn b-md btn-ok m-l-10px">
+          <i class="fa fa-check"></i> {{"buttons.OK" | translation | async}}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div> -->

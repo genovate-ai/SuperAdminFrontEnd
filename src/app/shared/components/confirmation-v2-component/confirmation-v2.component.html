@@ -1,0 +1,20 @@
+<div class="confirmation-overlay" [ngClass]="{'popup-confirmation-overlay': popupOpen}">
+  <div class="confirmation-box">
+    <div class="confirmation-close" (click)="Negative()">
+      &times;
+    </div>
+    <div class="confirmation-body">
+      <div class="confirmation-title">
+        {{ "confirmationBox.confirmation" | translation | async }}
+      </div>
+      <div class="confirmation-message">
+        {{message}}
+      </div>
+      <div class="confirmation-footer">
+        <button type="button" class="anc-btn anc-btn-secondary mr-4" (click)="Positive()">Yes</button>
+        <button type="button" class="anc-btn anc-btn-solid" (click)="Negative()">No</button>
+      </div>
+    </div>
+  </div>
+
+</div>

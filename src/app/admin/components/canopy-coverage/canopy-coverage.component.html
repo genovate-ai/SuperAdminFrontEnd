@@ -1,0 +1,90 @@
+<div id="canopy-coverage">
+    <div class="hide-report" [ngClass]="{'show-report': isDataLoaded}">
+      <button (click)="createCanopy()" id="create-canopy" *ngIf="this.screenPermission.isCreateButtonAllow"
+        class="anc-btn anc-btn-solid anc-btn-solid-2 mt-4 mb-4">
+        {{"app.createNew" | translation | async}}</button>
+      <div id="user-log" class="create-role" [ngClass]="{'mt-4': !this.screenPermission.isCreateButtonAllow}">
+        <div class="data-log-section hide-report-2" [ngClass]="{'show-report': isDataLoaded}">
+          <div class="widgets">
+            <div class="widgets__counter">
+              <span id="results-found-count">{{totalRecords | number}} </span>
+              <span *ngIf="totalRecords > 1">{{"general.resultsFound" | translation | async}}</span>
+              <span *ngIf="totalRecords <= 1">result found</span>
+            </div>
+            </div>
+          </div>
+  
+          <div class="datatable-container pr-0 pl-0 border border-1 border-dark rounded p-1">
+            <div class="table-responsive apl-data-log-table apl-scrollbar scrollbar--2 rounded" appHorizontalDragScroll
+              [disabled]="disabledDragScroll">
+              <div id='table-user-log' class=" mb-0">
+                <table id="dc-table-graph" class="table__data-log">
+                  <thead>
+                    <tr id='table-header-user-log' class="text-uppercase">
+                      <th>
+                        <label>Crop Name</label>
+                      </th>
+                      <th>
+                        <label>Days</label>
+                      </th>
+                      <th class="width-10-p">
+                        <label>Action</label>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of canopyCoverageList, let i = index">
+                      <td class="width-30-p" title="{{item.name}}">
+                        <label class="text-ellipsis max-w-500px vertical-align-middle">{{ item.name }}</label>
+                      </td>
+                      <td class="width-50-p" title="{{ item.months }}">
+                        <label class=""><span class="month-item" *ngFor="let numberOfDay of item.numberOfDays.split(',')">
+                          {{numberOfDay.trim() }}
+                        </span> (Days)</label>
+                      </td>
+                      <td class="text-nowrap pl-0">
+                        <div class="d-flex">
+                          <div class="widgets__controls--edit pb-0 pt-0 pos-r t-neg-3px bg-dark rounded"
+                            *ngIf="this.screenPermission.isEditButtonAllow"><span 
+                              class="cursor-pointer" id="edit-role-{{i}}" title="Edit Canopy">
+                              <img class="m-b-2px" height="14"
+                                src="../../../../../assets/images/components-icons/edit-icon.png" width="12" (click)="editCropCanopyCoverage(item.cropCatalogId)"></span>
+                          </div>
+                          <!-- <div class="widgets__controls--edit pb-0 pt-0 ml-2 pos-r t-neg-3px bg-dark rounded"
+                            *ngIf="this.screenPermission.isEditButtonAllow"><span 
+                              class="btn-inline-pading cursor-pointer" id="edit-role-rights-{{i}}" title="Edit Canopy">
+                              <img class="m-b-2px" height="14"
+                                src="../../../../../assets/images/components-icons/edit-2.png" width="12">
+                            </span>
+                          </div> -->
+                          <!-- <div class="widgets__controls--view pb-0 pt-0 ml-2 pos-r t-neg-3px"><span
+                               class="btn-inline-pading cursor-pointer"
+                              id="view-role-user-{{i}}" title="View users">
+                              <img class="m-b-2px" height="14"
+                                src="../../../../../assets/images/components-icons/view-icon.png" width="12">
+                            </span>
+                          </div> -->
+                        </div>
+                        <!-- <img src="../../../../../assets/images/components-icons/edit-icon.png" *ngIf="this.screenPermission.isEditButtonAllow" (click)="editRole(role.userRoleId)" class="grid-icon  btn-inline-margin cursor-pointer" id="edit-role-{{i}}">
+                                      <img src="../../../../assets/images/rights.svg" (click)="editRights(role.userRoleId)" *ngIf="this.screenPermission.isEditButtonAllow" class="btn-inline-pading cursor-pointer" id="edit-role-rights-{{i}}">
+                                      <img src="../../../../../assets/images/components-icons/view-icon.png" style="height:24px" (click)="viewUsers(role.userRoleId)" class="btn-inline-pading cursor-pointer" id="view-role-user-{{i}}"> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </div>
+  
+    </div>
+  
+    <app-confirmation-component *ngIf="showConfirmationFlag"
+      (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component>
+    <div class="anc-modal">
+      <app-popup-v2></app-popup-v2>
+    </div>
+  

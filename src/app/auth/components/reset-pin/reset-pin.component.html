@@ -1,0 +1,95 @@
+<div class="auth-body">
+    <div class="auth-top-logo">
+    </div>
+    <div class="auth-bottom-logo">
+        <svg class="display-inline" viewBox="0 0 28 28">
+            <path
+                d="M11.2948571,0 L11.4434286,0 C11.4422857,1.01828571 11.4445714,2.03657143 11.4422857,3.056 C7.38057143,3.97142857 4.00571429,7.33828571 3.08571429,11.4 C2.05828571,11.4 1.032,11.4011429 0.00457142857,11.4 C0.476571429,8.82971429 1.672,6.39542857 3.42857143,4.45828571 C5.47428571,2.16914286 8.28114286,0.585142857 11.2948571,0"
+                id="Fill-1"></path>
+            <path
+                d="M16.5577143,0 L16.6628571,0 C19.1862857,0.472 21.5668571,1.65828571 23.4754286,3.37142857 C25.816,5.45028571 27.4308571,8.32342857 27.9908571,11.4034286 C26.9668571,11.3977143 25.9417143,11.3988571 24.9177143,11.4022857 C23.9885714,7.344 20.6228571,3.97028571 16.5577143,3.056 C16.5565714,2.03771429 16.5577143,1.01828571 16.5577143,0"
+                id="Fill-3"></path>
+            <path
+                d="M0,16.5177143 C1.02285714,16.5097143 2.04457143,16.5165714 3.06628571,16.5131429 C3.67885714,19.0674286 5.18857143,21.3977143 7.304,22.96 C8.52342857,23.8754286 9.93257143,24.5325714 11.4148571,24.8868571 L11.4148571,27.9554286 C8.28228571,27.3931429 5.37028571,25.7222857 3.28457143,23.3222857 C1.60342857,21.4045714 0.453714286,19.0274286 0,16.5177143"
+                id="Fill-5"></path>
+            <path
+                d="M24.9222857,16.5142857 C25.9474286,16.5131429 26.9714286,16.5142857 27.9954286,16.5142857 C27.4525714,19.5085714 25.9211429,22.3131429 23.6845714,24.3771429 C21.7165714,26.2205714 19.2114286,27.4811429 16.5588571,27.9634286 C16.5565714,26.9405714 16.5577143,25.9165714 16.5577143,24.8937143 C19.0182857,24.3177143 21.2674286,22.8811429 22.8182857,20.8868571 C23.8285714,19.6068571 24.552,18.1017143 24.9222857,16.5142857"
+                id="Fill-7"></path>
+        </svg>
+    </div>
+    <div class="popup-card auth-card width25 height40 margintop80px" *ngIf = "islinkValid && !savePressed">
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label for="pwd1">{{'auth.pin'}}</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                        </span>
+                    </div>
+                    <input type="password"  name="nmePassword" formControlName="fcPassword" inputMask class="form-control" id="passwordId" />
+                </div>
+
+                <div class="form-error" *ngIf="form.get('fcPassword').errors?.required &&
+                            form.get('fcPassword').touched  ||
+                            form.get('fcPassword').errors?.required && isNavigated">
+                    {{ "resetPin.pinReq"}}
+                </div>
+                <div class="form-error" *ngIf="form.get('fcPassword').errors?.minlength &&
+                            form.get('fcPassword').touched  ||
+                            form.get('fcPassword').errors?.minlength && isNavigated">
+                    {{ "resetPin.pinReq"}}
+                </div>
+                <div class="form-error" *ngIf="form.get('fcPassword').errors?.maxlength &&
+                            form.get('fcPassword').touched  ||
+                            form.get('fcPassword').errors?.maxlength && isNavigated">
+                    {{ "resetPin.pinReq"}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pwd2">{{'auth.reTypePin' }}</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                        </span>
+                    </div>
+                    <input type="password" formControlName="fcRePassword" inputMask name="nmeRePassword" class="form-control" id="rePassordId"
+                        />
+                </div>
+                <div class="form-error" *ngIf="form.get('fcRePassword').errors?.required &&
+                form.get('fcRePassword').touched ||
+                form.get('fcRePassword').errors?.required && isNavigated">
+
+                    {{ "resetPin.repinReq"}}
+                </div>
+                <div class="form-error" *ngIf="form.get('fcRePassword').errors?.minlength &&
+                            form.get('fcRePassword').touched  ||
+                            form.get('fcRePassword').errors?.minlength && isNavigated">
+                    {{ "resetPin.pinReq"}}
+                </div>
+                <div class="form-error" *ngIf="form.get('fcRePassword').errors?.maxlength &&
+                            form.get('fcRePassword').touched  ||
+                            form.get('fcRePassword').errors?.maxlength && isNavigated">
+                    {{ "resetPin.pinReq"}}
+                </div>
+            </div>
+            <button type="submit" (click)="submit(form.value)" class="apl-btn btn-ok m-t-30px">
+                <i class="fa fa-undo"></i>
+                {{'auth.resetPin' }}
+            </button>
+        </form>
+    </div>
+    
+<div class="popup-card auth-card width25 height40 margintop80px" *ngIf = "islinkInValid">
+    <div class="popup-header">
+        <h6>{{'auth.invalidLink' }}</h6>
+    </div>
+</div>
+<div class="popup-card auth-card width25 height40 margintop80px" *ngIf = "islinkValid && savePressed">
+    <div class="popup-header">
+        <h6>{{'auth.pinUpdated' }}</h6>
+    </div>
+</div>
+
+</div>

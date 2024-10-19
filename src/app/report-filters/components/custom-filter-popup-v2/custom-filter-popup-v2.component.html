@@ -1,0 +1,127 @@
+<div class="filter-popup">
+  <div class="filter-popup__container">
+
+    <div class="filter-popup__header">
+      <div class="filter-popup__search-container">
+        <div class="filter-popup__search-input">
+          <input class="form-control" placeholder="Search" type="text" id="{{titleForId}}_search-input" #searchbox>
+          <div class="filter-popup__wildcard" *ngIf="wildcardEnable">
+            <img [ngClass]="{'d-block': wildcardActive}" class="d-none data-log-wildcard" (click)="switchWildcard(wildcardActive)"
+              id="{{titleForId}}_inactive-wildcard" src="../../../../assets/images/components-icons/wildcard.png"
+              alt="wildcard-search" />
+            <img [ngClass]="{'d-block': !wildcardActive}" class="d-none data-log-wildcard" (click)="switchWildcard(wildcardActive)"
+              id="{{titleForId}}_active-wildcard" src="../../../../assets/images/components-icons/wildcard-disabled.png"
+              alt="wildcard-search" />
+          </div>
+        </div>
+        <div id="{{titleForId}}_close" class="filter-popup__close" (click)="this.onClose.emit(true)">
+          &times;
+        </div>
+
+      </div>
+      <div class="filter-popup__action">
+        <span class="filter-popup__action--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{
+          "filterpopup.ClearAll" | translation | async }}</span>
+        <span class="filter-popup__action--apply" id="{{titleForId}}_apply" (click)="emitList()">{{ "filterpopup.Apply"
+          | translation | async }}</span>
+      </div>
+
+      <div class="filter-popup__wildcard-options data-log-radio" *ngIf="wildcardActive && wildcardEnable"
+        [ngClass]="{'mt-2': wildcardActive}">
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option1" (change)="this.wildcard = '2'" value='2'
+            [checked]="this.wildcard == '2'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option1"
+            (click)="this.wildcard = '2'">
+            {{ "filterpopup.StartsWith" | translation | async }}
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option2" (change)="this.wildcard = '4'" value='4'
+            [checked]="this.wildcard == '4'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option2"
+            (click)="this.wildcard = '4'">
+            {{ "filterpopup.Contains" | translation | async }}
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-radio-input" type="radio" name="{{titleForId}}_wildcard-search"
+            id="{{titleForId}}_wildcard-option3" (change)="this.wildcard = '3'" value='3'
+            [checked]="this.wildcard == '3'" />
+          <label class="form-check-label radio-label" for="{{titleForId}}_wildcard-option3"
+            (click)="this.wildcard = '3'">
+            {{ "filterpopup.EndsWith" | translation | async }}
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-popup__body" *ngIf="!wildcardActive">
+      <div class="filter-popup__filter-container apl-scrollbar {{heightClass}}">
+        <ul class="data-log-checkbox-2 checkbox-filter" id="ul-{{titleForId}}" #optionsList>
+
+          <li class="checkbox checkbox-sm checkbox-brdr-clr"
+            [ngClass]="{'d-block': item.searched === true, 'd-none': item.searched === false}" id="{{item.name}}"
+            *ngFor="let item of checkedOptions trackBy:trackByName, let i = index">
+            <input type="checkbox" [(ngModel)]="item.checked" class="form-radio-input"
+              id="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}">
+            <label class="checkboxsmall mb-0 checkbox-brdr-clr" for="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}"
+              title="{{item.name}}">
+
+              <span *ngIf="item.borderClr" class="{{item.borderClr}} mr-1"></span>
+
+              <small *ngIf="!isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{replaceDot(item)}}" class="ml-1"
+                [innerHTML]="item.name | boldStr:searchTxt"></small>
+
+              <small *ngIf="isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{item.name}}" class="ml-1"
+                [innerHTML]="item.date !== null ? (item.date | date: this.datezoneFormat | boldStr:searchTxt) : item.name | boldStr:searchTxt">
+                <!-- {{item.date !== null ? (item.date | date: this.datezoneFormat) : 'Blank' }} -->
+              </small>
+            </label>
+          </li>
+
+          <li class="divider" *ngIf="this.checkedOptions.length>0"></li>
+
+          <li class="checkbox checkbox-sm"
+            [ngClass]="{'d-block': item.searched === true, 'd-none': item.searched === false}" id="{{item.name}}"
+            *ngFor="let item of unCheckedOptions trackBy:trackByName, let i = index">
+            <input type="checkbox" [(ngModel)]="item.checked" class="form-radio-input"
+              id="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}">
+            <label class="checkboxsmall mb-0 checkbox-brdr-clr" for="{{titleForId}}_cust-cb-lst_{{replaceDot(item)}}"
+              title="{{item.name}}">
+
+              <span *ngIf="item.borderClr" class="{{item.borderClr}} mr-1"></span>
+
+              <small *ngIf="!isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{replaceDot(item)}}" class="ml-1"
+                [innerHTML]="item.name | boldStr:searchTxt"></small>
+
+              <small *ngIf="isFilterForDate" id="{{titleForId}}_cust-cb-lst-txt_{{item.name}}" class="ml-1"
+                [innerHTML]="item.date !== null ? (item.date | date: this.datezoneFormat | boldStr:searchTxt) : item.name | boldStr:searchTxt">
+                <!-- {{item.date !== null ? (item.date | date: this.datezoneFormat) : 'Blank' }} -->
+              </small>
+            </label>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-popup__footer" *ngIf="!wildcardActive && showFooter">
+      <span class="filter-popup__footer--count">
+        {{ "filterpopup.Showing" | translation | async }}
+        {{visibleCount || 0}} - {{totalCount || 0}}
+        {{ "filterpopup.Results" | translation | async }}
+      </span>
+      <span class="filter-popup__footer--view-all whitelisted" id="{{titleForId}}_view-all"
+        (click)="showAllFilters()">
+        {{ "general.viewAll" | translation | async }}
+      </span>
+    </div>
+
+
+  </div>
+</div>
+

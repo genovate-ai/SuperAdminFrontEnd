@@ -1,0 +1,11 @@
+<div class="anc-form-floating">
+  <div class="apl-datepicker date-picker-v3">
+    <div class="custom-date-picker">
+      <img src="assets/images/components-icons/calender.png" alt="calender" class="apl-datepicker__calender-icon"
+        (click)="openDatePicker();">
+      <input type="text" class="apl-datepicker__calender-view" [(ngModel)]="selectedDate" #dateSelected="dpDayPicker"
+        [dpDayPicker]="dayPickerConfig" [theme]="'dp-material'" [mode]="calenderMode"
+        [selectionEnd]="changeCalenderDesign()" (onChange)="dateChanged($event)" />
+    </div>
+  </div>
+</div>

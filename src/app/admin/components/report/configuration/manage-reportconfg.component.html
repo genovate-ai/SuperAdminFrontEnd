@@ -1,0 +1,95 @@
+<button *ngIf="this.screenPermission.isCreateButtonAllow" (click)="createReportConfg()"  class="apl-btn btn-ok-solid pl-2 pr-2">
+  {{"reportsConfg.cnfgReport" | translation | async}}</button>
+<div class="container-12 section-main">
+
+  <div class="section-main__head">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <p>{{ "reportsConfg.reports" | translation | async }}</p>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+ 
+  <div class="section-main__body">
+    <div class="apl-resp-table">
+      <div class="table-resp apl-resp-table-v3">
+        <table>
+          <thead>
+            <tr>
+                
+              <th class="width-20-p" (click)="LoadManageCnfgReportsLstData(getColManageReportEnum().reporGrp,true,false)">
+                <label>{{ "reportsConfg.reportgrp" | translation | async }}  </label>
+                    <span class="sortingArrow ml-0 ml-sm-0 ml-sm-2"><i class="fas fa-caret-up fa-lg sortingUpArrow"
+                      *ngIf="reportColName === getColManageReportEnum().reporGrp && reportSort === 2"></i>
+                    <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                      *ngIf="reportColName === getColManageReportEnum().reporGrp && reportSort === 3"></i>
+                  </span>
+              
+              </th>
+              <th class="width-20-p" (click)="LoadManageCnfgReportsLstData(getColManageReportEnum().report,true,false)">
+
+                <label >{{ "reportsConfg.report" | translation | async }}</label>
+                <span class="sortingArrow ml-0 ml-sm-0 ml-sm-2"><i class="fas fa-caret-up fa-lg sortingUpArrow"
+                  *ngIf="reportColName === getColManageReportEnum().report && reportSort === 2"></i>
+                <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                  *ngIf="reportColName === getColManageReportEnum().report && reportSort === 3"></i>
+              </span>
+              </th>
+              <th class="width-20-p" (click)="LoadManageCnfgReportsLstData(getColManageReportEnum().rprtDsplyName,true,false)">
+                <label>{{ "reportsConfg.reportdsply" | translation | async }}  </label>
+                <span class="sortingArrow ml-0 ml-sm-0 ml-sm-2"><i class="fas fa-caret-up fa-lg sortingUpArrow"
+                  *ngIf="reportColName === getColManageReportEnum().rprtDsplyName && reportSort === 2"></i>
+                <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                  *ngIf="reportColName === getColManageReportEnum().rprtDsplyName && reportSort === 3"></i>
+              </span>
+              </th>
+              <th class="width-20-p" (click)="LoadManageCnfgReportsLstData(getColManageReportEnum().rprtDsc,true,false)">
+
+                <label >{{ "reportsConfg.reportdsc" | translation | async }}</label>
+                <span class="sortingArrow ml-0 ml-sm-0 ml-sm-2"><i class="fas fa-caret-up fa-lg sortingUpArrow"
+                  *ngIf="reportColName === getColManageReportEnum().rprtDsc && reportSort === 2"></i>
+                <i class="fas fa-caret-down fa-lg sortingDownArrow"
+                  *ngIf="reportColName === getColManageReportEnum().rprtDsc && reportSort === 3"></i>
+              </span>
+              </th>
+              <th class="width-20-p">
+                <label >{{ "reportsConfg.action" | translation | async }}</label>
+              </th>
+            </tr>
+          </thead>
+
+       
+          <tbody>
+            <tr *ngFor="let report of lstReports, let i = index">
+              <td class="width-20-p">
+                <label >{{ report.groupName }}</label>
+              </td>
+              <td class="width-20-p">
+                <label >{{ report.reportName }}</label>
+              </td>
+              <td class="width-20-p">
+                <label >{{ report.displayName }}</label>
+              </td>
+              <td class="width-20-p">
+                <label >{{ report.description }}</label>
+              </td>
+              <td class="width-20-p">
+                <img src="../../../../assets/images/view-icon.png" (click)="editReportConfg(report.ieReportConfigurationID)"  class="grid-icon  btn-inline-margin ">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-confirmation-component *ngIf="showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage"></app-confirmation-component>
+
+<app-popup-component></app-popup-component>

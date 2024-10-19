@@ -1,0 +1,329 @@
+<div class="profile-overlay">
+  <form [formGroup]="form" autocomplete="off">
+    <div class="container-12 section-main">
+      <div class="mainProfileSection apl-scrollbar">
+        <div>
+          <div class="hideFlexonweb flex-row-reverse mr-0 mr-sm-2">
+            <button (click)="submit(form.value)" id="btn-save-1" class="apl-btn btn-ok-solid">
+              <i class="fa fa-save pr-1"></i>{{ "buttons.saveProfileandclose" | translation | async }}</button>
+          </div>
+          <div class="w-100p">
+            <label class="font-weight-bold mb-0" style="font-size: 1.5rem;">{{ "userAccount.mySettings" | translation |
+              async }}</label><br>
+            <label class="font-weight-bold m-t-20px m-b-20px" style="font-size: 1rem;">{{ "userAccount.changeSettings" |
+              translation | async }}</label><br>
+
+          </div>
+          <div class=" label-header">
+            <div class="tab-layout-v2 m-0px w-99p">
+              <div class="tabs row">
+                <div class="tab col-md-4 text-left" [ngClass]="{'tab-active': stepOne, 'tab':!stepOne}"
+                  id="progressbar-step-1" (click)="tabClick( 'one', true)">
+                  <label class="m-b-neg-5px">{{ "userAccount.basicInfo" | translation | async }}</label>
+
+                </div>
+                <div class="tab col-md-4" [ngClass]="{'tab-active': stepTwo}" id="progressbar-step-2"
+                  (click)="tabClick( 'two', true)">
+                  <label class="m-b-neg-5px">{{ "userAccount.personalInformation" | translation | async }}</label>
+
+                </div>
+                <div class="tab col-md-4 text-right" [ngClass]="{'tab-active':stepThree}" id="progressbar-step-3"
+                  (click)="tabClick('three', true)">
+                  <label class="m-b-neg-5px">{{ "userAccount.securitySettings" | translation | async }}</label>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div *ngIf="stepOne">
+
+              <div class="form-row m-t-15px m-l-0px">
+                <div class="col-md-3 name">
+                  <app-anc-input-box formControlName="fcFirstName" [placeholder]="'fieldText.firstname'"
+                    [numeric]="false" [translate]="true" [mandatory]="true" id="firstNameId"
+                    [displayError]="form.controls.fcFirstName.errors && (form.controls.fcFirstName.dirty || form.controls.fcFirstName.touched)">
+                    <ng-template>
+                      <div *ngIf="
+                                        form.get('fcFirstName').errors?.required &&
+                                        (form.get('fcFirstName').dirty || form.get('fcFirstName').touched) ||
+                                        form.get('fcFirstName').errors?.required && isNavigated
+                                      ">
+
+                        {{ "userAccount.firstNameIsRequired" | translation | async }}
+                      </div>
+                      <div
+                        *ngIf="form.controls.fcFirstName.errors?.maxlength && (form.controls.fcFirstName.dirty || form.controls.fcFirstName.touched)">
+                        {{ "userAccount.lengthundredMax" | translation | async }}
+                      </div>
+                    </ng-template>
+                  </app-anc-input-box>
+
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3 pos-r l-3p">
+                  <app-anc-input-box formControlName="fcLastName" [placeholder]="'fieldText.lastname'" [numeric]="false"
+                    [translate]="true" [mandatory]="true" id="lastNameId"
+                    [displayError]="form.controls.fcLastName.errors && (form.controls.fcLastName.dirty || form.controls.fcLastName.touched)">
+                    <ng-template>
+                      <div *ngIf="
+                                            form.get('fcLastName').errors?.required &&
+                                            (form.get('fcLastName').dirty || form.get('fcLastName').touched) || form.get('fcLastName').errors?.required && isNavigated
+                                          ">
+                        {{ "userAccount.lastNameIsRequired" | translation | async }}
+                      </div>
+                      <div
+                        *ngIf="form.controls.fcLastName.errors?.maxlength && (form.controls.fcLastName.dirty || form.controls.fcLastName.touched)">
+                        {{ "userAccount.lengthundredMax" | translation | async }}
+                      </div>
+                    </ng-template>
+                  </app-anc-input-box>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3 pos-r l-7p">
+                  <div class="ng-select-box required">
+
+                    <ng-select class="form-control" name="namelanguageItems" id="languageId"
+                      placeholder="{{ 'app.language' | translation | async }}" [(ngModel)]="selectedLanguage"
+                      [items]="lstLng" [clearable]="false" bindValue="code" bindLabel="name"
+                      formControlName="fcLanguage" [multiple]="false" [closeOnSelect]="true">
+                    </ng-select>
+
+
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="form-row m-t-3p m-l-0px">
+                <!-- <div class="col-md-3">
+                  <div class="ng-select-box required">
+
+                    <ng-select class="form-control" name="namedateFormatItems" id="dateFormatId"
+                      placeholder="{{ 'app.dateFormat' | translation | async }}" [(ngModel)]="selectedDateFormat"
+                      [items]="lstDateFormat" [clearable]="false" bindValue="codeID" bindLabel="name"
+                      formControlName="fcDateFormat" [multiple]="false" [closeOnSelect]="true"
+                      (change)=changeRegionName($event)>
+                    </ng-select>
+
+
+                  </div>
+
+                </div>
+                <div class="col-md-1">
+                </div> -->
+                <div class="col-md-3 ">
+
+                  <div class="ng-select-box required">
+
+                    <ng-select class="form-control" name="nameTimeZoneItems" id="timeZoneId"
+                      placeholder="{{ 'app.timeZone' | translation | async }}" [(ngModel)]="selectedTimeZone"
+                      [items]="lstTimeZone" [clearable]="false" bindValue="codeID" bindLabel="name"
+                      formControlName="fcTimeZone" [multiple]="false" [closeOnSelect]="true"
+                      (change)=changeTimeZone($event)>
+                    </ng-select>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div [hidden]='!stepTwo'>
+              <div class="form-row  m-t-15px m-l-0px">
+                <div class="col-md-3">
+                  <app-anc-input-box formControlName="fcEmail" [placeholder]="'userAccount.email'" [numeric]="false"
+                    [translate]="true" [mandatory]="false" id="EmailId"
+                    [displayError]="form.controls.fcEmail.errors && (form.controls.fcEmail.dirty || form.controls.fcEmail.touched)">
+                    <ng-template>
+                    </ng-template>
+                  </app-anc-input-box>
+                </div>
+
+                
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                  <div >
+                    <div class="mb-2">
+                      <app-anc-number-box formControlName="fcCellNumber" [placeholder]="'fieldText.cellNumber'"
+                        [numeric]="true"  [translate]="true" countryCode="92" 
+                        [mandatory]="form.controls.fcCellNumber?.errors?.required" id="cellNumberId"
+                        [displayError]="form.controls.fcCellNumber.errors && (form.controls.fcCellNumber.dirty || form.controls.fcCellNumber.touched)">
+                        <ng-template>
+                          <div *ngIf="
+                                    form.get('fcCellNumber').errors?.required &&
+                                    (form.get('fcCellNumber').dirty || form.get('fcCellNumber').touched) || form.get('fcCellNumber').errors?.required && isNavigated
+                                  ">
+                            {{ "userAccount.cellPhoneRequired" | translation | async }}
+                          </div>
+                        </ng-template>
+                      </app-anc-number-box>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-3 m-l-4p">
+                  <label class="fontBoldonWeb m-l-neg-15px">{{"userAccount.phoneNumber" | translation | async}}</label>
+
+                  <div class="row ">
+                    <div class="mb-2  pl-0 col-md-4 ng-select-box phone-code m-r-neg-20px"> -->
+
+
+                      <!-- <ng-select class="form-control phoneno" name="nmePhoneCode" id="phoneCodeId"
+                        placeholder="{{ 'fieldText.code' | translation | async }}" [(ngModel)]="selectedValueCellCode"
+                        [items]="lstPhoneCode" [clearable]="true" bindValue="codeID" bindLabel="name"
+                        formControlName="fcCellCode" [multiple]="false" (change)="isCellCodeSelected()">
+
+                        <ng-template ng-label-tmp let-item="item">
+                          <label id="cell-{{item.code}}" title="{{item.code}}" class="mb-0" for="">{{item.code}}</label>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item">
+                          <span class="ng-option-label" title="{{item.name}}">{{ item.name }}</span>
+                        </ng-template>
+
+                      </ng-select> -->
+
+                    
+
+                    <!-- <div class="mb-2  pr-0 col-md-8">
+                      <app-anc-number-box #cell formControlName="fcCellNumber" [placeholder]="'organizations.phoneNo'"
+                        [numeric]="true" [countryCode]="workCountryCode" [translate]="true"
+                        [mandatory]="form.controls.fcCellNumber?.errors?.required" id="cellNumberId"
+                        [displayError]="form.controls.fcCellNumber.errors && (form.controls.fcCellNumber.dirty || form.controls.fcCellNumber.touched)">
+                        <ng-template>
+                          <div *ngIf="
+                                      form.get('fcCellNumber').errors?.required &&
+                                      (form.get('fcCellNumber').dirty || form.get('fcCellNumber').touched) || form.get('fcCellNumber').errors?.required && isNavigated
+                                    ">
+                            {{ "userAccount.PhoneNumberRequired" | translation | async }}
+                          </div>
+                        </ng-template>
+                      </app-anc-number-box>
+
+                    </div> -->
+                  
+
+
+                
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+
+                  <div>
+<!-- 
+                    <div class="mb-2  pl-0 col-md-4 ng-select-box phone-code m-r-neg-20px">
+                      <ng-select class="form-control phoneno" name="nmeCellCode" id="cellCodeId"
+                        placeholder="{{ 'fieldText.code' | translation | async }}" [(ngModel)]="selectedValuePhoneCode"
+                        [items]="lstPhoneCode" [clearable]="true" bindValue="codeID" bindLabel="name"
+                        formControlName="fcPhoneCode" [multiple]="false" (change)="isWorkCodeSelected()">
+
+                        <ng-template ng-label-tmp let-item="item">
+                          <label id="cell-{{item.code}}" title="{{item.code}}" class="mb-0" for="">{{item.code}}</label>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item">
+                          <span class="ng-option-label" title="{{item.name}}">{{ item.name }}</span>
+                        </ng-template>
+
+                      </ng-select>
+                    </div> -->
+
+                    <div class="mb-2">
+                      <app-anc-number-box #work formControlName="fcPhoneNumber" [placeholder]="'userAccount.workNumber'"
+                        [numeric]="true" countryCode="92" [translate]="true"
+                        [mandatory]="form.controls.fcPhoneNumber?.errors?.required" id="PhoneNumberId"
+                        [displayError]="form.controls.fcPhoneNumber.errors && (form.controls.fcPhoneNumber.dirty || form.controls.fcPhoneNumber.touched)">
+                        <ng-template>
+                          <div *ngIf="
+                                      form.get('fcPhoneNumber').errors?.required &&
+                                      (form.get('fcPhoneNumber').dirty || form.get('fcPhoneNumber').touched) || form.get('fcPhoneNumber').errors?.required && isNavigated
+                                    ">
+                            {{ "userAccount.workNumberRequired" | translation | async }}
+                          </div>
+                          <div *ngIf="
+                                                form.get('fcPhoneNumber').errors?.maxlength &&
+                                                (form.get('fcPhoneNumber').dirty ||form.get('fcPhoneNumber').touched)
+                                                || form.get('fcPhoneNumber').errors?.maxlength && isNavigated
+                                                ">
+                            {{ "userAccount.maxLength-20" | translation | async }}
+                          </div>
+                        </ng-template>
+                      </app-anc-number-box>
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <div *ngIf="stepThree">
+
+
+              <div class="col-md-12 col-12 pl-0 mt-3">
+                <div class="form-row">
+
+
+                  <div class="col-xl-6 col-md-12 profile-pass p-l-5px">
+                    <!-- <label class="font-weight-bold hideonmobile">{{ "app.reset" | translation | async }}</label> -->
+                    <div class="form-row">
+                      <div class=" col-md-12">
+                        <div class="form-row">
+                          <div class="col-xl-3  contentCenter padding-top-15">
+                            <button (click)="ResetPassword()" id="btn-reset-password"
+                              class="apl-btn-v3 primary-2  pl-2 pr-2" [ngClass]="{'mr-2': !viewPipers}">
+                              <i class="fas fa-key pr-1"></i>{{ "buttons.profilePassword" | translation | async
+                              }}</button>
+                          </div>
+                          <div class="col-12 hideonweb contentCenter">
+                            <div class="resetPass">
+                              <p>
+                                {{ "buttons.passwordReset" | translation | async }}
+
+                              </p>
+                            </div>
+                          </div>
+                          <div class="col-xl-3  contentCenter contentCentermb">
+                            <button *ngIf="viewPipers" (click)="ResetUserPin()" id="btn-reset-pin"
+                              class="apl-btn-v3 primary-2  pl-2 pr-2 ">
+                              <i class="fa fa-key pr-1"></i>{{ "buttons.piperPIN" | translation | async }}</button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-7 hideonmobileInline">
+                                                <label class="mt-neg-4px">
+                        <span>{{ "buttons.resetCredentialsNote" | translation | async }}
+                        </span>
+                      </label>
+                                            </div> -->
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-3 pr-0 d-flex flex-row-reverse pos-a r-21px" style="bottom: 15rem;" *ngIf="!stepThree">
+      <button (click)="submit(form.value)" [ngClass]="{'disabled': this.form.invalid}" [disabled]="this.form.invalid"
+        id="btn-save-2" class="apl-btn-v3 primary-2 m-l-10px hideonmobile">
+        <i class="fa fa-save pr-1"></i>{{ "buttons.saveProfile" | translation | async }}</button>
+    </div>
+  </form>
+
+</div>
+
+<app-confirmation-v3 class="pop-up-delete" *ngIf="this.showConfirmationFlag" (positive)="positiveDelete()"
+  (negative)="showConfirmationFlag = false" [message]="confirmationMessage" [popupOpen]="showConfirmationFlag">
+</app-confirmation-v3>

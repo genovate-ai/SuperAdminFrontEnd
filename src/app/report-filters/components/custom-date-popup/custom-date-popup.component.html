@@ -1,0 +1,55 @@
+<div class="filter-popup">
+  <div class="filter-popup__container">
+
+    <div class="filter-popup__header">
+      <div class="filter-popup__close" id="{{titleForId}}_close" (click)="this.onClose.emit(true)">
+        &times;
+      </div>
+    </div>
+
+    <div class="filter-popup__body">
+      <div class="filter-popup__search-container">
+        <div class="filter-popup__search-input">
+          <div class="filter-popup__search-input position-relative">
+            <div class="pt-0">
+              <label class="date-from">{{'fieldText.dateFrom' | translation | async}}</label>
+              <app-custom-date-picker-v3 [selectedDate]="selectedMinDateInput"
+                [i18n-placeholder-key]="'fieldText.startDate'" [monthFormat]="'MMM YYYY'"
+                (onSelected)="getStartDate($event)"></app-custom-date-picker-v3>
+            </div>
+            <div class="pt-1">
+              <label class="date-to position-absolute t-62px mb-0 l-0px">{{'fieldText.dateTo' | translation | async}}</label>
+              <app-custom-date-picker-v3 [minDateRange]="startDateSet ? this.selectedMinDateInput : this.selectedMinDate" [selectedDate]="selectedMaxDateInput"
+                [i18n-placeholder-key]="'fieldText.endDate'" [monthFormat]="'MMM YYYY'"
+                (onSelected)="getEndDate($event)" [isDisabled]="!selectedMinDateInput">
+              </app-custom-date-picker-v3>
+            </div>
+            <div class="m-t-neg-10px m-b-2px">
+              <i class="fas fa-chevron-down range-box-icon cursor-pointer" aria-hidden="true"
+                [ngClass]="{'d-none': rangeSelect}" (click)="rangeSelect = !rangeSelect"></i>
+              <i class="fas fa-chevron-up range-box-icon cursor-pointer" aria-hidden="true" [ngClass]="{'d-none': !rangeSelect}"
+                (click)="rangeSelect = !rangeSelect"></i>
+              <label class="m-l-8px range-box-label cursor-pointer" id="{{titleForId}}_date-selection"
+                (click)="rangeSelect = !rangeSelect">{{lblSelectRange}}</label>
+              <div class="range-box apl-scrollbar" *ngIf="rangeSelect">
+                <p class="range-type" *ngFor="let item of lstRanges; let i = index" id="{{titleForId}}_range-{{i}}"
+                  (click)="selectRange(item)">{{item.key}}</p>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+    <div class="filter-popup__footer">
+      <span class="filter-popup__footer--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{
+        "filterpopup.ClearAll" | translation | async }}</span>
+      <span class="filter-popup__footer--apply" id="{{titleForId}}_apply" (click)="emitList()">{{ "filterpopup.Apply"
+        |
+        translation | async }}</span>
+    </div>
+  </div>

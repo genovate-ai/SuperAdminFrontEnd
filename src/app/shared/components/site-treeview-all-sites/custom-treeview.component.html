@@ -1,0 +1,71 @@
+<div>
+    <div class="input-group">
+
+        <div class="form-control apl-form-control-inv ng-select-container-v2 b-r-5 d-inline overlay-siteCard apl-scrollbar">
+            <div *ngFor="let item of siteDetails | keyvalue" class="d-inline-block siteCard-container">
+                <div class="siteCard">
+                    <p class="label-m-0_5">
+                        <label class="label-card-name custom-site-name" title="{{item.value.siteNameOrgnType}}">{{item.value.siteNameOrgnType}}</label>
+                        <i class="fa fa-times btn-icon" aria-hidden="true" (click)="removeOrgn(item.key)"></i><br>
+                        <label class="m_0-p-l_10"> {{ "userAccount.CollectionSites" | translation | async }} {{item.value.lstCollectionSites.length}}</label><br>
+                        <label class="m_0-p-l_10"> {{ "userAccount.TestingSites" | translation | async }} {{item.value.lstTestingSites.length}}</label> </p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button id="btn-show-tree-1" (click)="showTree1(true)" class="apl-btn-v2 primary m-l-10px  " [ngClass]="{'disableBtn' : disableBtn}">
+                <i class="fas fa-pencil-alt"></i> {{"userAccount.sites" | translation | async}}
+            </button>
+            <ng-content></ng-content>
+        </div>
+        <!-- <label *ngIf="isPiperUser" style="    position: absolute;
+            right: 0px;
+            top: 40px;">
+                {{"userAccount.PiperUser" | translation | async}}
+                <i class="far fa-check-circle piper-logo" style="font-size: 0.9rem;"></i>
+            </label> -->
+    </div>
+</div>
+<div class="myanim overlay-blur" *ngIf="showTreeComp">
+    <div class="popup-on-top1">
+        <div class="header-popup">
+            <label class="popup-heading">{{ "userAccount.testSites" | translation | async }}</label>
+            <span class="backG-hover-red btn-close-popup" id="close-demo-client-sites" (click)="hideTree()" aria-hidden="true">x</span>
+        </div>
+        <div style="padding: 20px 20px 0px 20px; height: 60vh; overflow: scroll;">
+
+
+            <label id="btn-show-tree-1" (click)="selectAllTestSites()" class="apl-btn b-md btn-ok">
+                {{"userAccount.testingSites" | translation | async}}
+            </label>
+
+            <label id="btn-show-tree-1" (click)="SelectAllCollection()" class="apl-btn b-md btn-ok m-l-10px">
+                {{"userAccount.allSites" | translation | async}}
+            </label>
+
+            <fieldset class="fieldsetCustomReport mb-0">
+                <legend class="legendFontWidth mb-0">{{ "userAccount.allSITES" | translation | async }}</legend>
+
+                <div class="all-sites-view control-ngx-treeview-view tree-height-inc h-15rem">
+                    <div class="custom-treeview piper-sites-view">
+                        <ngx-treeview id="sites-tree" [config]="config" [items]="itemsLst2" (selectedChange)="ValueChanged($event)" (filterChange)="onFilterChange($event)">
+                        </ngx-treeview>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="p-point-625">
+            <div class="w-100">
+                <button type="button" id="btn-cancel-sites" (click)="hideTree()" class="apl-btn b-md btn-ok m-l-10px">
+                      <i class="fa fa-times"></i> {{"buttons.cancel" | translation | async}}
+                    </button>
+
+                <button type="submit" id="btn-ok-sites" (click)="saveClientSites()" [disabled]="showLengthError || showRequiredError" class="apl-btn b-md btn-ok m-l-10px">
+                      <i class="fa fa-check"></i> {{"buttons.OK" | translation | async}}
+                    </button>
+            </div>
+        </div>
+
+    </div>
+</div>

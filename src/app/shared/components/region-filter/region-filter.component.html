@@ -1,0 +1,64 @@
+<div class="backdrop" (click)="onClose()" >
+    
+</div>
+<div class="popup">
+    <form [formGroup]="regionFarm" (ngSubmit)="onSubmit()" >
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="ng-select-box">
+                    <ng-select
+                      class="form-control"
+                      placeholder="Province"
+                      formControlName="Province"
+                      id="provinceId"
+                      [items]="lstProvince"
+                      bindLabel="name"
+                      bindValue="code"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                    >
+                    </ng-select>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="ng-select-box">
+                    <ng-select
+                      class="form-control"
+                      placeholder="District"
+                      formControlName="District"
+                      id="DistrictId"
+                      [items]="lstDistrict"
+                      bindLabel="name"
+                      bindValue="value"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                    >
+                    </ng-select>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="ng-select-box">
+                    <ng-select
+                      class="form-control"
+                      placeholder="Tehsil"
+                      formControlName="Tehsil"
+                      id="TehsilId"
+                      [items]="lstTehsil"
+                      bindLabel="name"
+                      bindValue="value"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                    >
+                    </ng-select>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <button id="SubmitId" type="submit" >Apply</button>
+        </div>
+    </form>
+</div>

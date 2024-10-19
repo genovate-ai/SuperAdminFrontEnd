@@ -1,0 +1,164 @@
+<div class="filter-popup">
+  <div class="filter-popup__container">
+
+    <div class="filter-popup__header">
+      <div class="filter-popup__close" id="{{titleForId}}_close" (click)="this.onClose.emit(true)">
+        &times;
+      </div>
+      <div class="filter-popup__search-container">
+        <div class="filter-popup__search-input">
+          <input class="form-control" placeholder="Search" type="text" id="{{titleForId}}_search-input"
+            autocomplete="off" #searchbox>
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-popup__body">
+      <div class="filter-popup__filter-container apl-scrollbar">
+        <!-- treeview starts here -->
+        <div class="ancera-scrollbar grid-container border-0 data-log-checkbox checkbox-filter">
+          <tr [ngClass]="{'d-none': this.selectCount == 0 && this.searchCount == 0}">
+            <td>
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" [(ngModel)]="selectedAll" id="{{prefix}}-site-select-all"
+                  (change)="onSelectAll()">
+                <label class="custom-control-label m-t-neg-3px" for="{{prefix}}-site-select-all">
+                </label>
+              </div>
+            </td>
+            <td [style.paddingLeft.px]="getPaddingLeftByLevel(1)" class="pl-1">
+              <div class="d-flex align-items-center site-view-checkbox">
+
+                <div >
+
+                  <label class="mb-0" for="site-select-all" [style.width.px]="getWidthByLevel(1)">
+                    <div class="d-inline-block pull-left">
+
+                    </div>
+                    <label class="mb-0" for="site-select-all">Select All</label>
+                  </label>
+
+                </div>
+              </div>
+
+            </td>
+          </tr>
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: lstCollectionSitesTree }">
+          </ng-container>
+
+          <ng-template #recursiveList let-list>
+            <ng-container>
+              <ng-container *ngFor="let item of list;">
+                <tr *ngIf="item.item.visibleState" [ngClass]="{'d-none': item.item.searched === false}">
+                  <td>
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" [checked]="item.item.selected"
+                        id="{{prefix}}-site-{{item.item.siteId}}" (change)="onItemCheckd($event, item)"
+                        [disabled]="item.item.disabled == true">
+                      <label class="custom-control-label m-t-neg-3px"
+                        [ngClass]="{'pointer-events-none color-disabled': item.item.disabled}"
+                        for="{{prefix}}-site-{{item.item.siteId}}">
+                      </label>
+                    </div>
+                  </td>
+                  <td [style.paddingLeft.px]="getPaddingLeftByLevel(item.level)">
+                    <div class="d-flex align-items-center site-view-checkbox"
+                      [ngClass]="{'color-disabled': item.item.disabled}">
+
+                      <i class="fas p-5px"
+                        [ngClass]="{'fa-caret-right': !item.item.expandChildren, 'fa-caret-down m-l-neg-3px': item.item.expandChildren}"
+                        (click)="expandChildren(item)"></i>
+                      <div >
+
+                        <label class="mb-0" for="{{prefix}}-site-{{item.item.siteId}}"
+                          [ngClass]="{'pointer-events-none': item.item.disabled}"
+                          [style.width.px]="getWidthByLevel(item.level)">
+                          <div class="d-inline-block pull-left">
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.CorporateOffice"
+                              class="fas fa-warehouse m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level1-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Farms" class="fas fa-sitemap m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level2-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Houses" class="fas fa-home m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level3-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.ProcessingPlants" class="fas fa-spa m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level4-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Integrator" class="fas fa-cogs m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level5-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Region" class="fas fa-landmark m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level6-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.FeedMill" class="fas fa-city m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level7-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Hatchery" class="fas fa-cubes m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level8-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Laboratory" class="fas fa-flask m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level9-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Default" class="fas fa-check-double m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level10-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Rehang" class="fas fa-weight-hanging m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level11-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.BirdWash" class="fab fa-earlybirds m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level16-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.BirdRinse" class="fas fa-dove m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level12-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.Chiller" class="fas fa-air-freshener m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level13-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.WingDip" class="far fa-circle m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level14-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab" class="fas fa-vial m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level15-color -->
+                            <i *ngIf="item.item.siteTypeId == siteTypeID.SubRegion"
+                              class="fas fa-map-marked-alt m-r-5px"
+                              [ngClass]="{'color-disabled': item.item.disabled, 'color-active-icon': !item.item.disabled }"></i>
+                            <!--level15-color -->
+                            <!-- <i *ngIf="item.item.siteTypeId == siteTypeID.SubLab"  class="fas fa-map-marked-alt m-l-10px level16-color"></i> -->
+                          </div>
+                          <label class="mb-0" for="{{prefix}}-site-{{item.item.siteId}}"
+                            [innerHTML]="item.item.siteName | boldStrSpChar:searchTxt"></label>
+                        </label>
+
+                      </div>
+                    </div>
+
+                  </td>
+                </tr>
+                <ng-container *ngIf="item.children.length > 0">
+                  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }">
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+
+          </ng-template>
+        </div>
+        <!-- Tree view ends here -->
+      </div>
+    </div>
+
+    <div class="filter-popup__footer">
+      <span class="filter-popup__footer--clear-all" id="{{titleForId}}_clear" (click)="clearList()">{{
+        "filterpopup.ClearAll" | translation | async }}</span>
+      <span class="filter-popup__footer--apply" id="{{titleForId}}_apply"
+        [ngClass]="{'filter-btn-disabled': checkedCount <= 0}" (click)="emitList()">{{ "filterpopup.Apply" |
+        translation | async }}</span>
+    </div>
+  </div>
+</div>

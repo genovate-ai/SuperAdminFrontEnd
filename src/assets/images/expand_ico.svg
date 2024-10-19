@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>expand_group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="404_Desktop-HD-Copy-42" transform="translate(-98.000000, -243.000000)" fill="#303D42" fill-rule="nonzero">
+            <g id="expand_group" transform="translate(98.000000, 243.000000)">
+                <g id="Group">
+                    <path d="M12,0 C5.38488,0 0,5.3808 0,11.99592 C0,18.61488 5.38488,24 12,24 C18.61512,24 24,18.61488 24,11.99592 C24,5.3808 18.61512,0 12,0 Z M12,21.81696 C6.58608,21.81696 2.18304,17.41368 2.18304,11.99592 C2.18304,6.582 6.58608,2.18304 12,2.18304 C17.41392,2.18304 21.81696,6.582 21.81696,11.99592 C21.81696,17.41392 17.41392,21.81696 12,21.81696 Z" id="Shape"></path>
+                    <path d="M16.1652,11.04 L12.96,11.04 L11.04,11.04 L7.59456,11.04 C7.11168,11.04 6.72,11.51688 6.72,12 C6.72,12.48312 7.11168,12.96 7.59456,12.96 L11.04,12.96 L12.96,12.96 L16.1652,12.96 C16.64856,12.96 17.04,12.48312 17.04,12 C17.04,11.51688 16.64856,11.04 16.1652,11.04 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
