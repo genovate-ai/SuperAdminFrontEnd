@@ -291,7 +291,10 @@ export class CreateProjectComponent implements OnInit {
     this.farmService.createMetaData(newIndustry).subscribe((response) => {
       newIndustry.id = response.dataObject;
       this.IndustryList = [...this.IndustryList.filter(item => item.id !== -1), newIndustry, { id: -1, name: 'Create New' }];
-      this.selectedIndustryItem = [...(this.selectedIndustryItem || []), newIndustry];
+      this.selectedIndustryItem = [
+        ...(this.selectedIndustryItem || []).filter(item => item.id !== -1),
+        newIndustry
+      ];
       this.addFarm.get('selectedIndustry').setValue(this.selectedIndustryItem);
       this.createIndustry = false;
     });
@@ -303,7 +306,7 @@ export class CreateProjectComponent implements OnInit {
     this.farmService.createMetaData(newRole).subscribe((response) => {
       newRole.id = response.dataObject;
       this.RoleList = [...this.RoleList.filter(item => item.id !== -1), newRole, { id: -1, name: 'Create New' }];
-      this.selectedRoleItem = [...(this.selectedRoleItem || []), newRole];
+      this.selectedRoleItem = [...(this.selectedRoleItem || []).filter(item => item.id !== -1), newRole];
       this.addFarm.get('selectedRole').setValue(this.selectedRoleItem);
       this.createRole = false;
     });
@@ -315,7 +318,7 @@ export class CreateProjectComponent implements OnInit {
     this.farmService.createMetaData(newGrade).subscribe((response) => {
       newGrade.id = response.dataObject;
       this.GradeList = [...this.GradeList.filter(item => item.id !== -1), newGrade, { id: -1, name: 'Create New' }];
-      this.selectedGradeItem = [...(this.selectedGradeItem || []), newGrade];
+      this.selectedGradeItem = [...(this.selectedGradeItem || []).filter(item => item.id !== -1), newGrade];
       this.addFarm.get('selectedGrade').setValue(this.selectedGradeItem);
       this.createGrade = false;
     });
@@ -327,7 +330,7 @@ export class CreateProjectComponent implements OnInit {
     this.farmService.createMetaData(newSubject).subscribe((response) => {
       newSubject.id = response.dataObject;
       this.SubjectList = [...this.SubjectList.filter(item => item.id !== -1), newSubject, { id: -1, name: 'Create New' }];
-      this.selectedSubjectItem = [...(this.selectedSubjectItem || []), newSubject];
+      this.selectedSubjectItem = [...(this.selectedSubjectItem || []).filter(item => item.id !== -1), newSubject];
       this.addFarm.get('selectedSubject').setValue(this.selectedSubjectItem);
       this.createSubject = false;
     });
