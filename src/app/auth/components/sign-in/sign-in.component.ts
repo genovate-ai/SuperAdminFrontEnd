@@ -173,7 +173,7 @@ export class SignInComponent extends BaseFormComponent implements OnInit {
   }
   createSessionAndNavigate() {
     this.authService.createSession();
-    this.router.navigate(['/home/project/project-Management']);
+    this.router.navigate(['/home/project/']);
   }
 
   public defultLanguage(value){
