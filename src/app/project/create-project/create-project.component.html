@@ -43,7 +43,12 @@
         [(ngModel)]="selectedIndustryItem"
         (ngModelChange)="onchangeEvent($event)"
         [selectOnTab]="true">
-        
+        <ng-template ng-option-tmp let-item="item">
+          <span *ngIf="item.id !== -1">{{ item.name }}</span>
+          <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewIndustry($event)">
+            Create New Industry
+          </button>
+        </ng-template>
         <!-- Custom Template: Nothing visible in the control -->
         <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
           <!-- Empty span to prevent displaying items in the control -->
@@ -468,8 +473,10 @@
   <div class="popup-content card" *ngIf="createIndustry">
     <div class="card-header" style="background-color: white;">
       <h5 class="card-title bg-none" >Create New Iindustry</h5>
-      <button type="button" class="btn-close" (click)="createRole = false"></button>
-    </div>
+      <span (click)="createIndustry = false" class="cursor-pointer">
+        <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+      </span>
+     </div>
     <form [formGroup]="addIndustry">
       <div class="row">
         <div class="col-md-4">
@@ -503,7 +510,9 @@
    <div class="popup-content card" *ngIf="createRole">
     <div class="card-header" style="background-color: white;">
       <h5 class="card-title bg-none" >Create New Role</h5>
-      <button type="button" class="btn-close" (click)="createRole = false"></button>
+      <span (click)="createRole = false" class="cursor-pointer">
+        <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+      </span>
     </div>
     <form [formGroup]="addRole">
       <div class="row">
@@ -538,7 +547,9 @@
    <div class="popup-content card" *ngIf="createSubject">
     <div class="card-header" style="background-color: white;">
       <h5 class="card-title bg-none" >Create New Subject</h5>
-      <button type="button" class="btn-close" (click)="createSubject = false"></button>
+      <span (click)="createSubject = false" class="cursor-pointer">
+        <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+      </span>
     </div>
     <form [formGroup]="addSubject">
       <div class="row">
@@ -573,7 +584,9 @@
    <div class="popup-content card" *ngIf="createGrade">
     <div class="card-header" style="background-color: white;">
       <h5 class="card-title bg-none" >Create New Grade</h5>
-      <button type="button" class="btn-close" (click)="createGrade = false"></button>
+      <span (click)="createGrade = false" class="cursor-pointer">
+        <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+      </span>
     </div>
     <form [formGroup]="addGrade">
       <div class="row">
@@ -608,7 +621,9 @@
    <div class="popup-content card" *ngIf="createTool">
     <div class="card-header" style="background-color: white;">
       <h5 class="card-title bg-none" >Create New Tool</h5>
-      <button type="button" class="btn-close" (click)="createTool = false"></button>
+      <span (click)="createTool = false" class="cursor-pointer">
+        <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+      </span>
     </div>
     <form [formGroup]="addTool">
       <div class="row">
