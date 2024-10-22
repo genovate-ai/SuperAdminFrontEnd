@@ -128,7 +128,6 @@ throw new Error('Method not implemented.');
 
     this.showLoader();
     this.ongetALLFarms(null);
-
     this.closeSubscription = this.popupController.getResultOnClose().subscribe((result: any) => {
 
       if (result !== null && result !== false) {

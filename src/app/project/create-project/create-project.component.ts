@@ -69,12 +69,15 @@ export class CreateProjectComponent implements OnInit {
       this.updateFarm = data[0];
 
     }
+    debugger;
     this.loadCombos();
     if (this.updateFarm) {
       this.update = true;
       console.log("DATAA", this.updateFarm)
       this.id = this.updateFarm.projectId;
       this.CurriculumPoints = this.updateFarm.curriculumPoints;
+      this.ProjectDuration = this.updateFarm.projectDuration;
+      this.IndustrySpecificProblem = this.updateFarm.industrySpecificProblem;
       this.ProjectTile = this.updateFarm.projectName;
       this.Description = this.updateFarm.projectDescription;
       this.PrerequisiteLearnings = this.updateFarm.tehsil;
@@ -108,6 +111,8 @@ export class CreateProjectComponent implements OnInit {
       ProjectTile: [this.ProjectTile, Validators.required],
       Description: [this.Description],
       Industry: [''],
+      IndustrySpecificProblem : [this.IndustrySpecificProblem],
+      ProjectDuration : [this.ProjectDuration],
       GradeLevel: ['', Validators.required],
       PrerequisiteLearnings: [this.PrerequisiteLearnings, Validators.required],
       CurriculumPoints: [this.CurriculumPoints],
@@ -115,6 +120,7 @@ export class CreateProjectComponent implements OnInit {
       selectedRole: [[], Validators.required],
       selectedGrade: [[], Validators.required],
       selectedSubject: [[], Validators.required],
+
       weeks: this.weeksArray
     });
 
@@ -382,6 +388,8 @@ export class CreateProjectComponent implements OnInit {
       ProjectId : this.id,
       projectName: this.addFarm.get('ProjectTile').value,
       projectDescription: this.addFarm.get('Description').value,
+      IndustrySpecificProblem : this.addFarm.get('IndustrySpecificProblem').value,
+      ProjectDuration : this.addFarm.get('ProjectDuration').value,
       industryIds: this.addFarm.get('selectedIndustry').value.map(industry => industry.id),
       gradeIds: this.addFarm.get('selectedGrade').value.map(grade => grade.id),
       roleIds: this.addFarm.get('selectedRole').value.map(role => role.id),
@@ -471,6 +479,8 @@ export class CreateProjectComponent implements OnInit {
       Description: projectDetails.Description,
       Industry: projectDetails.Industry,
       GradeLevel: projectDetails.GradeLevel,
+      IndustrySpecificProblem: projectDetails.IndustrySpecificProblem,
+      ProjectDuration: projectDetails.ProjectDuration,
       PrerequisiteLearnings: projectDetails.PrerequisiteLearnings,
       CurriculumPoints: projectDetails.CurriculumPoints,
       selectedIndustry: projectDetails.selectedIndustry.map(ind => ind.IndustryId),

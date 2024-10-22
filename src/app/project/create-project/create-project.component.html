@@ -27,56 +27,53 @@
           </div>
   
           <!-- Industry Select (Dropdown List Style) -->
-          <div class="col-md-4">
-  <div class="form-group ng-select-box required custom-dropdown-container">
-    <label for="roleSelect">Select Industry</label>
-    <div class="custom-dropdown-container">
-      <ng-select
-        id="roleSelect"
-        class="form-control"
-        [clearable]="true"
-        [multiple]="true"
-        bindLabel="name"
-        [closeOnSelect]="false"
-        [items]="IndustryList"
-        [virtualScroll]="true"
-        formControlName="selectedIndustry"
-        [(ngModel)]="selectedIndustryItem"
-        (ngModelChange)="onchangeEvent($event)"
-        [selectOnTab]="true">
-        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-          
-          <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
-            {{ item.name }}
-            <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
-          </span>
-        </ng-template>
-        <ng-template ng-option-tmp let-item="item">
-          <span *ngIf="item.id !== -1">{{ item.name }}</span>
-          <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewIndustry($event)">
-            Create New Industry
-          </button>
-        </ng-template>
-        <!-- Custom Template: Nothing visible in the control -->
-        
+             <div class="col-md-4">
+                <div class="form-group ng-select-box required custom-dropdown-container">
+                   <label for="roleSelect">Select Industry</label>
+                       <div class="custom-dropdown-container">
+                          <ng-select
+                            id="roleSelect"
+                            class="form-control"
+                            [clearable]="true"
+                            [multiple]="true"
+                            bindLabel="name"
+                            [closeOnSelect]="false"
+                            [items]="IndustryList"
+                            [virtualScroll]="true"
+                            formControlName="selectedIndustry"
+                            [(ngModel)]="selectedIndustryItem"
+                            (ngModelChange)="onchangeEvent($event)"
+                            [selectOnTab]="true">
+                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                              
+                              <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+                                {{ item.name }}
+                                <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+                              </span>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item">
+                              <span *ngIf="item.id !== -1">{{ item.name }}</span>
+                              <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewIndustry($event)">
+                                Create New Industry
+                              </button>
+                            </ng-template>
+                            <!-- Custom Template: Nothing visible in the control -->
+                            
 
-        <!-- Custom Template for Items in the Dropdown with checkboxes -->
+                            <!-- Custom Template for Items in the Dropdown with checkboxes -->
 
-      </ng-select>
-      
-    </div>
+                  </ng-select>
+                  
+                </div>
 
-    <!-- Error Handling -->
-    <div *ngIf="addFarm.get('selectedIndustry').errors && 
-                (addFarm.get('selectedIndustry').dirty || addFarm.get('selectedIndustry').touched)"
-         class="invalid-feedback d-block">
-      <i class="bi bi-exclamation-circle-fill text-danger"></i> Please Select Industry!
-    </div>
-  </div>
-</div>
-
-          
-  
+                <!-- Error Handling -->
+                <div *ngIf="addFarm.get('selectedIndustry').errors && 
+                            (addFarm.get('selectedIndustry').dirty || addFarm.get('selectedIndustry').touched)"
+                    class="invalid-feedback d-block">
+                  <i class="bi bi-exclamation-circle-fill text-danger"></i> Please Select Industry!
+                </div>
+              </div>
+            </div>
           <!-- Role Select (Dropdown List Style) -->
           <div class="col-md-4">
             <div class="form-group ng-select-box required custom-dropdown-container">
@@ -241,18 +238,18 @@
           </div>
           </div>
           <div class="col-md-4">
-            <label for="industrySelect">Curriculum Points</label>
-            <app-anc-input-box formControlName="CurriculumPoints" placeholder=" " [numeric]="false" [mandatory]="true"
+            <label for="industrySelect">Project Duration</label>
+            <app-anc-input-box formControlName="ProjectDuration" placeholder=" " [numeric]="false" [mandatory]="true"
               [displayError]="
-                addFarm.controls.CurriculumPoints.errors &&
-                (addFarm.controls.CurriculumPoints.dirty ||
-                  addFarm.controls.CurriculumPoints.touched)
+                addFarm.controls.ProjectDuration.errors &&
+                (addFarm.controls.ProjectDuration.dirty ||
+                  addFarm.controls.ProjectDuration.touched)
               ">
               <ng-template>
                 <div *ngIf="
-                    addFarm.controls.CurriculumPoints.errors?.required &&
-                    (addFarm.controls.CurriculumPoints.dirty ||
-                      addFarm.controls.CurriculumPoints.touched)
+                    addFarm.controls.ProjectDuration.errors?.required &&
+                    (addFarm.controls.ProjectDuration.dirty ||
+                      addFarm.controls.ProjectDuration.touched)
                   ">
                   Curriculum Points  is required
                 </div>
@@ -261,6 +258,50 @@
             </app-anc-input-box>
           </div>
         </div>
+       <div class="row">
+        <div class="col-md-6">
+          <label for="industrySelect">Industry Specific Problem</label>
+          <textarea
+            formControlName="IndustrySpecificProblem"
+            class="form-control"
+            rows="5"
+            [ngClass]="{
+              'is-invalid': addFarm.controls.IndustrySpecificProblem.errors && 
+              (addFarm.controls.IndustrySpecificProblem.dirty || addFarm.controls.IndustrySpecificProblem.touched)
+            }"
+            placeholder=""
+          ></textarea>
+          <div *ngIf="
+                addFarm.controls.IndustrySpecificProblem.errors?.required &&
+                (addFarm.controls.IndustrySpecificProblem.dirty || 
+                addFarm.controls.IndustrySpecificProblem.touched)
+              " class="invalid-feedback">
+            Industry Specific Problem Points are required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="industrySelect">Curriculum Mapping</label>
+          <textarea
+            formControlName="CurriculumPoints"
+            class="form-control"
+            rows="5"
+            [ngClass]="{
+              'is-invalid': addFarm.controls.CurriculumPoints.errors && 
+              (addFarm.controls.CurriculumPoints.dirty || addFarm.controls.CurriculumPoints.touched)
+            }"
+            placeholder=""
+          ></textarea>
+          <div *ngIf="
+                addFarm.controls.CurriculumPoints.errors?.required &&
+                (addFarm.controls.CurriculumPoints.dirty || 
+                addFarm.controls.CurriculumPoints.touched)
+              " class="invalid-feedback">
+            Curriculum Points are required
+          </div>
+        </div>
+        
+       </div>
+
         <hr class="sidebar-divider">
         <div class="row">
           <div class="col-md-4">
@@ -387,22 +428,7 @@
                 <span></span>
               </ng-template>
             </ng-select>
-            <div *ngIf="selectedToolItem?.length > 0" class="selected-items-hover">
-              <span class="selected-items-text">
-                {{ getSelectedItemsText(weeks.controls[i].get('selectedTool').value) }}
-              </span>
-              
-              <!-- Hoverable dropdown container -->
-              <div class="hover-dropdown">
-                <ul>
-                  <li *ngFor="let item of weeks.controls[i].get('selectedTool').value; let index = index">
-                    {{ item.name }}
-                    <!-- Remove button/icon next to each selected item -->
-                    <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Tool',i)"></i>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            
             <!-- Error Handling -->
             <div *ngIf="week.get('selectedTool').errors && (week.get('selectedTool').dirty || week.get('selectedTool').touched)"
               class="invalid-feedback d-block">
