@@ -39,10 +39,18 @@
         bindLabel="name"
         [closeOnSelect]="false"
         [items]="IndustryList"
+        [virtualScroll]="true"
         formControlName="selectedIndustry"
         [(ngModel)]="selectedIndustryItem"
         (ngModelChange)="onchangeEvent($event)"
         [selectOnTab]="true">
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          
+          <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+            {{ item.name }}
+            <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+          </span>
+        </ng-template>
         <ng-template ng-option-tmp let-item="item">
           <span *ngIf="item.id !== -1">{{ item.name }}</span>
           <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewIndustry($event)">
@@ -50,30 +58,12 @@
           </button>
         </ng-template>
         <!-- Custom Template: Nothing visible in the control -->
-        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
-          <!-- Empty span to prevent displaying items in the control -->
-          <span></span>
-        </ng-template>
+        
 
         <!-- Custom Template for Items in the Dropdown with checkboxes -->
 
       </ng-select>
-      <div *ngIf="selectedIndustryItem?.length > 0" class="selected-items-hover">
-        <span class="selected-items-text">
-          {{ getSelectedItemsText(selectedIndustryItem) }}
-        </span>
-        
-        <!-- Hoverable dropdown container -->
-        <div class="hover-dropdown">
-          <ul>
-            <li *ngFor="let item of selectedIndustryItem; let index = index">
-              {{ item.name }}
-              <!-- Remove button/icon next to each selected item -->
-              <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Industry' ,-1)"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
+      
     </div>
 
     <!-- Error Handling -->
@@ -103,6 +93,13 @@
                 formControlName="selectedRole"
                 [(ngModel)]="selectedRoleItem"
                 (ngModelChange)="onchangeRoleEvent($event)">
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          
+                  <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+                    {{ item.name }}
+                    <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+                  </span>
+                </ng-template>
                 <ng-template ng-option-tmp let-item="item">
                   <span *ngIf="item.id !== -1">{{ item.name }}</span>
                   <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewRole($event)">
@@ -110,28 +107,10 @@
                   </button>
                 </ng-template>
                  <!-- Custom Template: Nothing visible in the control -->
-                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
-                  <!-- Empty span to prevent displaying items in the control -->
-                  <span></span>
-                </ng-template>
+              
               </ng-select>
              
-              <div *ngIf="selectedRoleItem?.length > 0" class="selected-items-hover">
-                <span class="selected-items-text">
-                  {{ getSelectedItemsText(selectedRoleItem) }}
-                </span>
-                
-                <!-- Hoverable dropdown container -->
-                <div class="hover-dropdown">
-                  <ul>
-                    <li *ngFor="let item of selectedRoleItem; let index = index">
-                      {{ item.name }}
-                      <!-- Remove button/icon next to each selected item -->
-                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Role',-1)"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              
             </div>
               <!-- Error Handling -->
               <div *ngIf="addFarm.get('selectedRole').errors && 
@@ -160,6 +139,13 @@
                 (ngModelChange) = "onchangeGradeEvent($event)"
                 
                 >
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          
+                  <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+                    {{ item.name }}
+                    <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+                  </span>
+                </ng-template>
                  <!-- Custom option template for Create New Industry -->
               <ng-template ng-option-tmp let-item="item">
                 <span *ngIf="item.id !== -1">{{ item.name }}</span>
@@ -169,22 +155,7 @@
               </ng-template>
               
               </ng-select>
-              <div *ngIf="selectedGradeItem?.length > 0" class="selected-items-hover">
-                <span class="selected-items-text">
-                  {{ getSelectedItemsText(selectedGradeItem) }}
-                </span>
-                
-                <!-- Hoverable dropdown container -->
-                <div class="hover-dropdown">
-                  <ul>
-                    <li *ngFor="let item of selectedGradeItem; let index = index">
-                      {{ item.name }}
-                      <!-- Remove button/icon next to each selected item -->
-                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Grad',-1)"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              
               <div class="floating-error"
               [ngClass]="{'hide': !(addFarm.get('selectedGrade').errors && (addFarm.get('selectedGrade').dirty || addFarm.get('selectedGrade').touched))}">
               <i>
@@ -227,6 +198,13 @@
                 (ngModelChange) = "onchangeSubjectEvent($event)"
                 
                 >
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          
+                  <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+                    {{ item.name }}
+                    <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+                  </span>
+                </ng-template>
                  <!-- Custom option template for Create New Industry -->
               <ng-template ng-option-tmp let-item="item">
                 <span *ngIf="item.id !== -1">{{ item.name }}</span>
@@ -234,27 +212,9 @@
                   Create New Subject
                 </button>
               </ng-template>
-              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-open="open">
-                <!-- Empty span to prevent displaying items in the control -->
-                <span></span>
-              </ng-template>
+              
               </ng-select>
-              <div *ngIf="selectedSubjectItem?.length > 0" class="selected-items-hover">
-                <span class="selected-items-text">
-                  {{ getSelectedItemsText(selectedSubjectItem) }}
-                </span>
-                
-                <!-- Hoverable dropdown container -->
-                <div class="hover-dropdown">
-                  <ul>
-                    <li *ngFor="let item of selectedSubjectItem; let index = index">
-                      {{ item.name }}
-                      <!-- Remove button/icon next to each selected item -->
-                      <i class="bi bi-trash text-danger ml-2" (click)="removeSelectedItem(index, 'Subject',-1)"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              
               <div class="floating-error"
               [ngClass]="{'hide': !(addFarm.get('selectedSubject').errors && (addFarm.get('selectedSubject').dirty || addFarm.get('selectedSubject').touched))}">
               <i>
@@ -409,6 +369,13 @@
               [closeOnSelect]="true" [dropdownPosition]="'bottom'" [items]="ToolList" [virtualScroll]="true" formControlName="selectedTool"
               (change)="onchangeToolEvent($event, i)">
               <!-- Custom option template for Create New Tool -->
+              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          
+                <span *ngFor="let item of items" class="selected-item" title="{{ item.name }}">
+                  {{ item.name }}
+                  <span class="remove-button" (click)="clear(item)">&times;</span> <!-- Cross button for unselecting -->
+                </span>
+              </ng-template>
               <ng-template ng-option-tmp let-item="item">
                 <span *ngIf="item.id !== -1">{{ item.name }}</span>
                 <button *ngIf="item.id === -1" class="btn btn-sm btn-primary" (click)="createNewTool($event)">

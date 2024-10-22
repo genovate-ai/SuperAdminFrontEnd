@@ -1419,3 +1419,69 @@ agm-map{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.ng-select {
+  width: 100%;
+}
+
+.selected-item {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 5px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate text with ellipsis */
+  max-width: 50px; /* Adjust the width as needed */
+  vertical-align: middle;
+}
+
+.selected-item:hover {
+  background-color: #f5f5f5;
+  //white-space: normal; /* Allow text to wrap on hover */
+  max-width: none; /* Remove the max-width on hover */
+  z-index: 1;
+}
+
+.remove-button {
+  margin-left: 5px;
+  cursor: pointer;
+  color: #d9534f; /* Red color for the cross button */
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.ng-select .ng-value-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure the items wrap within the container */
+  align-items: center;
+  max-height: 50px; /* Limit the height of the container */
+  overflow-y: auto; /* Add scroll if the items exceed the container height */
+}
+.ng-select {
+  display: block;
+  max-width: 100%;
+}
+
+.ng-select .ng-value-container {
+  max-height: 50px; /* Set the max height for selected items */
+  overflow-y: auto; /* Enable vertical scrolling when items exceed max-height */
+  padding: 2px;
+}
+
+.ng-select .ng-value-container::-webkit-scrollbar {
+  width: 6px; /* Customize the scrollbar width */
+}
+
+.ng-select .ng-value-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+.ng-select .ng-value-container::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb color */
+}
+
+.ng-select .ng-value-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Hover color */
+}
