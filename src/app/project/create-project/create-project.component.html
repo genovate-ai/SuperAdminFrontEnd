@@ -332,10 +332,21 @@
         <!-- Week Details Section -->
         <div>
           <hr class="sidebar-divider">
-           <button class="btn btn-sm btn-primary shadow-sm" (click)="addWeek()">
-            <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
-            Add Week
-          </button>
+           <div class="row">
+            <div class="col-md-4">
+            <button class="btn btn-sm btn-primary shadow-sm" (click)="addWeek()">
+              <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
+              Add
+            </button>
+           
+           </div>
+           
+          <div class="col-md-4">
+            
+            <input type="text" class="form-control" formControlName="section" [(ngModel)]="StepCation" placeholder="Enter text">
+          </div>
+           </div>
+           
           
 <!-- Collapse All Button with Icon -->
 <div class="row mb-2">
@@ -353,7 +364,7 @@
     <!-- Toggle Collapse Button for Each Week -->
     <div class="row">
       <div class="col-md-10">
-        <h5>Week {{ i + 1 }}</h5>
+        <h5>{{StepCation}} {{ i + 1 }}</h5>
       </div>
       <div class="col-md-2 text-right">
         <span (click)="toggleCollapse(i)">
@@ -371,7 +382,8 @@
       <div class="row">
         <!-- Lesson Plan -->
         <div class="col-md-4">
-          <app-anc-input-box formControlName="lessonPlan" placeholder="Lesson Plan" [numeric]="false" [mandatory]="true"
+          <label for="LessonPlan">Lesson Plan</label>
+          <app-anc-input-box formControlName="lessonPlan" placeholder=" " [numeric]="false" [mandatory]="true"
             [displayError]="week.get('lessonPlan').errors && (week.get('lessonPlan').dirty || week.get('lessonPlan').touched)">
             <ng-template>
               <div *ngIf="week.get('lessonPlan').errors?.required && (week.get('lessonPlan').dirty || week.get('lessonPlan').touched)">
@@ -383,7 +395,8 @@
 
         <!-- Objectives -->
         <div class="col-md-4">
-          <app-anc-input-box formControlName="objectives" placeholder="Objectives" [numeric]="false" [mandatory]="true"
+          <label for="Objectives">Objectives</label>
+          <app-anc-input-box formControlName="objectives" placeholder=" " [numeric]="false" [mandatory]="true"
             [displayError]="week.get('objectives').errors && (week.get('objectives').dirty || week.get('objectives').touched)">
             <ng-template>
               <div *ngIf="week.get('objectives').errors?.required && (week.get('objectives').dirty || week.get('objectives').touched)">
@@ -395,7 +408,8 @@
 
         <!-- Activities -->
         <div class="col-md-4">
-          <app-anc-input-box formControlName="activities" placeholder="Activities" [numeric]="false" [mandatory]="false"
+          <label for="activities">Activities</label>
+          <app-anc-input-box formControlName="activities" placeholder=" " [numeric]="false" [mandatory]="false"
             [displayError]="week.get('activities').errors && (week.get('activities').dirty || week.get('activities').touched)">
           </app-anc-input-box>
         </div>
@@ -404,9 +418,10 @@
       <div class="row">
         <!-- Tools Selection -->
         <div class="col-md-4">
-          <div class="ng-select-box required">
+          <div class="ng-select-box form-group floating-label-group required">
             <label for="industrySelect">Select Tool</label>
-            <ng-select class="form-control"  [clearable]="true" bindLabel="name" [multiple]="true"
+            
+            <ng-select class="form-control"  [clearable]="true" laceholder="Tools" bindLabel="name" [multiple]="true"
               [closeOnSelect]="true" [dropdownPosition]="'bottom'" [items]="ToolList" [virtualScroll]="true" formControlName="selectedTool"
               (change)="onchangeToolEvent($event, i)">
               <!-- Custom option template for Create New Tool -->

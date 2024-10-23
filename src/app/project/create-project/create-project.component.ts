@@ -11,7 +11,7 @@ import { FarmService } from 'src/app/shared/services/farm.service';
 })
 export class CreateProjectComponent implements OnInit {
   [x: string]: any;
-
+  StepCation = 'Week'
   addFarm: FormGroup;
   addIndustry: UntypedFormGroup;
   addRole: UntypedFormGroup;
@@ -75,6 +75,7 @@ export class CreateProjectComponent implements OnInit {
       this.update = true;
       console.log("DATAA", this.updateFarm)
       this.id = this.updateFarm.projectId;
+      this.StepCation = this.updateFarm.projectWeek[0].step_caption;
       this.CurriculumPoints = this.updateFarm.curriculumPoints;
       this.ProjectDuration = this.updateFarm.projectDuration;
       this.IndustrySpecificProblem = this.updateFarm.industrySpecificProblem;
@@ -120,7 +121,7 @@ export class CreateProjectComponent implements OnInit {
       selectedRole: [[], Validators.required],
       selectedGrade: [[], Validators.required],
       selectedSubject: [[], Validators.required],
-
+      section :[this.StepCation],
       weeks: this.weeksArray
     });
 
@@ -400,6 +401,7 @@ export class CreateProjectComponent implements OnInit {
         lessonPlan: week.lessonPlan,
         objectives: week.objectives,
         activities: week.activities,
+        stepCaption: this.StepCation,
         tools: week.selectedTool.map(tool => tool.id)
       })),
       prerequisiteLearnings: this.addFarm.get('PrerequisiteLearnings').value,
@@ -505,7 +507,8 @@ export class CreateProjectComponent implements OnInit {
       WeekLesson: [week.WeekLesson, Validators.required],
       WeekId: [week.weekId, Validators.required],
       WeekObjective: [week.WeekObjective, Validators.required],
-      WeekActivities: [week.WeekActivities, Validators.required]
+      WeekActivities: [week.WeekActivities, Validators.required],
+      stepCation :[this.StepCation]
     });
   }
   showLoader() {
