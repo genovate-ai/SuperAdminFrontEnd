@@ -340,9 +340,11 @@
             </button>
            
            </div>
-           
+           <div  class="col-md-2">
+            <label for="Objectives">Step Caption</label>
+           </div>
           <div class="col-md-4">
-            
+             
             <input type="text" class="form-control" formControlName="section" [(ngModel)]="StepCation" placeholder="Enter text">
           </div>
            </div>
@@ -467,9 +469,13 @@
           <div class="col-md-4"></div>
           <div class="col-md-4"></div>
           <div class="col-md-4 text-right"> <!-- Align button to the right -->
-            <button class="btn btn-sm btn-primary shadow-sm" (click)="onSubmit()">
+            <button *ngIf="!this.update" class="btn btn-sm btn-primary shadow-sm" (click)="onSubmit()">
               <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
               Create Project
+            </button>
+            <button *ngIf="this.update"  class="btn btn-sm btn-primary shadow-sm" (click)="onSubmit()">
+              <i class="fas fa-plus fa-sm text-white-50"></i> <!-- Correct Add Icon -->
+              Update Project
             </button>
           </div>
         </div>        

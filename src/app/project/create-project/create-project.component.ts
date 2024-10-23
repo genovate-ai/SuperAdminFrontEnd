@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, UntypedFormGroup, UntypedFormArray, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { PopupControllerService } from 'src/app/shared/services/common/popup-controller.service';
 import { FarmService } from 'src/app/shared/services/farm.service';
-
 @Component({
   selector: "app-create-farm",
   templateUrl: "./create-project.component.html",
@@ -49,6 +48,7 @@ export class CreateProjectComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private cd: ChangeDetectorRef, private farmService: FarmService
     ,protected route: ActivatedRoute,
+    private router: Router,
     protected popupController: PopupControllerService,
   ) {}
 
@@ -114,8 +114,6 @@ export class CreateProjectComponent implements OnInit {
       Industry: [''],
       IndustrySpecificProblem : [this.IndustrySpecificProblem],
       ProjectDuration : [this.ProjectDuration],
-      GradeLevel: ['', Validators.required],
-      PrerequisiteLearnings: [this.PrerequisiteLearnings, Validators.required],
       CurriculumPoints: [this.CurriculumPoints],
       selectedIndustry: [this.selectedIndustry, Validators.required],
       selectedRole: [[], Validators.required],
@@ -256,6 +254,10 @@ export class CreateProjectComponent implements OnInit {
   // Submit form
   onSubmit() {
     debugger;
+    if (this.addFarm.invalid) {
+      this.addFarm.markAllAsTouched();
+      return;
+    }
     this.showLoader();          
     const requestPayload = this.buildRequestPayload();
 
@@ -263,11 +265,17 @@ export class CreateProjectComponent implements OnInit {
 
       this.farmService.updateFarm(requestPayload).subscribe((response) => {
          this.showProjectUpdatedAlert();
+         setTimeout(() => {
+          window.location.reload();  // Full page reload
+        }, 2000);
       });
     }
     else{
       this.farmService.createFarm(requestPayload).subscribe((response) => {
         this.showProjectCreatedAlert();
+        setTimeout(() => {
+          window.location.reload();  // Full page reload
+        }, 2000);
       });
     }
     this.hideLoader();   
@@ -386,27 +394,38 @@ export class CreateProjectComponent implements OnInit {
   private buildRequestPayload() {
     
     return {
-      ProjectId : this.id,
-      projectName: this.addFarm.get('ProjectTile').value,
-      projectDescription: this.addFarm.get('Description').value,
-      IndustrySpecificProblem : this.addFarm.get('IndustrySpecificProblem').value,
-      ProjectDuration : this.addFarm.get('ProjectDuration').value,
-      industryIds: this.addFarm.get('selectedIndustry').value.map(industry => industry.id),
-      gradeIds: this.addFarm.get('selectedGrade').value.map(grade => grade.id),
-      roleIds: this.addFarm.get('selectedRole').value.map(role => role.id),
-      subjectIds: this.addFarm.get('selectedSubject').value.map(subject => subject.id),
-      ProjectImages: this.selectedImages,
-      weeks: this.weeks.value.map(week => ({
-        weekId : week.weekId,
-        lessonPlan: week.lessonPlan,
-        objectives: week.objectives,
-        activities: week.activities,
-        stepCaption: this.StepCation,
-        tools: week.selectedTool.map(tool => tool.id)
-      })),
-      prerequisiteLearnings: this.addFarm.get('PrerequisiteLearnings').value,
-      curriculumPoints: this.addFarm.get('CurriculumPoints').value
-    };
+      
+        ProjectId: this.id ?? 0, // Use 0 if this.id is null or undefined
+        projectName: this.addFarm.get('ProjectTile')?.value ?? '', // Default to empty string if value is null or undefined
+        projectDescription: this.addFarm.get('Description')?.value ?? '', // Same here
+        IndustrySpecificProblem: this.addFarm.get('IndustrySpecificProblem')?.value ?? '',
+        ProjectDuration: this.addFarm.get('ProjectDuration')?.value ?? '',
+        
+        // Safely map ids from selectedIndustry, fallback to empty array if null
+        industryIds: this.addFarm.get('selectedIndustry')?.value?.map(industry => industry.id) ?? [],
+      
+        // Handle grades, roles, and subjects similarly
+        gradeIds: this.addFarm.get('selectedGrade')?.value?.map(grade => grade.id) ?? [],
+        roleIds: this.addFarm.get('selectedRole')?.value?.map(role => role.id) ?? [],
+        subjectIds: this.addFarm.get('selectedSubject')?.value?.map(subject => subject.id) ?? [],
+      
+        // Handle selected images array or fallback to empty array if null/undefined
+        ProjectImages: this.selectedImages ?? [],
+      
+        // Safely map weeks and their respective tools, fallback to empty array if null
+        weeks: this.weeks?.value?.map(week => ({
+          weekId: week.weekId ?? 0, // Default to 0 for weekId if null
+          lessonPlan: week.lessonPlan ?? '', // Default to empty string if null
+          objectives: week.objectives ?? '',
+          activities: week.activities ?? '',
+          stepCaption: this.StepCation ?? '', // Fallback if StepCation is null
+          tools: week.selectedTool?.map(tool => tool.id) ?? [] // Map tool ids or fallback to empty array
+        })) ?? [],
+      
+        // Handle other fields with fallbacks
+        prerequisiteLearnings: this.addFarm.get('PrerequisiteLearnings')?.value ?? '',
+        curriculumPoints: this.addFarm.get('CurriculumPoints')?.value ?? ''
+      };
   }
 
   
